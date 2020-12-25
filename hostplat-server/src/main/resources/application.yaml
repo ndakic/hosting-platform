@@ -1,0 +1,16 @@
+server:
+  port: 9000
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://hostplatdb.c6a9ssak6sgn.eu-central-1.rds.amazonaws.com:5432/hostplatdb?ApplicationName=hostplat-db
+    username: postgres
+    password: NKcdxWYfg8odL
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
