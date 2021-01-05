@@ -1,0 +1,30 @@
+version: "3"
+services:
+  hostplat-client:
+    image: hostplat-client
+    build:
+      context: ./
+      dockerfile: hostplat-client/Dockerfile
+    container_name: hostplat-client-container
+    networks:
+      hostplat:
+        ipv4_address: 172.22.0.11
+    ports:
+      - 4200:4200
+  hostplat-server:
+    image: hostplat-server
+    build:
+      context: ./
+      dockerfile: hostplat-server/Dockerfile
+    container_name: hostplat-server-container
+    networks:
+      hostplat:
+        ipv4_address: 172.22.0.12
+    ports:
+      - 9000:9000
+networks:
+  hostplat:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.22.0.0/24
