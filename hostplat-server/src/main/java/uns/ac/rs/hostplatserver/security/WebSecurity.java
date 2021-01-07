@@ -32,6 +32,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/task/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/task/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/task/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/label/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/label/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/label/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/label/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

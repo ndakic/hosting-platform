@@ -6,3 +6,6 @@ insert into status (status_id, name, description) values (11, 'Deleted', 'Projec
 
 insert into status (status_id, name, description) values (20, 'Active', 'Task is Active');
 insert into status (status_id, name, description) values (21, 'Deleted', 'Task is Deleted');
+
+insert into status (status_id, name, description) values (30, 'Active', 'Label is Active');
+insert into status (status_id, name, description) values (31, 'Deleted', 'Label is Deleted');
