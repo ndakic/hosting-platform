@@ -25,7 +25,7 @@ jobs:
       - name: Build Application
         working-directory: hostplat-client/
         run: npm run-script build
-      - uses: jakejarvis/s3-sync-action@main
+      - uses: jakejarvis/s3-sync-action@master
         name: Upload App to S3 Bucket
         with:
           args: --follow-symlinks --delete
