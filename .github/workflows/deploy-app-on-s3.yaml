@@ -25,6 +25,7 @@ jobs:
       - name: Build Application
         working-directory: hostplat-client/
         run: |
+             npm install -g @angular/cli@8.2.2
              ng build
              cd dist/hostplat-client
       - uses: jakejarvis/s3-sync-action@master
