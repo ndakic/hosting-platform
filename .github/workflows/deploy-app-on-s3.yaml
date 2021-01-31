@@ -30,7 +30,7 @@ jobs:
       - name: Build Application
         working-directory: hostplat-client/
         run: npm run-script build
-      - uses: ndakic/hosting-platform@master
+      - uses: ndakic/hosting-platform@main
         name: Upload App to S3 Bucket
         with:
           args: --follow-symlinks --delete
