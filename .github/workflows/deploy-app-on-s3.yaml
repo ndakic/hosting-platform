@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      AWS_S3_BUCKET_NAME: github-action-env
+      AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
     strategy:
       matrix:
         node-version: [10.x]
@@ -25,7 +25,6 @@ jobs:
       - name: Build Application
         working-directory: hostplat-client/
         run: |
-             npm install
              ng build
              cd dist/hostplat-client
       - uses: jakejarvis/s3-sync-action@master
@@ -37,4 +36,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-          SOURCE_DIR: "dist"
+          SOURCE_DIR: "dist/hostplat-client"
