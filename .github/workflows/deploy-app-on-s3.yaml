@@ -4,6 +4,12 @@ on:
   pull_request:
     branches: [master]
     types: [closed]
+  workflow_dispatch:
+    inputs:
+      home:
+        description: 'location'
+        required: false
+        default: 'The Octoverse'
 jobs:
   deploy:
     runs-on: ubuntu-latest
