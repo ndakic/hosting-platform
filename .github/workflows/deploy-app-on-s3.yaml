@@ -19,8 +19,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies
+        working-directory: hostplat-client/
         run: npm install
       - name: Build Application
+        working-directory: hostplat-client/
         run: npm run-script build
       - uses: ndakic/s3-sync-action@master
         name: Upload App to S3 Bucket
