@@ -2,6 +2,8 @@ pipeline {
     environment {
         GIT_COMMIT_INFO = sh(returnStdout: true, script: 'git log | head -3').trim()
         GIT_MESSAGE = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
+        HUB_USERNAME = credentials('hub-username')
+        HUB_PASSWORD = credentials('hub-password')
     }
     agent {
         dockerfile {
@@ -23,10 +25,13 @@ pipeline {
                 }
             }
         }
-        stage('Uber JAR') {
+        stage('Build/Push Image') {
             steps {
                 dir("hostplat-server") {
-                    sh 'mvn -B package'
+                    sh 'docker login --username $HUB_USERNAME --password $HUB_PASSWORD'
+                    sh 'docker build -f Dockerfile -t hostplat-server .'
+                    sh 'docker tag hostplat-server:latest ndakic/hostplat-server:latest'
+                    sh 'docker push ndakic/hostplat-server:latest'
                 }
             }
         }
