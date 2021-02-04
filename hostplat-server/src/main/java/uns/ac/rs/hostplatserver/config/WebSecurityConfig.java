@@ -62,9 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
+        //config.addAllowedOrigin("*");
+        /*
+         *  You'll then need to switch to allowedOriginPatterns instead of allowedOrigins 
+         *  but that gives you an option to define more precisely the allowed domain patterns. 
+         *  In the mean time, you might be able to work around by listing specific domains 
+         *  if that's feasible.
+         */
         config.addAllowedOriginPattern("*");
+        config.addAllowedHeader("*");
         config.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Location", "X-Requested-With", "Authorization", "Cache-Control", "Content-Type", "X-Total-Count", "allowedOriginPatterns"));
    	    config.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(), HttpMethod.OPTIONS.name(), HttpMethod.DELETE.name(), HttpMethod.PATCH.name()));
         source.registerCorsConfiguration("/**", config);
@@ -83,7 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.POST, "/task/**").permitAll()
             .antMatchers(HttpMethod.PUT, "/task/**").permitAll()
             .antMatchers(HttpMethod.DELETE, "/task/**").permitAll()
-            .antMatchers("/auth/**").permitAll()
+            .antMatchers("/api/auth/**").permitAll()
             .anyRequest().authenticated().and()
             .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService), BasicAuthenticationFilter.class);
 
@@ -94,7 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js");
         web.ignoring().antMatchers("/static/**");
-        web.ignoring().antMatchers(HttpMethod.POST, "/auth/login");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/login");
 
 
     }

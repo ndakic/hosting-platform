@@ -10,6 +10,11 @@ import { HomePageComponent } from './home-page/home-page.component';
   declarations: [NotFoundPageComponent, ForbiddenPageComponent, HomePageComponent],
   imports: [
     CommonModule
+  ],
+  exports: [
+    NotFoundPageComponent,
+    ForbiddenPageComponent,
+    HomePageComponent
   ]
 })
 export class PagesModule { }
