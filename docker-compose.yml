@@ -3,8 +3,8 @@ services:
   hostplat-client:
     image: hostplat-client
     build:
-      context: ./
-      dockerfile: hostplat-client/Dockerfile
+      context: hostplat-client
+      dockerfile: Dockerfile
     container_name: hostplat-client-container
     networks:
       hostplat:
@@ -14,8 +14,8 @@ services:
   hostplat-server:
     image: hostplat-server
     build:
-      context: ./
-      dockerfile: hostplat-server/Dockerfile
+      context: hostplat-server
+      dockerfile: Dockerfile
     container_name: hostplat-server-container
     networks:
       hostplat:
