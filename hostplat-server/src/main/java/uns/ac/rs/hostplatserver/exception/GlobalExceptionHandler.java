@@ -37,6 +37,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
     
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<CustomErrorResponse> apiRequestExceptionHandler(Exception ex, WebRequest request) {
+        CustomErrorResponse errors = new CustomErrorResponse();
+        errors.setTimestamp(LocalDateTime.now());
+        errors.setError(ex.getMessage());
+        errors.setStatus(HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+
+    }
+    
 
 
 }
