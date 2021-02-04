@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://hostplatdb.c6a9ssak6sgn.eu-central-1.rds.amazonaws.com:5432/hostplatdb?ApplicationName=hostplat-db
+    url: jdbc:postgresql://hostplatdb.clyjge7psjds.us-east-2.rds.amazonaws.com:5432/hostplatdb?ApplicationName=hostplat-db
     username: postgres
     password: NKcdxWYfg8odL
   jpa:
