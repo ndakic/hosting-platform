@@ -33,6 +33,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'chmod +x config/deploy.sh'
+                sh 'chmod 400 config/hostplat-server.pem'
                 sh 'config/deploy.sh'
             }
         }
