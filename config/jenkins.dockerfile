@@ -14,6 +14,9 @@ RUN apt-get update && \
 ## Install Maven
 RUN apt-get update -y && apt-get install maven -y
 
+## Install Docker
+RUN apt-get update && apt-get install -y docker.io
+
 ## Jenkis user setup
 ENV USER=jenkins USER_ID=1000 USER_GID=1000
 
