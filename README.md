@@ -4,6 +4,6 @@
 
 Course Software Configuration Management at Faculty of Technical Sciences, University of Novi Sad
 
-Front deploy link
+Front deploy link:
 
 http://hostplat-client.s3-website.us-east-2.amazonaws.com/
