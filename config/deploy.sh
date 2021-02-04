@@ -3,7 +3,7 @@
 spring_env=dev
 server_ip=18.188.91.54
 user=ubuntu
-pem_file=config/java-api-latest.pem # temp solution
+pem_file=config/hostplat-server.pem # temp solution
 remote_server=$user@$server_ip
 port=9000
 
