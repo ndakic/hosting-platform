@@ -11,17 +11,23 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                sh 'mvn -B -DskipTests clean compile'
+                dir("hostplat-server") {
+                    sh 'mvn -B -DskipTests clean compile'
+                }
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn -B test'
+                dir("hostplat-server") {
+                    sh 'mvn -B test'
+                }
             }
         }
         stage('Uber JAR') {
             steps {
-                sh 'mvn -B package'
+                dir("hostplat-server") {
+                    sh 'mvn -B package'
+                }
             }
         }
         stage('Deploy') {
