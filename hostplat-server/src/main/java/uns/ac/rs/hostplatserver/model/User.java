@@ -163,5 +163,8 @@ public class User implements UserDetails {
         return true;
     }
 
+    public User(Long userId) {
+		this.id = userId;
+	}
 
 }
