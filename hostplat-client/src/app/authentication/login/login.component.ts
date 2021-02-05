@@ -13,8 +13,6 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  loginSuccess: boolean = false;
-  loginError: boolean = false;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -50,13 +48,9 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('user-username-key', data.username);
       localStorage.setItem('user-token-key', data.token.accessToken);
 
-      this.loginSuccess = true;
-      this.loginError = false;
       //this.router.navigate([HOME_PATH]);
       this.router.navigate(['']);
     }, error => {
-      this.loginSuccess = false;
-      this.loginError = true;
       this.toastr.warning(error.error.message, 'Warning');
     });
   }
