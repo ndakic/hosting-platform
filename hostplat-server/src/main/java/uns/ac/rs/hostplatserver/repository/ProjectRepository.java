@@ -3,9 +3,9 @@ package uns.ac.rs.hostplatserver.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import uns.ac.rs.hostplatserver.model.Milestone;
+import uns.ac.rs.hostplatserver.model.Project;
 
 @Repository
-public interface MilestoneRepository extends JpaRepository<Milestone, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Long>{
 
 }

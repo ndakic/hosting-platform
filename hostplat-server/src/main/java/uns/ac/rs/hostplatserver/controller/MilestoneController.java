@@ -52,7 +52,7 @@ public class MilestoneController {
 	}
 	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MilestoneDTO> updateEvent(@RequestBody MilestoneDTO milestoneDTO) throws Exception {
+	public ResponseEntity<MilestoneDTO> updateMilestone(@RequestBody MilestoneDTO milestoneDTO) throws Exception {
 		Milestone updatedMilestone = milestoneService.update(MilestoneMapper.toMilestone(milestoneDTO));
 		return new ResponseEntity<>(MilestoneMapper.toDTO(updatedMilestone), HttpStatus.OK);
 	}
