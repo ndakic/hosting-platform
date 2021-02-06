@@ -53,5 +53,9 @@ public class Milestone {
 		this.user = user;
 	}
 
+	public Milestone(Long milestone_id) {
+		this.id = milestone_id;
+	}
+
 
 }
