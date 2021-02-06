@@ -57,5 +57,9 @@ public class Project {
 		this.users = set;
 	}
 
+	public Project(Long project_id) {
+		this.id = project_id;
+	}
+
 
 }

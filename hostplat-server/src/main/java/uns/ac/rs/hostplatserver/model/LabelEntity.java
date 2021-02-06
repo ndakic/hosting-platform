@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "label")
@@ -21,6 +22,9 @@ public class LabelEntity {
     private Timestamp createDate;
 //    private UserEntity user; update this later
     private StatusEntity status;
+    
+    @ManyToMany(mappedBy = "labels")
+   	private Set<Task> Task;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "label_id_seq")
@@ -66,4 +70,8 @@ public class LabelEntity {
     public void setStatus(StatusEntity status) {
         this.status = status;
     }
+
+	public LabelEntity(Long id) {
+		this.id = id;
+	}
 }

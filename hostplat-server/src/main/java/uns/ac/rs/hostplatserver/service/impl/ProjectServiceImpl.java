@@ -58,15 +58,22 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Project update(Project project) throws Exception {
-		 Project projectToUpdate = this.findOne(project.getId());
-		 if(project.getName()!=null) {
-			 projectToUpdate.setName(project.getName());
-		 }else if(project.getDescription()!= null) {
-			 projectToUpdate.setDescription(project.getDescription());
-		 }else if(project.getUsers()!= null) {
-			 projectToUpdate.setUsers(project.getUsers());
-		 }
-		 return this.projectRepository.save(projectToUpdate);
+		Project projectToUpdate = this.findOne(project.getId());
+		if(project.getName()!=null) {
+			projectToUpdate.setName(project.getName());
+		}else if(project.getDescription()!= null) {
+			projectToUpdate.setDescription(project.getDescription());
+		}
+		Set<User> users = new HashSet<>();
+
+		for (User user : project.getUsers()) {
+			User u = userService.findOne(user.getId());
+			users.add(u);
+		}
+				
+		projectToUpdate.setUsers(users);
+	
+		return this.projectRepository.save(projectToUpdate);
 	}
 
 	@Override

@@ -52,6 +52,9 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "users")
 	private Set<Project> projects;
     
+    @ManyToMany(mappedBy = "assigned_users")
+   	private Set<Task> Task;
+    
     
     public User() {
     }
