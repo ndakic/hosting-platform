@@ -32,7 +32,9 @@ public class UserDTO {
                 .map(authority -> ((Authority) authority).getName()).collect(Collectors.toList());
     }
 
-    public Long getId() {
+    
+
+	public Long getId() {
         return id;
     }
 
@@ -94,5 +96,13 @@ public class UserDTO {
 
     public void setToken(TokenDTO token) {
         this.token = token;
+    }
+    
+    public UserDTO(Long id, String username, String firstName, String lastName, String email) {
+    	this.id = id;
+    	this.username = username;
+    	this.firstName = firstName;
+    	this.lastName = lastName;
+    	this.email = email;
     }
 }

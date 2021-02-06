@@ -49,7 +49,10 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private Set<Authority> authorities = new HashSet<>();
 
-
+    @ManyToMany(mappedBy = "users")
+	private Set<Project> projects;
+    
+    
     public User() {
     }
 
@@ -165,6 +168,14 @@ public class User implements UserDetails {
 
     public User(Long userId) {
 		this.id = userId;
+	}
+
+	public User(Long id, String username, String firstName, String lastName, String email) {
+		this.id = id;
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 	}
 
 }
