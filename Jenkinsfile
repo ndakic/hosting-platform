@@ -8,6 +8,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'config/jenkins.dockerfile'
+            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     stages {
@@ -30,11 +31,9 @@ pipeline {
                 dir("hostplat-server") {
                     sh 'echo $HUB_PASSWORD | docker login --username $HUB_USERNAME --password-stdin'
                     sh 'service docker start && gpasswd -a $USER docker'
-                    sh 'service docker status'
-                    sh 'ls'
-                    sh 'sudo docker build -f Dockerfile -t hostplat-server .'
-                    sh 'sudo docker tag hostplat-server:latest ndakic/hostplat-server:latest'
-                    sh 'sudo docker push ndakic/hostplat-server:latest'
+                    sh 'docker build -f Dockerfile -t hostplat-server .'
+                    sh 'docker tag hostplat-server:latest ndakic/hostplat-server:latest'
+                    sh 'docker push ndakic/hostplat-server:latest'
                 }
             }
         }
