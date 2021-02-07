@@ -30,6 +30,8 @@ pipeline {
                 dir("hostplat-server") {
                     sh 'echo $HUB_PASSWORD | docker login --username $HUB_USERNAME --password-stdin'
                     sh 'service docker start && gpasswd -a $USER docker'
+                    sh 'service docker status'
+                    sh 'ls'
                     sh 'docker build -f Dockerfile -t hostplat-server .'
                     sh 'docker tag hostplat-server:latest ndakic/hostplat-server:latest'
                     sh 'docker push ndakic/hostplat-server:latest'
