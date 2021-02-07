@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import uns.ac.rs.hostplatserver.constant.ErrorCode;
 import uns.ac.rs.hostplatserver.constant.LabelStatus;
 import uns.ac.rs.hostplatserver.constant.Md5Salt;
+import uns.ac.rs.hostplatserver.exception.BadRequestException;
 import uns.ac.rs.hostplatserver.exception.ResourceNotExistException;
+import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.LabelEntity;
 import uns.ac.rs.hostplatserver.repository.LabelRepository;
 import uns.ac.rs.hostplatserver.repository.StatusRepository;
@@ -67,5 +69,12 @@ public class LabelService {
         labelEntity.setName(labelResource.getName());
         labelRepository.save(labelEntity);
         return LabelResource.entityToResource(labelEntity);
+    }
+    
+    public LabelEntity findOne(Long id) throws BadRequestException {
+    	return this.labelRepository.findById(id)
+        		.orElseThrow(
+                ()-> new ResourceNotFoundException(String.format("Label with id %s not found!", id))
+       );
     }
 }
