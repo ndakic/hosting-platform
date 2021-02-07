@@ -32,9 +32,9 @@ pipeline {
                     sh 'service docker start && gpasswd -a $USER docker'
                     sh 'service docker status'
                     sh 'ls'
-                    sh 'docker build -f Dockerfile -t hostplat-server .'
-                    sh 'docker tag hostplat-server:latest ndakic/hostplat-server:latest'
-                    sh 'docker push ndakic/hostplat-server:latest'
+                    sh 'sudo docker build -f Dockerfile -t hostplat-server .'
+                    sh 'sudo docker tag hostplat-server:latest ndakic/hostplat-server:latest'
+                    sh 'sudo docker push ndakic/hostplat-server:latest'
                 }
             }
         }
