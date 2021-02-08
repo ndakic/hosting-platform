@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.exception.BadRequestException;
+import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.repository.UserRepository;
 import uns.ac.rs.hostplatserver.service.UserService;
@@ -44,5 +45,13 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> findAll() {
         return userRepository.findAll().stream()
                 .map(user -> new UserDTO(user)).collect(Collectors.toList());
+    }
+    
+    @Override
+    public User findOne(Long id) throws BadRequestException {
+    	return this.userRepository.findById(id)
+        		.orElseThrow(
+                ()-> new ResourceNotFoundException(String.format("User with id %s not found!", id))
+       );
     }
 }
