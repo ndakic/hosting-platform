@@ -1,5 +1,6 @@
 package uns.ac.rs.hostplatserver.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,6 +84,27 @@ public class ProjectServiceImpl implements ProjectService {
 		projectRepository.save(project);
 		this.projectRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public List<Project> findAllForUser(Long id) {
+		return this.projectRepository.findAllByUsersId(id);
+
+	}
+
+	@Override
+	public List<Project> findAllPublic() {
+		List<Project> allPublic = new ArrayList<>();
+		
+		for (Project project : projectRepository.findAll()) {
+			if(!project.isPrivate_project()) {
+				allPublic.add(project);
+			}
+		}
+		
+		
+		return allPublic;
+
 	}
 
 }

@@ -15,7 +15,11 @@ public interface ProjectService {
 
 	public Project update(Project project) throws Exception;
 
-	public void delete(Long id); 
+	public void delete(Long id);
+
+	public List<Project> findAllForUser(Long id);
+
+	public List<Project> findAllPublic(); 
 	
 
 }
