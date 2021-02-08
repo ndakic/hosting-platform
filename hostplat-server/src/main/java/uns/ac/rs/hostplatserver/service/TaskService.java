@@ -15,7 +15,13 @@ public interface TaskService {
 
 	public Task update(Task task) throws Exception;
 
-	public void delete(Long id); 
+	public void delete(Long id);
+
+	public Task closeTask(Long id);
+
+	public List<Task> findAllCloseTasks();
+
+	public List<Task> findAllOpenTasks(); 
 	
 
 }
