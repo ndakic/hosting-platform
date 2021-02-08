@@ -50,11 +50,14 @@ public class Project {
 	
     private StatusEntity status;
     
-	public Project(Long id, String name, String description, Set<User> set) {
+    private boolean private_project = true;
+    
+	public Project(Long id, String name, String description, Set<User> set, boolean private_project) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.users = set;
+		this.private_project = private_project;
 	}
 
 
