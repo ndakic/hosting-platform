@@ -1,17 +1,7 @@
-<h1>radi angular material</h1>
-<section>
-  <div class="example-label">Basic</div>
-  <div class="example-button-row">
-    <button mat-button>Basic</button>
-    <button mat-button color="primary">Primary</button>
-    <button mat-button color="accent">Accent</button>
-    <button mat-button color="warn" (click)="showSuccess()">Toaster Radi</button>
-    <button mat-button disabled>Disabled</button>
-    <a mat-button href="https://www.google.com/" target="_blank">Link</a>
-  </div>
-</section>
-<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+<app-navbar-registered-user *ngIf="role==='ROLE_USER'"></app-navbar-registered-user>
+<app-navbar-unregistered-user *ngIf="!role"></app-navbar-unregistered-user>
 
 
-
-<router-outlet></router-outlet>
+<div layout="row" layout-fill layout-align="center center">
+<router-outlet (activate)="checkRole()"></router-outlet>
+</div>
