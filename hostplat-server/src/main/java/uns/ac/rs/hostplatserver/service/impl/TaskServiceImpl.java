@@ -1,5 +1,6 @@
 package uns.ac.rs.hostplatserver.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -115,6 +116,45 @@ public class TaskServiceImpl implements TaskService {
 		taskRepository.save(task);
 		this.taskRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public Task closeTask(Long id) {
+		Task task = findOne(id);
+		task.setEnd_date(DateUtil.nowSystemTime());
+		taskRepository.save(task);
+		return task;
+		
+	}
+
+	@Override
+	public List<Task> findAllCloseTasks() {
+		List<Task> allClose = new ArrayList<>();
+		
+		for (Task task : taskRepository.findAll()) {
+			if(task.getEnd_date()!=null) {
+				allClose.add(task);
+			}
+		}
+		
+		
+		return allClose;
+
+	}
+	
+	@Override
+	public List<Task> findAllOpenTasks() {
+		List<Task> allClose = new ArrayList<>();
+		
+		for (Task task : taskRepository.findAll()) {
+			if(task.getEnd_date()==null) {
+				allClose.add(task);
+			}
+		}
+		
+		
+		return allClose;
+
 	}
 
 }
