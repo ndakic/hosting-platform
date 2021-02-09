@@ -13,7 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
@@ -43,7 +42,6 @@ public class Task {
 	
 	private Date create_date;
 
-	@Future(message="End date must be in future")
 	private Date end_date;
 	
     private StatusEntity status;

@@ -68,5 +68,33 @@ public class TaskController {
 		taskService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	
+	@GetMapping(value = "/closeTask/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TaskDTO> closeTask(@PathVariable("id") Long id) throws ResourceNotFoundException {
+		Task task = taskService.closeTask(id);
+		return new ResponseEntity<>(TaskMapper.toDTO(task), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/allCloseTask", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskDTO>> getCloseTasks() {
+		List<Task> tasks = taskService.findAllCloseTasks();
+		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
+		for (Task task: tasks) {
+			tasksDTO.add(TaskMapper.toDTO(task));
+		}
+		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/allOpenTask", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskDTO>> getOpenTasks() {
+		List<Task> tasks = taskService.findAllOpenTasks();
+		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
+		for (Task task: tasks) {
+			tasksDTO.add(TaskMapper.toDTO(task));
+		}
+		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
+	}
+	
 
 }

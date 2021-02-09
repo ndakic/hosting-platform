@@ -36,6 +36,10 @@ export class AuthenticationService {
     localStorage.removeItem('user-token-key');
   }
 
+  getToken(): string {
+    return localStorage.getItem('user-token-key');
+  }
+
 /*   addNewUser(userInfo: UserRegistrationData): Observable<any> {
     return this.http.post(API_REGISTER_USER, userInfo);
   } */
