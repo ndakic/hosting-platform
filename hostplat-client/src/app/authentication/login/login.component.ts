@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.authenticationService.isUserLoggedIn()) {
-      this.router.navigate(['']);
-      //this.router.navigate([HOME_PATH]);
+      this.router.navigate(['home']);
     }
   }
 
@@ -47,9 +46,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('user-role-key', data.authorities[0]);
       localStorage.setItem('user-username-key', data.username);
       localStorage.setItem('user-token-key', data.token.accessToken);
-
-      //this.router.navigate([HOME_PATH]);
-      this.router.navigate(['']);
+      this.router.navigate(['home']);
     }, error => {
       this.toastr.warning(error.error.message, 'Warning');
     });
