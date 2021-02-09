@@ -31,4 +31,8 @@ export class NavbarRegisteredUserComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  onClickChangePassword(): void {
+    this.router.navigate(['change-password']);
+  }
+
 }
