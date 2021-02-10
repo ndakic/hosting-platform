@@ -1,8 +1,4 @@
-
-//import { API_LOGIN, API_REGISTER_USER, API_VERIFY_ACCOUNT } from './../config/api-paths';
 import { Observable } from 'rxjs';
-
-//import { USER_ID_KEY, USER_ROLE_KEY, USERNAME_KEY, USER_TOKEN_KEY } from './../config/local-storage-keys';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login } from 'src/app/models/login';
@@ -38,6 +34,10 @@ export class AuthenticationService {
 
   getToken(): string {
     return localStorage.getItem('user-token-key');
+  }
+
+  getRole(): string {
+    return localStorage.getItem('user-role-key');
   }
 
 /*   addNewUser(userInfo: UserRegistrationData): Observable<any> {
