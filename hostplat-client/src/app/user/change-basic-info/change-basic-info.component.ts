@@ -73,11 +73,5 @@ export class ChangeBasicInfoComponent implements OnInit {
       this.toastr.error('There was an error. Your data will not be changed for now.');
     });
   }
-  
-
-
-
-  
-
 
 }

@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "http://127.0.0.1:9000/auth/login",
+			"name": "http://localhost:9000/api/auth/login",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -20,16 +20,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:9000/auth/login",
+					"raw": "http://localhost:9000/api/auth/login",
 					"protocol": "http",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"localhost"
 					],
 					"port": "9000",
 					"path": [
+						"api",
 						"auth",
 						"login"
 					]
@@ -38,7 +36,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:9000/api/users/user",
+			"name": "http://localhost:9000/api/users/user",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -49,13 +47,10 @@
 					}
 				],
 				"url": {
-					"raw": "http://127.0.0.1:9000/api/users/user",
+					"raw": "http://localhost:9000/api/users/user",
 					"protocol": "http",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"localhost"
 					],
 					"port": "9000",
 					"path": [
@@ -97,7 +92,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:9000/auth/change-password",
+			"name": "http://localhost:9000/api/auth/change-password",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -117,18 +112,116 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:9000/auth/change-password",
+					"raw": "http://localhost:9000/api/auth/change-password",
 					"protocol": "http",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"localhost"
 					],
 					"port": "9000",
 					"path": [
+						"api",
 						"auth",
 						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/api/users/my-profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Bearer}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9000/api/users/my-profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"users",
+						"my-profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/api/users/my-profile",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Bearer}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"User\",\r\n    \"lastName\": \"Useric\",\r\n    \"email\": \"user@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/users/my-profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"users",
+						"my-profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/api/users/public/add-use",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Bearer}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"bob\",\r\n    \"firstName\": \"Bob\",\r\n    \"lastName\": \"Bobic\",\r\n    \"password\": \"bob123bob\",\r\n    \"repeatPassword\": \"bob123bob\",\r\n    \"email\": \"hostplat+bob@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/users/public/add-user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"users",
+						"public",
+						"add-user"
 					]
 				}
 			},

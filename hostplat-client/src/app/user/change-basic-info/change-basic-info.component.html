@@ -37,7 +37,7 @@
                 </small>
 
                 <small class="text-danger"
-                    *ngIf="basicInfoForm.controls.email.touched && basicInfoForm.controls.email">
+                    *ngIf="basicInfoForm.controls.email.touched && basicInfoForm.controls.email.errors?.email">
                     Email is not valid
                 </small>
             </div>
