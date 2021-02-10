@@ -5,10 +5,12 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import uns.ac.rs.hostplatserver.dto.UserDTO;
+import uns.ac.rs.hostplatserver.dto.UserEditDTO;
 import uns.ac.rs.hostplatserver.exception.BadRequestException;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.User;
@@ -53,5 +55,30 @@ public class UserServiceImpl implements UserService {
         		.orElseThrow(
                 ()-> new ResourceNotFoundException(String.format("User with id %s not found!", id))
        );
+    }
+    
+    @Override
+    public User getMyProfileData() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+    
+    @Override
+    public User editUser(UserEditDTO userInfo) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setFirstName(userInfo.getFirstName());
+        user.setLastName(userInfo.getLastName());
+        User dbUser = userRepository.findByEmail(userInfo.getEmail());
+
+        if(dbUser != null) {
+            if (dbUser.getId() != user.getId()) {
+                throw new BadRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+            }
+        }
+
+        user.setEmail(userInfo.getEmail());
+
+        userRepository.save(user);
+
+        return user;
     }
 }
