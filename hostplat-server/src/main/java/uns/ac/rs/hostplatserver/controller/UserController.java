@@ -60,12 +60,19 @@ public class UserController {
         User user = userService.addUser(userInfo);
         return new ResponseEntity<>(UserMapper.toDTO(user), HttpStatus.OK);
     }
+    
+    @GetMapping("/public/verify-account/{token}")
+    public ResponseEntity verifyUserAccount(@PathVariable String token) {
+        userService.activateAccount(token);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   	public ResponseEntity<UserDTO> getProject(@PathVariable("id") Long id) throws ResourceNotFoundException {
       	User user = userService.findOne(id);
   		return new ResponseEntity<>(UserMapper.toDTO(user), HttpStatus.OK);
   	}
+    
 
 
 }
