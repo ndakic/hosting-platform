@@ -23,5 +23,6 @@ public interface TaskService {
 
 	public List<Task> findAllOpenTasks(); 
 	
+	
 
 }

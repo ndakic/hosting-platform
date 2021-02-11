@@ -36,7 +36,7 @@ public class TaskController {
 	}
 
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TaskDTO>> getTasks() {
 		List<Task> tasks = taskService.findAll();
 		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();

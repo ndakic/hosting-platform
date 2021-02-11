@@ -1,0 +1,9 @@
+<div class="main" *ngIf="project">
+    <h1>{{project.name}}</h1>
+    <h3>Description:</h3>
+    <p>{{project.description}}</p>
+    <div>
+      <button   mat-raised-button   (click)='updateProject()' color="accent">Update project</button>
+      <button   mat-raised-button  (click)='delete()' color="accent">Delete</button>
+    </div>
+</div> 
