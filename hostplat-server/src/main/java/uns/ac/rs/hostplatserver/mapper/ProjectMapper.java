@@ -12,7 +12,8 @@ public class ProjectMapper {
         		project.getName(),
         		project.getDescription(),
         		project.getCreate_date(),
-        		project.getUsers().stream().map(UserMapper::toDTO).collect(Collectors.toSet())
+        		project.getUsers().stream().map(UserMapper::toDTO).collect(Collectors.toSet()),
+        		project.isPrivate_project()
         		
         );
 	}
@@ -21,7 +22,8 @@ public class ProjectMapper {
         return new Project(projectDTO.getId(),
         		projectDTO.getName(), 
         		projectDTO.getDescription(),
-        		projectDTO.getUsers().stream().map(UserMapper::toUser).collect(Collectors.toSet())
+        		projectDTO.getUsers().stream().map(UserMapper::toUser).collect(Collectors.toSet()),
+        		projectDTO.isPrivate_project()
             );    
     }
 

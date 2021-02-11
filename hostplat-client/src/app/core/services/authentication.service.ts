@@ -1,8 +1,4 @@
-
-//import { API_LOGIN, API_REGISTER_USER, API_VERIFY_ACCOUNT } from './../config/api-paths';
 import { Observable } from 'rxjs';
-
-//import { USER_ID_KEY, USER_ROLE_KEY, USERNAME_KEY, USER_TOKEN_KEY } from './../config/local-storage-keys';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login } from 'src/app/models/login';
@@ -36,9 +32,17 @@ export class AuthenticationService {
     localStorage.removeItem('user-token-key');
   }
 
-/*   addNewUser(userInfo: UserRegistrationData): Observable<any> {
-    return this.http.post(API_REGISTER_USER, userInfo);
-  } */
+  getToken(): string {
+    return localStorage.getItem('user-token-key');
+  }
+
+  getRole(): string {
+    return localStorage.getItem('user-role-key');
+  }
+
+  addNewUser(userInfo: UserRegistrationData): Observable<any> {
+    return this.http.post(environment.apiUrlPrefix + '/api/users/public/add-user', userInfo);
+  }
 
 /*   activateAccount(confirmationToken: string): Observable<any> {
     return this.http.get(`${API_VERIFY_ACCOUNT}/${confirmationToken}`);

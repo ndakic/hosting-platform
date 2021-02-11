@@ -19,6 +19,7 @@ public class ProjectDTO {
 	private String description;
 	private Date create_date;
 	private Set<UserDTO> users;
+	private boolean private_project;
 
 
 }
