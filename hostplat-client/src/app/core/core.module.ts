@@ -5,6 +5,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { NavbarUnregisteredUserComponent } from './navbars/navbar-unregistered-user/navbar-unregistered-user.component';
 import { NavbarRegisteredUserComponent } from './navbars/navbar-registered-user/navbar-registered-user.component';
+import { UserService } from './services/user.service';
 
 
 
@@ -19,6 +20,7 @@ import { NavbarRegisteredUserComponent } from './navbars/navbar-registered-user/
   ],
   providers: [
     AuthenticationService,
+    UserService
   ],
   exports: [
     NavbarUnregisteredUserComponent,

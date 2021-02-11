@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="user-info-container">
+        <form [formGroup]="basicInfoForm" (submit)="onClickSaveEdit()">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                    <input id="firstname-input" matInput type="text" placeholder="First name" formControlName="firstName" />
+                </mat-form-field>
+
+                <small class="text-danger"
+                    *ngIf="basicInfoForm.controls.firstName.touched && basicInfoForm.controls.firstName.errors?.required">
+                    First name is required
+                </small>
+            </div>
+            
+            <div>
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                    <input id="lastname-input" matInput type="text" placeholder="Last name" formControlName="lastName" />
+                </mat-form-field>
+
+                <small class="text-danger"
+                    *ngIf="basicInfoForm.controls.lastName.touched && basicInfoForm.controls.lastName.errors?.required">
+                    Last name is required
+                </small>
+            </div>
+            
+            <div>
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-icon matPrefix class="icon">email</mat-icon>
+                    <input id="email-input" matInput type="email" placeholder="E-mail" formControlName="email" />
+                </mat-form-field>
+
+                <small class="text-danger"
+                    *ngIf="basicInfoForm.controls.email.touched && basicInfoForm.controls.email.errors?.required">
+                    Email is required
+                </small>
+
+                <small class="text-danger"
+                    *ngIf="basicInfoForm.controls.email.touched && basicInfoForm.controls.email.errors?.email">
+                    Email is not valid
+                </small>
+            </div>
+            
+            <button id="save-btn" type="submit" mat-raised-button color="primary" [disabled]="basicInfoForm.invalid">
+                Save
+            </button>
+        </form>
+    </div>
+</div>
