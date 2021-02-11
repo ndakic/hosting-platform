@@ -8,6 +8,11 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
 import { ChangeBasicInfoComponent } from './user/change-basic-info/change-basic-info.component';
 import { ChangePasswordComponent } from './user/change-password/change-password.component';
 import { RoleGuard } from './core/guards/role.guard';
+import { ProjectDetailsComponent } from './projects/project-details/project-details.component';
+import { ProjectsListComponent } from './projects/projects-list/projects-list.component';
+import { ProjectListItemComponent } from './projects/project-list-item/project-list-item.component';
+import { UpdateProjectComponent } from './projects/update-project/update-project.component';
+import { AddProjectComponent } from './projects/add-project/add-project.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -25,6 +30,30 @@ const routes: Routes = [
   {
     path: 'change-basic-info',
     component: ChangeBasicInfoComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'project-details/:id',
+    component: ProjectDetailsComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'project-list',
+    component: ProjectsListComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'update-project/:id',
+    component: UpdateProjectComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'add-project',
+    component: AddProjectComponent,
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_USER'}
   },

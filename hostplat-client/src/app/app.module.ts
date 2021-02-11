@@ -13,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserModule } from './user/user.module';
 import { Jwt } from './core/interceptors/jwt.interceptor';
+import { ProjectModule} from './projects/project.module'; 
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { Jwt } from './core/interceptors/jwt.interceptor';
     CoreModule,
     PagesModule,
     UserModule,
+    ProjectModule,
     ToastrModule.forRoot({
       progressBar: true,
       timeOut: 4000,
