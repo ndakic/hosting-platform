@@ -38,6 +38,7 @@ public class TaskController {
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TaskDTO>> getTasks() {
+		System.out.println("CAO");
 		List<Task> tasks = taskService.findAll();
 		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
 		for (Task task: tasks) {
