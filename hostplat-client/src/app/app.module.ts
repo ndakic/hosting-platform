@@ -9,8 +9,10 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { CoreModule } from './core/core.module';
 import { PagesModule } from './pages/pages.module';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserModule } from './user/user.module';
+import { Jwt } from './core/interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AuthenticationModule,
     CoreModule,
     PagesModule,
+    UserModule,
     ToastrModule.forRoot({
       progressBar: true,
       timeOut: 4000,
@@ -35,7 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       preventDuplicates: true
     }),
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: Jwt, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

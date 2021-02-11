@@ -3,11 +3,16 @@ import { CommonModule } from '@angular/common';
 import { AuthenticationService } from './services/authentication.service';
 import { AppRoutingModule } from '../app-routing.module';
 import { MaterialModule } from '../material/material.module';
+import { NavbarUnregisteredUserComponent } from './navbars/navbar-unregistered-user/navbar-unregistered-user.component';
+import { NavbarRegisteredUserComponent } from './navbars/navbar-registered-user/navbar-registered-user.component';
+import { UserService } from './services/user.service';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    NavbarUnregisteredUserComponent,
+    NavbarRegisteredUserComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -15,8 +20,11 @@ import { MaterialModule } from '../material/material.module';
   ],
   providers: [
     AuthenticationService,
+    UserService
   ],
   exports: [
+    NavbarUnregisteredUserComponent,
+    NavbarRegisteredUserComponent
   ]
 })
 export class CoreModule {
