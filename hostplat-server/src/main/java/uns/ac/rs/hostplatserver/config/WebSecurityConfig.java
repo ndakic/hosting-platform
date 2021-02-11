@@ -102,5 +102,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.POST, "/api/users/public/add-user");
 
 
+
     }
 }
