@@ -39,4 +39,15 @@ export class NavbarRegisteredUserComponent implements OnInit {
     this.router.navigate(['change-basic-info']);
   }
 
+  onAllProject(): void {
+    this.router.navigate(['project-list']);
+
+  }
+
+  onNewProject(): void {
+    this.router.navigate(['add-project']);
+
+  }
+
+
 }

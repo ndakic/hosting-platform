@@ -10,4 +10,6 @@ import uns.ac.rs.hostplatserver.model.Task;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long>{
 
+	Task deleteByProjectId(Long id);
+
 }

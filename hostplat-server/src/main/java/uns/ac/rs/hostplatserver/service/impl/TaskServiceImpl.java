@@ -77,13 +77,17 @@ public class TaskServiceImpl implements TaskService {
 		Task taskToUpdate = this.findOne(task.getId());
 		if(task.getTitle()!=null) {
 			taskToUpdate.setTitle(task.getTitle());
-		}else if(task.getDescription()!= null) {
+		}
+		if(task.getDescription()!= null) {
 			taskToUpdate.setDescription(task.getDescription());
-		}else if(task.getEnd_date()!=null) {
+		}
+		if(task.getEnd_date()!=null) {
 			taskToUpdate.setEnd_date(task.getEnd_date());
-		}else if(task.getProject()!= null) {
+		}
+		if(task.getProject()!= null) {
 			taskToUpdate.setProject(task.getProject());
-		}else if(task.getMilestone()!= null) {
+		}
+		if(task.getMilestone()!= null) {
 			taskToUpdate.setMilestone(task.getMilestone());
 		}
 		Set<User> users = new HashSet<>();
@@ -155,6 +159,15 @@ public class TaskServiceImpl implements TaskService {
 		
 		return allClose;
 
+	}
+
+	@Override
+	public void deleteByProjectId(Long id) {
+		Task task = taskRepository.deleteByProjectId(id);
+		task.setEnd_date(DateUtil.nowSystemTime());
+		taskRepository.save(task);
+		this.taskRepository.deleteById(id);
+		
 	}
 
 }

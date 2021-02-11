@@ -1,0 +1,21 @@
+<div  *ngIf="project">
+    <form #updateProject="ngForm" (ngSubmit)="update()" novalidate>
+      <h1>Update project:</h1>
+      <div>
+        <mat-form-field>
+          <input matInput type="text" required #name='ngModel'
+          [(ngModel)]="project.name" name="name" placeholder="Project name">
+        </mat-form-field>
+        <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">Please enter project name</mat-error>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type="text" required #description='ngModel'
+          [(ngModel)]="project.description" name="description" placeholder="Project description">
+        </mat-form-field>
+        <mat-error *ngIf="description.invalid && (description.dirty || description.touched)">Please enter project description</mat-error>
+      </div>
+      <button mat-raised-button color="accent" type="submit" [disabled]="updateProject.form.invalid">Update project</button>
+    </form>
+  </div>
+  

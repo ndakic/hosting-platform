@@ -13,6 +13,7 @@ import uns.ac.rs.hostplatserver.model.Project;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.repository.ProjectRepository;
 import uns.ac.rs.hostplatserver.service.ProjectService;
+import uns.ac.rs.hostplatserver.service.TaskService;
 import uns.ac.rs.hostplatserver.service.UserService;
 import uns.ac.rs.hostplatserver.util.DateUtil;
 
@@ -25,6 +26,9 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
     private UserService userService;
+	
+	@Autowired
+    private TaskService taskService;
 
 	@Override
 	public Project findOne(Long id) throws ResourceNotFoundException {
@@ -62,7 +66,8 @@ public class ProjectServiceImpl implements ProjectService {
 		Project projectToUpdate = this.findOne(project.getId());
 		if(project.getName()!=null) {
 			projectToUpdate.setName(project.getName());
-		}else if(project.getDescription()!= null) {
+		}
+		if(project.getDescription()!= null) {
 			projectToUpdate.setDescription(project.getDescription());
 		}
 		Set<User> users = new HashSet<>();
@@ -82,6 +87,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Project project = findOne(id);
 		project.setUsers(new HashSet<>());
 		projectRepository.save(project);
+		//taskService.deleteByProjectId(id);
 		this.projectRepository.deleteById(id);
 		
 	}

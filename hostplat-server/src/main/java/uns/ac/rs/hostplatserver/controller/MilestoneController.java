@@ -35,7 +35,7 @@ public class MilestoneController {
 		return new ResponseEntity<>(MilestoneMapper.toDTO(milestone), HttpStatus.OK);
 	}
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/getAll",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MilestoneDTO>> getMilestones() {
 		List<Milestone> milestones = milestoneService.findAll();
 		List<MilestoneDTO> milestonesDTO = new ArrayList<MilestoneDTO>();

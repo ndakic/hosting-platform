@@ -25,5 +25,16 @@ export class UserService {
   editMyProfile(userEditData: UserEditInfo): Observable<any> {
     return this.http.put(environment.apiUrlPrefix + '/api/users/my-profile', userEditData);
   }
+
+  getUserFromLocalStorage() {
+    let user: User = null;
+    const u = localStorage.getItem('user');
+    if (u) {
+      user = JSON.parse(localStorage.getItem('user'));
+    }
+    console.log("CAO SERVIS");
+    console.log(user);
+    return user;
+  }
   
 }

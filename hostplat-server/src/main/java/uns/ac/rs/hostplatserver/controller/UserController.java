@@ -4,17 +4,24 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import uns.ac.rs.hostplatserver.dto.ProjectDTO;
 import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.dto.UserEditDTO;
+import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
+import uns.ac.rs.hostplatserver.mapper.ProjectMapper;
 import uns.ac.rs.hostplatserver.mapper.UserMapper;
+import uns.ac.rs.hostplatserver.model.Project;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.service.UserService;
 
@@ -49,6 +56,13 @@ public class UserController {
         User user = userService.editUser(userInfo);
         return new ResponseEntity<>(UserMapper.toDTO(user), HttpStatus.OK);
     }
+    
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserDTO> getProject(@PathVariable("id") Long id) throws ResourceNotFoundException {
+    	User user = userService.findOne(id);
+		return new ResponseEntity<>(UserMapper.toDTO(user), HttpStatus.OK);
+	}
+  
 
 
 

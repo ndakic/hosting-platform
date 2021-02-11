@@ -36,7 +36,7 @@ public class ProjectController {
 	}
 
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/getAll",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ProjectDTO>> getProjects() {
 		List<Project> projects = projectService.findAll();
 		List<ProjectDTO> projectsDTO = new ArrayList<ProjectDTO>();

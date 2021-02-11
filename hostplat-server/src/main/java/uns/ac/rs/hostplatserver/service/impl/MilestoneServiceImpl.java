@@ -42,9 +42,11 @@ public class MilestoneServiceImpl implements MilestoneService {
 		 Milestone milestoneToUpdate = this.findOne(milestone.getId());
 		 if(milestone.getTitle()!=null) {
 			 milestoneToUpdate.setTitle(milestone.getTitle());
-		 }else if(milestone.getStart_date()!= null) {
+		 }
+		 if(milestone.getStart_date()!= null) {
 			 milestoneToUpdate.setStart_date(milestone.getStart_date());
-		 }else if(milestone.getEnd_date()!= null) {
+		 }
+		 if(milestone.getEnd_date()!= null) {
 			 milestoneToUpdate.setEnd_date(milestone.getEnd_date());
 		 }
 		 return this.milestoneRepository.save(milestoneToUpdate);
