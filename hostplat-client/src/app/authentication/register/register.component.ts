@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { UserRegistrationData } from 'src/app/models/user-registration-data';
 
 @Component({
   selector: 'app-register',
@@ -15,15 +17,15 @@ export class RegisterComponent implements OnInit {
   registrationForm: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService,
+              private authenticationService: AuthenticationService,
               private router: Router,
               private toastr: ToastrService) {
   }
 
   ngOnInit() {
-    if (this.authService.isUserLoggedIn()) {
+    if (this.authenticationService.isUserLoggedIn()) {
       this.toastr.warning('Please logout if you want to create a new account.', 'Warning');
-      this.router.navigate([HOME_PATH]);
+      this.router.navigate(['home']);
     }
 
     this.createForm();
@@ -51,14 +53,14 @@ export class RegisterComponent implements OnInit {
 
     const userInfo: UserRegistrationData = {
       username: this.registrationForm.controls.username.value,
-      password: password,
-      repeatPassword: repeatPassword,
+      password,
+      repeatPassword,
       email: this.registrationForm.controls.email.value,
       firstName: this.registrationForm.controls.firstName.value,
       lastName: this.registrationForm.controls.lastName.value,
     };
 
-    this.authService.addNewUser(userInfo).subscribe(data => {
+    this.authenticationService.addNewUser(userInfo).subscribe(data => {
       this.isUserInfoSent = true;
     }, error => {
       this.toastr.error('There was an error while adding your account. Try again later.');
@@ -66,7 +68,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onClickSignIn(): void {
-    this.router.navigate([LOGIN_PATH]);
+    this.router.navigate(['login']);
   }
 
 }
