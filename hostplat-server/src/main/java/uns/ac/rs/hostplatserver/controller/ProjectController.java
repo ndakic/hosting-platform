@@ -64,4 +64,23 @@ public class ProjectController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping(value = "/allForUser/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ProjectDTO>> getProjectsForUser(@PathVariable("id") Long id) {
+		List<Project> projects = projectService.findAllForUser(id);
+		List<ProjectDTO> projectsDTO = new ArrayList<ProjectDTO>();
+		for (Project project: projects) {
+			projectsDTO.add(ProjectMapper.toDTO(project));
+		}
+		return new ResponseEntity<>(projectsDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/allPublic", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ProjectDTO>> getPublic() {
+		List<Project> projects = projectService.findAllPublic();
+		List<ProjectDTO> projectsDTO = new ArrayList<ProjectDTO>();
+		for (Project project: projects) {
+			projectsDTO.add(ProjectMapper.toDTO(project));
+		}
+		return new ResponseEntity<>(projectsDTO, HttpStatus.OK);
+	}
 }
