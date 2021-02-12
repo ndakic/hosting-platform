@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
     private User createNewUserObject(UserRegistrationDTO userInfo) {
         User user = UserMapper.toEntity(userInfo);
         user.setPassword(passwordEncoder.encode(userInfo.getPassword()));
-        user.setImagePath("putanje do slike sa cloudinary servisa");
+        user.setImagePath("https://res.cloudinary.com/djxkexzcr/image/upload/v1574108111/zbvvptxlxzzhzomjvp2s.jpg");
         user.setLastPasswordResetDate(timeProvider.nowTimestamp());
         user.getUserAuthorities().add(authorityRepository.findByName(UserRoles.ROLE_USER));
 
