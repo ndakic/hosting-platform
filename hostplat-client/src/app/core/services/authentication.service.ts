@@ -44,7 +44,8 @@ export class AuthenticationService {
     return this.http.post(environment.apiUrlPrefix + '/api/users/public/add-user', userInfo);
   }
 
-/*   activateAccount(confirmationToken: string): Observable<any> {
-    return this.http.get(`${API_VERIFY_ACCOUNT}/${confirmationToken}`);
-  } */
+
+  activateAccount(confirmationToken: string): Observable<any> {
+    return this.http.get(`${environment.apiUrlPrefix + '/api/users/public/verify-account'}/${confirmationToken}`);
+  }
 }

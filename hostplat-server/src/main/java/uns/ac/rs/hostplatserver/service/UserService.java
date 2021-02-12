@@ -17,4 +17,5 @@ public interface UserService {
 	User getMyProfileData();
 	User editUser(UserEditDTO userInfo);
 	User addUser(UserRegistrationDTO userInfo);
+	boolean activateAccount(String token);
 }

@@ -134,10 +134,39 @@ public class UserServiceImpl implements UserService {
     private User createNewUserObject(UserRegistrationDTO userInfo) {
         User user = UserMapper.toEntity(userInfo);
         user.setPassword(passwordEncoder.encode(userInfo.getPassword()));
-        user.setImagePath("putanje do slike sa cloudinary");
+        user.setImagePath("putanje do slike sa cloudinary servisa");
         user.setLastPasswordResetDate(timeProvider.nowTimestamp());
         user.getUserAuthorities().add(authorityRepository.findByName(UserRoles.ROLE_USER));
 
         return user;
+    }
+    
+    @Override
+    public boolean activateAccount(String token) {
+        ConfirmationToken confirmationToken = tokenRepository.findByToken(token);
+
+        if (confirmationToken == null) {
+            throw new ResourceNotFoundException("Confirmation token doesn't exist.");
+        }
+
+        if (confirmationToken.isUsed()) {
+            throw new BadRequestException("This token has been already used.");
+        }
+
+        User user = confirmationToken.getUser();
+        long timeDifference = timeProvider.timeDifferenceInMinutes(timeProvider.now(), confirmationToken.getDatetimeCreated());
+
+        if (timeDifference < 30) {
+            user.setActivatedAccount(true);
+            userRepository.save(user);
+            confirmationToken.setUsed(true);
+            tokenRepository.save(confirmationToken);
+            return true;
+        } else {
+            tokenRepository.delete(confirmationToken);
+            userRepository.delete(user);
+            throw new BadRequestException("Confirmation token timed out.");
+        }
+
     }
 }

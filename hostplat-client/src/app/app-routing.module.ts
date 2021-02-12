@@ -13,12 +13,14 @@ import { ProjectsListComponent } from './projects/projects-list/projects-list.co
 import { ProjectListItemComponent } from './projects/project-list-item/project-list-item.component';
 import { UpdateProjectComponent } from './projects/update-project/update-project.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
+import { AccountConfirmationComponent } from './authentication/account-confirmation/account-confirmation.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'home', component: HomePageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'verify', component: AccountConfirmationComponent },
   {path: 'forbidden-page', component: ForbiddenPageComponent},
   {path: 'not-found-page', component: NotFoundPageComponent},
   {
