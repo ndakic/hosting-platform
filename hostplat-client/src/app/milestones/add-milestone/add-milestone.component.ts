@@ -1,3 +1,4 @@
+import { ContentObserver } from "@angular/cdk/observers";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { Component, OnInit } from "@angular/core";
 import { MatDatepickerInputEvent } from "@angular/material/datepicker";
@@ -34,6 +35,8 @@ import { MilestoneService } from "../milestone.service";
 
     ngOnInit() {
       this.getAll();
+     
+
     }
 
     getAll(){
@@ -42,6 +45,7 @@ import { MilestoneService } from "../milestone.service";
           this.milestones = data;
         }
       );
+     
 
     }
 
@@ -50,6 +54,7 @@ import { MilestoneService } from "../milestone.service";
     }
     
     addEvent2(type: string, event: MatDatepickerInputEvent<Date>) {
+      
       this.milestone.end_date = event.value;
     }
 
@@ -58,20 +63,17 @@ import { MilestoneService } from "../milestone.service";
       this.milestone.user_id = Number(id);
       this.role = this.authService.getRole();
       const task_id = Number(this.route.snapshot.paramMap.get('id'));
-      const len = this.milestones[this.milestones.length - 1];
-
+      const len = this.milestones.length+1;
 
       this.milestoneService.add(this.milestone).subscribe(
         (data: any) => {
           this.toastr.success('Successful add!');
           this.milestone = data;
-          console.log(data.id);
-          //this.milestoneTask.milestone_id = len.id;
-          //this.milestoneTask.task_id = task_id;
-          //this.milestoneService.addMilestoneToTask(this.milestoneTask).subscribe();
-          this.router.navigate(['/task-details/' + task_id]);
+          //
         }
       );
+
+    
 
 
     }

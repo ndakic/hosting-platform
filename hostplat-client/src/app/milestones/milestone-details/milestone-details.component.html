@@ -1,12 +1,12 @@
 <div class="main" *ngIf="milestone">
     <h1>{{milestone.title}}</h1>
-    <h2>From date:</h2><h3>{{milestone.start_date}}</h3>
-    <h2>To date:</h2><h3>{{milestone.end_date}}</h3>
+    <h2>From date:</h2><h3>{{milestone.start_date | date}}</h3>
+    <h2>To date:</h2><h3>{{milestone.end_date | date}}</h3>
  
     <div>
       <button   mat-raised-button  *ngIf="milestone.close == false" (click)='updateMilestone(milestone.id)' color="accent">Update milestone</button>
       <button   mat-raised-button *ngIf="milestone.close == false " (click)='closeMilestone(milestone.id)' color="accent">Close milestone</button>
       <button   mat-raised-button  (click)='deleteMilestone(milestone.id)' color="accent">Delete milestone</button>
-
     </div>
+    
    </div>

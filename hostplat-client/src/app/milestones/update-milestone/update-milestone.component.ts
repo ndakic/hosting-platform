@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { MatDatepickerInputEvent } from "@angular/material/datepicker";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { AuthenticationService } from "src/app/core/services/authentication.service";
@@ -34,6 +35,13 @@ import { MilestoneService } from "../milestone.service";
       console.log(this.milestone);
     }
 
+    addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+      this.milestone.start_date = event.value;
+    }
+    
+    addEvent2(type: string, event: MatDatepickerInputEvent<Date>) {
+      this.milestone.end_date = event.value;
+    }
 
 
     update() {

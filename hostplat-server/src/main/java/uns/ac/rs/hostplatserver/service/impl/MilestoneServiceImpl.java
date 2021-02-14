@@ -108,8 +108,6 @@ public class MilestoneServiceImpl implements MilestoneService {
 	public Milestone addMilestoneToTask(MilestoneTaskDTO mtDTO) {
 		Task task = taskService.findOne(mtDTO.getTask_id());
 		Milestone milestone = this.findOne(mtDTO.getMilestone_id());
-		System.out.println(task.getTitle());
-		System.out.println(milestone.getTitle());
 
 		task.setMilestone(milestone);
 		taskRepository.save(task);

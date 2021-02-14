@@ -1,6 +1,7 @@
 import { NgIf } from "@angular/common";
 import { identifierModuleUrl } from "@angular/compiler";
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { AuthenticationService } from "src/app/core/services/authentication.service";
@@ -10,6 +11,8 @@ import { Project } from "src/app/models/project.model";
 import { Task } from "src/app/models/task.model";
 import { TaskService } from "src/app/tasks/task.service";
 import { ProjectService } from "../project.service";
+
+
 
 @Component({
     selector: 'app-project-details',
@@ -24,6 +27,7 @@ import { ProjectService } from "../project.service";
     closeTasks: Task[];
     openMilestones: Milestone[];
     closeMilestones: Milestone[];
+ 
 
     constructor(
       private route: ActivatedRoute,
@@ -32,7 +36,8 @@ import { ProjectService } from "../project.service";
       private authService: AuthenticationService,
       private toastr: ToastrService,
       private taskService: TaskService,
-      private milestoneService: MilestoneService
+      private milestoneService: MilestoneService,
+      public dialog: MatDialog
 
     ) { }
 
@@ -60,6 +65,9 @@ import { ProjectService } from "../project.service";
       this.getOpenMilestones()
 
     }
+
+    
+  
 
     updateProject() {
       this.router.navigate(['/update-project/' + this.project.id]);
@@ -129,3 +137,4 @@ import { ProjectService } from "../project.service";
       this.router.navigate(['/add-task/' + this.project.id]);
     }
   } 
+

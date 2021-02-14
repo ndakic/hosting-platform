@@ -11,6 +11,7 @@ import { User } from "src/app/models/user";
 import { ProjectService } from "src/app/projects/project.service";
 import { TaskService } from "../task.service";
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { MatCheckboxChange } from "@angular/material/checkbox";
 
 
 
@@ -27,9 +28,11 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
     milestones: Milestone[];
     milestone: Milestone;
     users: User[];
-
+    selected = 'option2';
     step = 0;
-   
+    selectedFoodstuffs = [];
+  foodstuffs = [];
+  selectFoodstuff = [];
 
   
 
@@ -117,6 +120,16 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
     addMilestone(){
       this.router.navigate(['/add-milestone']);
+    }
+
+    isFoodstuffSelected = (foodstuffID: number) => {
+      return this.selectedFoodstuffs.includes(foodstuffID);
+    }
+  
+    onFoodstuffCheckboxChange(event: MatCheckboxChange, idx: number, foodstuff: Milestone) {
+      if (event.checked) {
+        this.selectFoodstuff.push(foodstuff);
+      }
     }
 
   } 

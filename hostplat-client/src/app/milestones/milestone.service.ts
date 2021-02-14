@@ -41,4 +41,7 @@ import { Milestone } from "../models/milestone.model";
       return this.http.get(environment.apiUrlPrefix +  `/api/milestone/getAll` );
     }
 
+    getOpenTaskForMilestone(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix +  `/api/task/getAllCloseForMilestone/` + id);
+    }
   }

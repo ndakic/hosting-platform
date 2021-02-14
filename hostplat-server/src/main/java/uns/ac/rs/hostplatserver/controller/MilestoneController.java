@@ -52,7 +52,6 @@ public class MilestoneController {
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MilestoneDTO> createMilestone(@RequestBody MilestoneDTO milestoneDTO) throws Exception {
-		System.out.println(milestoneDTO.getUser_id());
 		Milestone savedMilestone = milestoneService.create(MilestoneMapper.toMilestone(milestoneDTO));
 		return new ResponseEntity<>(MilestoneMapper.toDTO(savedMilestone), HttpStatus.CREATED);
 	}
@@ -100,10 +99,12 @@ public class MilestoneController {
 	
 	@PutMapping(value = "/addMilestoneToTask", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity addMilestoneToTask(@PathVariable("id") MilestoneTaskDTO mtDTO) throws ResourceNotFoundException {
-		System.out.println("OVDE SAM");
-		Milestone milestone = milestoneService.addMilestoneToTask(mtDTO);
+		milestoneService.addMilestoneToTask(mtDTO);
 		return ResponseEntity.ok().build();
 	}
+	
+	
+	
 	
 	
 	

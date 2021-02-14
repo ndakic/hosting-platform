@@ -29,19 +29,11 @@
         <button mat-button color="accent" (click)="addMilestone()">Create new milestone</button>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <mat-chip-list
-  class="example-chip"
-  cdkDropList 
-  cdkDropListOrientation="horizontal"
-  (cdkDropListDropped)="drop($event)">
-  <mat-chip
-    class="example-box"
-    cdkDrag
-    *ngFor="let vegetable of milestones">
-    {{vegetable.title}}
-  </mat-chip>
-</mat-chip-list>
-
+    <div *ngFor="let milestone of milestones">
+      <mat-checkbox type="checkbox" value={{milestone.id}} id="milestones{{milestone.id}}" name="milestones{{milestone.id}}" (change)="onFoodstuffCheckboxChange($event, i, milestone)"  [checked]="isFoodstuffSelected(milestone.id)">
+           {{milestone.title}}
+      </mat-checkbox>
+    </div>
   </mat-expansion-panel>
   <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
     <mat-expansion-panel-header>

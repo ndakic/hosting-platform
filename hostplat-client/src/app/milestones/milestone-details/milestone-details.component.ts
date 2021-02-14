@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { AuthenticationService } from "src/app/core/services/authentication.service";
 import { Milestone } from "src/app/models/milestone.model";
+import { Task } from "src/app/models/task.model";
 import { MilestoneService } from "../milestone.service";
 
 @Component({
@@ -14,6 +15,8 @@ import { MilestoneService } from "../milestone.service";
 
     milestone: Milestone;
     role = '';
+    openTasks: Task[];
+    closeTasks: Task[];
    
 
     constructor(
@@ -54,6 +57,8 @@ import { MilestoneService } from "../milestone.service";
       this.router.navigate(['/project-list']);
 
     }
+
+    
 
     
   } 
