@@ -59,8 +59,13 @@ public class TaskController {
 	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TaskDTO> updateTask(@RequestBody TaskDTO taskDTO) throws Exception {
-		Task updatedTask = taskService.update(TaskMapper.toTask(taskDTO));
-		return new ResponseEntity<>(TaskMapper.toDTO(updatedTask), HttpStatus.OK);
+		Task savedTask;
+		if (taskDTO.getMilestone_id()!= null) {
+			savedTask = taskService.update(TaskMapper.toTask(taskDTO));
+		}else {
+			savedTask = taskService.update(TaskMapper.toTask2(taskDTO));
+		}
+		return new ResponseEntity<>(TaskMapper.toDTO(savedTask), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/{id}")
@@ -91,6 +96,28 @@ public class TaskController {
 		List<Task> tasks = taskService.findAllOpenTasks();
 		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
 		for (Task task: tasks) {
+			tasksDTO.add(TaskMapper.toDTO(task));
+		}
+		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getAllOpenById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskDTO>> getOpenTasksByProjectId(@PathVariable("id") Long id) {
+		List<Task> tasks = taskService.findAllOpenTasks();
+		List<Task> tasksByProjectId = taskService.findAllByProjectId(tasks, id);
+		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
+		for (Task task: tasksByProjectId) {
+			tasksDTO.add(TaskMapper.toDTO(task));
+		}
+		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getAllCloseById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskDTO>> getCloseTasksByProjectId(@PathVariable("id") Long id) {
+		List<Task> tasks = taskService.findAllCloseTasks();
+		List<Task> tasksByProjectId = taskService.findAllByProjectId(tasks,id);
+		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
+		for (Task task: tasksByProjectId) {
 			tasksDTO.add(TaskMapper.toDTO(task));
 		}
 		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);

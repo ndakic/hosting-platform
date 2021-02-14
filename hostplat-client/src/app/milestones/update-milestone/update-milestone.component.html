@@ -1,0 +1,13 @@
+<div  *ngIf="milestone">
+    <form #updateMilestone="ngForm" (ngSubmit)="update()" novalidate>
+      <h1>Update milestone:</h1>
+      <div>
+        <mat-form-field>
+          <input matInput type="text" required #name='ngModel'
+          [(ngModel)]="milestone.title" name="title" placeholder="Milestone title">
+        </mat-form-field>
+      </div>
+      
+      <button mat-raised-button color="accent" type="submit" [disabled]="updateMilestone.form.invalid">Update milestone</button>
+    </form>
+  </div> 

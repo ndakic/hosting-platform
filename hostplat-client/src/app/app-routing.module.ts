@@ -14,6 +14,13 @@ import { ProjectListItemComponent } from './projects/project-list-item/project-l
 import { UpdateProjectComponent } from './projects/update-project/update-project.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
 import { AccountConfirmationComponent } from './authentication/account-confirmation/account-confirmation.component';
+import { AddTaskComponent } from './tasks/add-task/add-task.component';
+import { TaskDetailsComponent } from './tasks/task-details/task-details.component';
+import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
+import { UpdateTaskComponent } from './tasks/update-task/update-task.component';
+import { UpdateMilestoneComponent } from './milestones/update-milestone/update-milestone.component';
+import { AddMilestoneComponent } from './milestones/add-milestone/add-milestone.component';
+import { MilestoneDetailsComponent } from './milestones/milestone-details/milestone-details.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -59,6 +66,49 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_USER'}
   },
+  {
+    path: 'add-task/:id',
+    component: AddTaskComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'task-details/:id',
+    component: TaskDetailsComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'task-list',
+    component: TasksListComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'update-task/:id',
+    component: UpdateTaskComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'update-milestone/:id',
+    component: UpdateMilestoneComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'add-milestone',
+    component: AddMilestoneComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'milestone-details/:id',
+    component: MilestoneDetailsComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+ 
 ];
 
 @NgModule({

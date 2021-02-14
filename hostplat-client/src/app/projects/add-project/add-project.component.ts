@@ -7,6 +7,11 @@ import { Project } from "src/app/models/project.model";
 import { User } from "src/app/models/user.model";
 import { ProjectService } from "../project.service";
 import { ProjectsListComponent } from "../projects-list/projects-list.component";
+import { getMultipleValuesInSingleSelectionError } from "@angular/cdk/collections";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MilestoneService } from "src/app/milestones/milestone.service";
+import { Milestone } from "src/app/models/milestone.model";
+import { Task } from "src/app/models/task.model";
 
 @Component({
     selector: 'app-add-project',
@@ -16,12 +21,18 @@ import { ProjectsListComponent } from "../projects-list/projects-list.component"
   export class AddProjectComponent implements OnInit {
     project = new Project(null, '', '', null, [], false);
     user: User;    
+    role = '';
+    milestones: Milestone[];
+
 
 
     constructor(
       private projectService: ProjectService,
       private router: Router,
-      private toastr: ToastrService
+      private toastr: ToastrService,
+      private authService: AuthenticationService,
+      private route: ActivatedRoute,
+
     ) { }
 
     ngOnInit() {
@@ -50,5 +61,7 @@ import { ProjectsListComponent } from "../projects-list/projects-list.component"
         }
       );
     }
+
+    
 
   } 

@@ -7,6 +7,7 @@ import { AddProjectComponent } from './add-project/add-project.component';
 import { ProjectsListComponent } from './projects-list/projects-list.component';
 import { UpdateProjectComponent } from './update-project/update-project.component';
 import { ProjectListItemComponent } from './project-list-item/project-list-item.component';
+import { TasksListComponent } from '../tasks/tasks-list/tasks-list.component';
 
 
 
@@ -17,10 +18,14 @@ import { ProjectListItemComponent } from './project-list-item/project-list-item.
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   exports: [
     ProjectDetailsComponent,
+    AddProjectComponent,
+    ProjectsListComponent,
+    UpdateProjectComponent,
+    ProjectListItemComponent
   ]
 })
 export class ProjectModule { } 

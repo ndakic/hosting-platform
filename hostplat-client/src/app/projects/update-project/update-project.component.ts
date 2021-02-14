@@ -36,8 +36,6 @@ import { ProjectService } from "../project.service";
 
 
     update() {
-      console.log("cao");
-      console.log(this.project.description);
       this.projectService.update(this.project).subscribe(
         (data: any) => {
           this.project = data;

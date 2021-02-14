@@ -161,4 +161,17 @@ public class TaskServiceImpl implements TaskService {
 
 	}
 
+	
+	@Override
+	public List<Task> findAllByProjectId(List<Task> tasks, Long id) {
+		List<Task> returnTask = new ArrayList<>();
+		
+		for (Task task : tasks) {
+			if(task.getProject().getId().equals(id)) {
+				returnTask.add(task);
+			}
+		}
+		return returnTask;
+	}
+
 }

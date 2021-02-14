@@ -21,7 +21,9 @@ public interface TaskService {
 
 	public List<Task> findAllCloseTasks();
 
-	public List<Task> findAllOpenTasks(); 
+	public List<Task> findAllOpenTasks();
+
+	public List<Task> findAllByProjectId(List<Task> tasks, Long id); 
 	
 
 }

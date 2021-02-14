@@ -1,0 +1,19 @@
+<div  *ngIf="task">
+    <form #updateTask="ngForm" (ngSubmit)="update()" novalidate>
+      <h1>Update task:</h1>
+      <div>
+        <mat-form-field>
+          <input matInput type="text" required #name='ngModel'
+          [(ngModel)]="task.title" name="title" placeholder="Task title">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type="text" required #description='ngModel'
+          [(ngModel)]="task.description" name="description" placeholder="Task description">
+        </mat-form-field>
+        <mat-error *ngIf="description.invalid && (description.dirty || description.touched)">Please enter task description</mat-error>
+      </div>
+      <button mat-raised-button color="accent" type="submit" [disabled]="updateTask.form.invalid">Update task</button>
+    </form>
+  </div> 

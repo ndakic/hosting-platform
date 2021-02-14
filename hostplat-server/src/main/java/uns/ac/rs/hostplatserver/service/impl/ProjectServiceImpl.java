@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
+import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Project;
+import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.repository.ProjectRepository;
 import uns.ac.rs.hostplatserver.service.ProjectService;
+import uns.ac.rs.hostplatserver.service.TaskService;
 import uns.ac.rs.hostplatserver.service.UserService;
 import uns.ac.rs.hostplatserver.util.DateUtil;
 
@@ -25,6 +28,9 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
     private UserService userService;
+	
+	@Autowired
+    private TaskService taskService;
 
 	@Override
 	public Project findOne(Long id) throws ResourceNotFoundException {
@@ -106,6 +112,43 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return allPublic;
 
+	}
+
+	@Override
+	public Set<User> findAllUsersForProject(Long id) {
+		Project project = taskService.findOne(id).getProject();
+		return project.getUsers();
+
+	}
+
+	@Override
+	public List<Milestone> findAllMilestonesForProjectWithTask(Long id) {
+		Project project = taskService.findOne(id).getProject();
+		List<Task> allTask = taskService.findAll();
+		List<Task> tasks = taskService.findAllByProjectId(allTask, project.getId());
+		List<Milestone> milestones = new ArrayList<>();
+		for (Task t : tasks) {
+			if (!milestones.contains(t.getMilestone())) {
+				milestones.add(t.getMilestone());
+			}
+		}
+		return milestones;
+		
+	}
+	
+	@Override
+	public List<Milestone> findAllMilestonesForProject(Long id) {
+		Project project = this.findOne(id);
+		List<Task> allTask = taskService.findAll();
+		List<Task> tasks = taskService.findAllByProjectId(allTask, project.getId());
+		List<Milestone> milestones = new ArrayList<>();
+		for (Task t : tasks) {
+			if (!milestones.contains(t.getMilestone())) {
+				milestones.add(t.getMilestone());
+			}
+		}
+		return milestones;
+		
 	}
 
 }
