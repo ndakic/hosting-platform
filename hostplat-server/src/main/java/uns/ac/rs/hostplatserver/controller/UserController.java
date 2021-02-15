@@ -1,5 +1,9 @@
 package uns.ac.rs.hostplatserver.controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +19,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sun.xml.bind.v2.schemagen.xmlschema.List;
+
+import uns.ac.rs.hostplatserver.dto.MilestoneDTO;
 import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.dto.UserEditDTO;
 import uns.ac.rs.hostplatserver.dto.UserRegistrationDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
+import uns.ac.rs.hostplatserver.mapper.MilestoneMapper;
 import uns.ac.rs.hostplatserver.mapper.UserMapper;
+import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.service.UserService;
 
@@ -71,6 +80,17 @@ public class UserController {
   	public ResponseEntity<UserDTO> getProject(@PathVariable("id") Long id) throws ResourceNotFoundException {
       	User user = userService.findOne(id);
   		return new ResponseEntity<>(UserMapper.toDTO(user), HttpStatus.OK);
+  	}
+    
+
+    @GetMapping(value = "/getUserForProject/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  	public ResponseEntity<Set<UserDTO>> getUserForProject(@PathVariable("id") Long id) throws ResourceNotFoundException {
+      	Set<User> users = userService.getUserForProject(id);
+      	Set<UserDTO> usersDTO = new HashSet<UserDTO>();
+		for (User user: users) {
+			usersDTO.add(UserMapper.toDTO(user));
+		}
+  		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
   	}
     
 

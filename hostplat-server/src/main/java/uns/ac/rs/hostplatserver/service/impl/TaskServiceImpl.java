@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import uns.ac.rs.hostplatserver.dto.UserTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.LabelEntity;
 import uns.ac.rs.hostplatserver.model.Task;
@@ -159,6 +160,45 @@ public class TaskServiceImpl implements TaskService {
 		
 		return allClose;
 
+	}
+
+	
+	@Override
+	public List<Task> findAllByProjectId(List<Task> tasks, Long id) {
+		List<Task> returnTask = new ArrayList<>();
+		
+		for (Task task : tasks) {
+			if(task.getProject().getId().equals(id)) {
+				returnTask.add(task);
+			}
+		}
+		return returnTask;
+	}
+
+	@Override
+	public void setUserToTask(UserTaskDTO userTask) {
+		Task task = this.findOne(userTask.getTask_id());
+		Set<User> users = new HashSet<User>();
+		for(Long id : userTask.users_id) {
+			User user = userService.findOne(id);
+			users.add(user);
+		}
+		task.setAssigned_users(users);
+		taskRepository.save(task);
+		
+	}
+
+	@Override
+	public List<Task> findAllForMilestone(List<Task> tasks, Long id) {
+			
+		List<Task> returnTask = new ArrayList<>();
+		
+		for (Task task : tasks) {
+			if(task.getMilestone().getId().equals(id)) {
+				returnTask.add(task);
+			}
+		}
+		return returnTask;
 	}
 
 }

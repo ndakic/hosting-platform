@@ -11,7 +11,8 @@ public class MilestoneMapper {
         		milestone.getTitle(),
         		milestone.getStart_date(),
         		milestone.getEnd_date(),
-                milestone.getUser() == null ? null: milestone.getUser().getId());
+                milestone.getUser() == null ? null: milestone.getUser().getId(),
+                milestone.isClose());
 	}
     
     public static Milestone toMilestone(MilestoneDTO milestoneDTO) {
@@ -19,7 +20,8 @@ public class MilestoneMapper {
                 milestoneDTO.getTitle(), 
                 milestoneDTO.getStart_date(),
                 milestoneDTO.getEnd_date(),
-                new User(milestoneDTO.getUser_id())
+                new User(milestoneDTO.getUser_id()),
+                milestoneDTO.isClose()
             );    
     }
 

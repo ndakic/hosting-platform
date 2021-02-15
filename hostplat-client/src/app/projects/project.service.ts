@@ -36,4 +36,26 @@ import { Project } from "../models/project.model";
       return this.http.delete(environment.apiUrlPrefix +  `/api/project/` + id);
     }
 
+    getMilestoneForProject(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/project/allMilestoneForProject/` + id);
+    }
+
+    getUsersForProject(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/project/allUserForProject/` + id);
+    }
+   
+    updatePrivateProject(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/project/updatePrivateProject/` + id);
+    }
+
+    getOpenMilestone(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/milestone/getAllOpenForProject/` + id);
+    }
+
+    getCloseMilestone(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/milestone/getAllCloseForProject/` + id);
+    }
+
+    
+
   }

@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import uns.ac.rs.hostplatserver.dto.TaskDTO;
+import uns.ac.rs.hostplatserver.dto.UserTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.mapper.TaskMapper;
+import uns.ac.rs.hostplatserver.mapper.UserMapper;
 import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.service.TaskService;
 
@@ -59,8 +61,13 @@ public class TaskController {
 	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TaskDTO> updateTask(@RequestBody TaskDTO taskDTO) throws Exception {
-		Task updatedTask = taskService.update(TaskMapper.toTask(taskDTO));
-		return new ResponseEntity<>(TaskMapper.toDTO(updatedTask), HttpStatus.OK);
+		Task savedTask;
+		if (taskDTO.getMilestone_id()!= null) {
+			savedTask = taskService.update(TaskMapper.toTask(taskDTO));
+		}else {
+			savedTask = taskService.update(TaskMapper.toTask2(taskDTO));
+		}
+		return new ResponseEntity<>(TaskMapper.toDTO(savedTask), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/{id}")
@@ -91,6 +98,58 @@ public class TaskController {
 		List<Task> tasks = taskService.findAllOpenTasks();
 		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
 		for (Task task: tasks) {
+			tasksDTO.add(TaskMapper.toDTO(task));
+		}
+		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getAllOpenById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskDTO>> getOpenTasksByProjectId(@PathVariable("id") Long id) {
+		List<Task> tasks = taskService.findAllOpenTasks();
+		List<Task> tasksByProjectId = taskService.findAllByProjectId(tasks, id);
+		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
+		for (Task task: tasksByProjectId) {
+			tasksDTO.add(TaskMapper.toDTO(task));
+		}
+		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getAllCloseById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskDTO>> getCloseTasksByProjectId(@PathVariable("id") Long id) {
+		List<Task> tasks = taskService.findAllCloseTasks();
+		List<Task> tasksByProjectId = taskService.findAllByProjectId(tasks,id);
+		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
+		for (Task task: tasksByProjectId) {
+			tasksDTO.add(TaskMapper.toDTO(task));
+		}
+		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/setUsersToTask", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity setUsersToTask(@PathVariable("id") UserTaskDTO userTask) {
+		taskService.setUserToTask(userTask);
+
+		return ResponseEntity.ok().build();
+	}
+	
+
+	@GetMapping(value = "/getAllCloseForMilestone/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskDTO>> getCloseTasksForMilestone(@PathVariable("id") Long id) {
+		List<Task> tasks = taskService.findAllCloseTasks();
+		List<Task> tasksByProjectId = taskService.findAllForMilestone(tasks,id);
+		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
+		for (Task task: tasksByProjectId) {
+			tasksDTO.add(TaskMapper.toDTO(task));
+		}
+		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getAllOpenForMilestone/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskDTO>> getOpenTasksForMilestone(@PathVariable("id") Long id) {
+		List<Task> tasks = taskService.findAllOpenTasks();
+		List<Task> tasksByProjectId = taskService.findAllForMilestone(tasks,id);
+		List<TaskDTO> tasksDTO = new ArrayList<TaskDTO>();
+		for (Task task: tasksByProjectId) {
 			tasksDTO.add(TaskMapper.toDTO(task));
 		}
 		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);

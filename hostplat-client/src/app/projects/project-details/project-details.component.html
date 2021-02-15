@@ -1,9 +1,91 @@
-<div class="main" *ngIf="project">
-    <h1>{{project.name}}</h1>
-    <h3>Description:</h3>
-    <p>{{project.description}}</p>
-    <div>
-      <button   mat-raised-button   (click)='updateProject()' color="accent">Update project</button>
-      <button   mat-raised-button  (click)='delete()' color="accent">Delete</button>
-    </div>
-</div>  
+<mat-tab-group>
+  <mat-tab label="Code">
+    <div class="main" *ngIf="project">
+      <h1>{{project.name}}</h1>
+      <h2>Description:</h2>
+      <h3>{{project.description}}</h3>
+      <div *ngIf="project.private_project == true">
+        <h3>Private project:<mat-icon class="example-icon" aria-hidden="false" >done</mat-icon></h3>
+        
+
+      </div>
+      <div *ngIf="project.private_project == false">
+        <h3>Public project:<mat-icon class="example-icon" aria-hidden="false">done</mat-icon></h3>
+        
+
+      </div>
+      <div>
+        <button   mat-raised-button   (click)='updateProject()' color="accent">Update project</button>
+        <button   mat-raised-button   *ngIf="project.private_project == false" (click)='updatePrivateProject()' color="accent">Set project to private</button>
+        <button   mat-raised-button   *ngIf="project.private_project == true" (click)='updatePrivateProject()' color="accent">Set project to public</button>
+        <button   mat-raised-button  (click)='delete()' color="accent">Delete</button>
+
+      </div>
+    </div>  
+  </mat-tab>
+  <mat-tab label="Tasks">
+    <button   mat-raised-button  (click)='addTask()' color="accent">Create task</button>
+    <mat-tab-group>
+      <mat-tab label="Open">
+        <mat-grid-list  cols="1" rowHeight="160px">
+          <mat-grid-tile *ngFor="let open of openTasks" >
+            <mat-card class="card">
+              <mat-card-header>
+                <mat-card-title>{{open.title}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-actions>
+                <button mat-raised-button (click)="showDetails(open.id)" color="accent">Details</button>
+              </mat-card-actions>
+            </mat-card>  
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-tab>
+      <mat-tab label="Close">
+        <mat-grid-list  cols="1" rowHeight="160px">
+          <mat-grid-tile *ngFor="let close of closeTasks" >
+            <mat-card class="card">
+              <mat-card-header>
+                <mat-card-title>{{close.title}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-actions>
+                <button mat-raised-button (click)="showDetails(close.id)" color="accent">Details</button>
+              </mat-card-actions>
+            </mat-card>  
+          </mat-grid-tile>
+        </mat-grid-list>
+        
+      </mat-tab>
+    </mat-tab-group>
+    
+  </mat-tab>
+  <mat-tab label="Milestones">
+    <mat-tab-group>
+      <mat-tab label="Open">
+        <mat-grid-list  cols="1" rowHeight="160px">
+          <mat-grid-tile *ngFor="let open of openMilestones" >
+            <mat-card class="card">
+              <mat-card-header>
+                <mat-card-title>{{open.title}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-actions>
+                <button mat-raised-button (click)="showDetailsMilestone(open.id)" color="accent">Details</button>
+              </mat-card-actions>
+            </mat-card>  
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-tab>
+      <mat-tab label="Close">
+        <mat-grid-list  cols="1" rowHeight="160px">
+          <mat-grid-tile *ngFor="let open of closeMilestones" >
+            <mat-card class="card">
+              <mat-card-header>
+                <mat-card-title>{{open.title}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-actions>
+                <button mat-raised-button (click)="showDetailsMilestone(open.id)" color="accent">Details</button>
+              </mat-card-actions>
+            </mat-card>  
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-tab>
+</mat-tab-group>

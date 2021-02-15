@@ -1,6 +1,7 @@
 package uns.ac.rs.hostplatserver.service;
 
 import java.util.List;
+import java.util.Set;
 
 import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.dto.UserEditDTO;
@@ -18,4 +19,5 @@ public interface UserService {
 	User editUser(UserEditDTO userInfo);
 	User addUser(UserRegistrationDTO userInfo);
 	boolean activateAccount(String token);
+	Set<User> getUserForProject(Long id);
 }

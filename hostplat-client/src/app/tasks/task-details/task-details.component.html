@@ -1,0 +1,47 @@
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h1>{{task.title}}</h1>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <h2>Description:</h2><h3>{{task.description}}</h3>
+    <mat-action-row>
+      <button mat-button color="accent" *ngIf="task.end_date == null " (click)="updateTask()">Update task</button>
+      <button mat-button color="accent" *ngIf="task.end_date == null " (click)="closeTask()">Close task</button>
+
+    </mat-action-row>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>Assignes user:</h2>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>Milestone:</h2> 
+      </mat-panel-title>
+      <mat-panel-description>
+        <button mat-button color="accent" (click)="addMilestone()">Create new milestone</button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div *ngFor="let milestone of milestones">
+      <mat-checkbox type="checkbox" value={{milestone.id}} id="milestones{{milestone.id}}" name="milestones{{milestone.id}}" (change)="onFoodstuffCheckboxChange($event, i, milestone)"  [checked]="isFoodstuffSelected(milestone.id)">
+           {{milestone.title}}
+      </mat-checkbox>
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>Labels:</h2>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  
+
+</mat-accordion>

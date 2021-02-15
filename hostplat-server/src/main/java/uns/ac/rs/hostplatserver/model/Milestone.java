@@ -33,10 +33,8 @@ public class Milestone {
 	@NotBlank(message = "Title can not be empty string")
 	private String title;
 	
-	@Future(message="Start date must be in future")
 	private Date start_date;
 
-	@Future(message="End date must be in future")
 	private Date end_date;
 	
 	@ManyToOne
@@ -45,12 +43,15 @@ public class Milestone {
 	
     private StatusEntity status;
     
-    public Milestone(Long id, String title, Date start_date, Date end_date, User user) {
+    private boolean close;
+    
+    public Milestone(Long id, String title, Date start_date, Date end_date, User user, boolean close) {
 		this.id = id;
 		this.title = title;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.user = user;
+		this.close = close;
 	}
 
 	public Milestone(Long milestone_id) {
