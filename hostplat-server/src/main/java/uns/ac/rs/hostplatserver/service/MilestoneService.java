@@ -2,6 +2,7 @@ package uns.ac.rs.hostplatserver.service;
 
 import java.util.List;
 
+import uns.ac.rs.hostplatserver.dto.MilestoneTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.Milestone;
 
@@ -15,7 +16,15 @@ public interface MilestoneService {
 
 	public Milestone update(Milestone milestone) throws Exception;
 
-	public void delete(Long id); 
+	public void delete(Long id);
+
+	public List<Milestone> findAllClose(List<Milestone> milestones); 
 	
+	public List<Milestone> findAllOpen(List<Milestone> milestones);
+
+	public Milestone closeMilestone(Long id);
+
+	public Milestone addMilestoneToTask(MilestoneTaskDTO mtDTO); 
+
 
 }

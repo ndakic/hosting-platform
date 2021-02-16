@@ -61,39 +61,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        //config.addAllowedOrigin("*");
-        /*
-         *  You'll then need to switch to allowedOriginPatterns instead of allowedOrigins 
-         *  but that gives you an option to define more precisely the allowed domain patterns. 
-         *  In the mean time, you might be able to work around by listing specific domains 
-         *  if that's feasible.
-         */
-        config.addAllowedOriginPattern("*");
+        config.setAllowCredentials(false);
+        config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Location", "X-Requested-With", "Authorization", "Cache-Control", "Content-Type", "X-Total-Count", "allowedOriginPatterns"));
-   	    config.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(), HttpMethod.OPTIONS.name(), HttpMethod.DELETE.name(), HttpMethod.PATCH.name()));
+        config.addAllowedMethod(HttpMethod.OPTIONS.name());
+        config.addAllowedMethod(HttpMethod.GET.name());
+        config.addAllowedMethod(HttpMethod.PUT.name());
+        config.addAllowedMethod(HttpMethod.POST.name());
+        config.addAllowedMethod(HttpMethod.DELETE.name());
         source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+        return new org.springframework.web.filter.CorsFilter(source);
     }
 
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/task/**").permitAll()
-            .antMatchers(HttpMethod.POST, "/task/**").permitAll()
-            .antMatchers(HttpMethod.PUT, "/task/**").permitAll()
-            .antMatchers(HttpMethod.DELETE, "/task/**").permitAll()
-            .antMatchers("/api/auth/**").permitAll()
-            .anyRequest().authenticated().and()
-            .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService), BasicAuthenticationFilter.class);
-
-        http.csrf().disable();
+        http.cors().and().csrf().disable().authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/task/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/task/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/task/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/task/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/label/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/label/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/label/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/label/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
+                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService), BasicAuthenticationFilter.class);
     }
 
     @Override
@@ -101,6 +99,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js");
         web.ignoring().antMatchers("/static/**");
         web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/login");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/users/public/add-user");
+        web.ignoring().antMatchers(HttpMethod.GET, "/api/users/public/verify-account/{token}");
+
 
 
     }

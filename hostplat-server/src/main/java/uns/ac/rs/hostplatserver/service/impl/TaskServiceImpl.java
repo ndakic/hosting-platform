@@ -1,5 +1,6 @@
 package uns.ac.rs.hostplatserver.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import uns.ac.rs.hostplatserver.dto.UserTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.LabelEntity;
 import uns.ac.rs.hostplatserver.model.Task;
@@ -76,13 +78,17 @@ public class TaskServiceImpl implements TaskService {
 		Task taskToUpdate = this.findOne(task.getId());
 		if(task.getTitle()!=null) {
 			taskToUpdate.setTitle(task.getTitle());
-		}else if(task.getDescription()!= null) {
+		}
+		if(task.getDescription()!= null) {
 			taskToUpdate.setDescription(task.getDescription());
-		}else if(task.getEnd_date()!=null) {
+		}
+		if(task.getEnd_date()!=null) {
 			taskToUpdate.setEnd_date(task.getEnd_date());
-		}else if(task.getProject()!= null) {
+		}
+		if(task.getProject()!= null) {
 			taskToUpdate.setProject(task.getProject());
-		}else if(task.getMilestone()!= null) {
+		}
+		if(task.getMilestone()!= null) {
 			taskToUpdate.setMilestone(task.getMilestone());
 		}
 		Set<User> users = new HashSet<>();
@@ -115,6 +121,84 @@ public class TaskServiceImpl implements TaskService {
 		taskRepository.save(task);
 		this.taskRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public Task closeTask(Long id) {
+		Task task = findOne(id);
+		task.setEnd_date(DateUtil.nowSystemTime());
+		taskRepository.save(task);
+		return task;
+		
+	}
+
+	@Override
+	public List<Task> findAllCloseTasks() {
+		List<Task> allClose = new ArrayList<>();
+		
+		for (Task task : taskRepository.findAll()) {
+			if(task.getEnd_date()!=null) {
+				allClose.add(task);
+			}
+		}
+		
+		
+		return allClose;
+
+	}
+	
+	@Override
+	public List<Task> findAllOpenTasks() {
+		List<Task> allClose = new ArrayList<>();
+		
+		for (Task task : taskRepository.findAll()) {
+			if(task.getEnd_date()==null) {
+				allClose.add(task);
+			}
+		}
+		
+		
+		return allClose;
+
+	}
+
+	
+	@Override
+	public List<Task> findAllByProjectId(List<Task> tasks, Long id) {
+		List<Task> returnTask = new ArrayList<>();
+		
+		for (Task task : tasks) {
+			if(task.getProject().getId().equals(id)) {
+				returnTask.add(task);
+			}
+		}
+		return returnTask;
+	}
+
+	@Override
+	public void setUserToTask(UserTaskDTO userTask) {
+		Task task = this.findOne(userTask.getTask_id());
+		Set<User> users = new HashSet<User>();
+		for(Long id : userTask.users_id) {
+			User user = userService.findOne(id);
+			users.add(user);
+		}
+		task.setAssigned_users(users);
+		taskRepository.save(task);
+		
+	}
+
+	@Override
+	public List<Task> findAllForMilestone(List<Task> tasks, Long id) {
+			
+		List<Task> returnTask = new ArrayList<>();
+		
+		for (Task task : tasks) {
+			if(task.getMilestone().getId().equals(id)) {
+				returnTask.add(task);
+			}
+		}
+		return returnTask;
 	}
 
 }
