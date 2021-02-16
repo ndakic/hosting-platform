@@ -1,0 +1,146 @@
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h1>{{task.title}}</h1>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <h2>Description:</h2><h3>{{task.description}}</h3>
+    <mat-action-row>
+      <button mat-button color="accent" *ngIf="task.end_date == null " (click)="updateTask()">Update task</button>
+      <button mat-button color="accent" *ngIf="task.end_date == null " (click)="closeTask()">Close task</button>
+
+    </mat-action-row>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>Assignes user:</h2>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-action-row>
+      <table mat-table [dataSource]="usersForTask" class="mat-elevation-z8" >
+        
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef> First name </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef> Last name </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef> Username </th>
+          <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns3" ></tr>
+        <tr mat-row  *matRowDef="let row; columns: displayedColumns3  let idx=index; let even=even;" [style.background-color]="rowClicked == idx ? 'pink' : (even ? 'white' : 'white')"
+        (click)="changeTableRowColor(idx)" [ngClass]="{selected: row.isSelected}" (click)="selection.toggle(row)"></tr>
+  </table>
+  
+</mat-action-row>
+<mat-action-row>
+
+
+
+
+      <table mat-table [dataSource]="users" class="mat-elevation-z8" >
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection2.hasValue() && isAllSelected()"
+                          [indeterminate]="selection2.hasValue() && !isAllSelected()"
+                          [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection2.toggle(row) : null"
+                          [checked]="selection2.isSelected(row)"
+                          [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef> First name </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef> Last name </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef> Username </th>
+          <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2" ></tr>
+        <tr mat-row  *matRowDef="let row; columns: displayedColumns2  let idx=index; let even=even;" [style.background-color]="rowClicked == idx ? 'pink' : (even ? 'white' : 'white')"
+        (click)="changeTableRowColor(idx)" [ngClass]="{selected: row.isSelected}" (click)="selection.toggle(row)"></tr>
+
+  </table>
+  <button mat-button color="accent" (click)="addUser(task.id)">Save</button>
+
+    </mat-action-row>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>Milestone:</h2> 
+      </mat-panel-title>
+      <mat-panel-description>
+        <button mat-button color="accent" (click)="addMilestone()">Create new milestone</button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-action-row>
+      <table mat-table [dataSource]="milestones" class="mat-elevation-z8" >
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef> Title </th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="start_date">
+          <th mat-header-cell *matHeaderCellDef> Start date </th>
+          <td mat-cell *matCellDef="let element"> {{element.start_date | date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="end_date">
+          <th mat-header-cell *matHeaderCellDef> End date </th>
+          <td mat-cell *matCellDef="let element"> {{element.end_date | date}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+        <tr mat-row  *matRowDef="let row; columns: displayedColumns  let idx=index; let even=even;" [style.background-color]="rowClicked == idx ? 'pink' : (even ? 'white' : 'white')"
+        (click)="changeTableRowColor(idx)" (click)="onRowClicked(row)" [ngClass]="{selected: row.isSelected}" [ngClass]="{'color': (row.id == milestone.id)}"></tr>
+
+  </table>
+    </mat-action-row>
+
+
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>Labels:</h2>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  
+
+</mat-accordion>

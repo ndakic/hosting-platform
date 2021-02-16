@@ -12,5 +12,25 @@ public class UserMapper {
 	public static User toUser(UserDTO userDto) {
 		return new User(userDto.getId(), userDto.getUsername(), userDto.getFirstName(), userDto.getLastName(), userDto.getEmail());
 	}
+<<<<<<< Updated upstream
+=======
+	
+    public static User toEntity(UserRegistrationDTO userInfo) {
+        User user = new User();
+        user.setUsername(userInfo.getUsername());
+        user.setActivatedAccount(false);
+        user.setEmail(userInfo.getEmail());
+        user.setFirstName(userInfo.getFirstName());
+        user.setLastName(userInfo.getLastName());
+        user.setPassword("");
+        user.setImagePath("");
+
+        return user;
+    }
+    
+    public static User toUser2(UserDTO userDto) {
+		return new User(userDto.getId(), userDto.getUsername(), userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(), "https://res.cloudinary.com/djxkexzcr/image/upload/v1574108111/zbvvptxlxzzhzomjvp2s.jpg");
+	}
+>>>>>>> Stashed changes
 
 }

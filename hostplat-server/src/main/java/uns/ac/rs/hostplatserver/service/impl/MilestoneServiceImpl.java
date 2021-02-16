@@ -31,9 +31,12 @@ public class MilestoneServiceImpl implements MilestoneService {
 
 	
 	@Override
-	public Milestone create(Milestone milestone) throws Exception {
-        return this.milestoneRepository.save(milestone);
-
+	public Milestone create(Milestone milestone, Long task_id) throws Exception {
+		Task task = taskService.findOne(task_id);
+		Milestone milestoneSaved = this.milestoneRepository.save(milestone);
+		task.setMilestone(milestoneSaved);
+		taskRepository.save(task);
+		return milestoneSaved;
 	}
 
 	
@@ -55,5 +58,44 @@ public class MilestoneServiceImpl implements MilestoneService {
         this.milestoneRepository.deleteById(id);
 		
 	}
+<<<<<<< Updated upstream
+=======
+
+	@Override
+	public List<Milestone> findAllClose(List<Milestone> milestones) {
+		List<Milestone> m = new ArrayList<>();
+		for (Milestone mi : milestones) {
+			if(mi!=null) {
+				if(mi.isClose()) {
+					m.add(mi);
+				}
+			}
+		}
+		return m;
+	}
+	
+	@Override
+	public List<Milestone> findAllOpen(List<Milestone> milestones) {
+		List<Milestone> m = new ArrayList<>();
+		for (Milestone mi : milestones) {
+			if(mi!=null) {
+				System.out.println(mi.getTitle());
+				if(!mi.isClose()) {
+					m.add(mi);
+				}
+			}
+		}
+		return m;
+	}
+
+	@Override
+	public Milestone closeMilestone(Long id) {
+		Milestone milestone = this.findOne(id);
+		milestone.setClose(true);
+		return milestoneRepository.save(milestone);
+	}
+
+	
+>>>>>>> Stashed changes
 	
 }

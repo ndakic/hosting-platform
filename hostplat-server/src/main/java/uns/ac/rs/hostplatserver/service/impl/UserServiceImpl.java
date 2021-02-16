@@ -11,6 +11,14 @@ import org.springframework.stereotype.Service;
 import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.exception.BadRequestException;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
+<<<<<<< Updated upstream
+=======
+import uns.ac.rs.hostplatserver.mapper.UserMapper;
+import uns.ac.rs.hostplatserver.model.ConfirmationToken;
+import uns.ac.rs.hostplatserver.model.Milestone;
+import uns.ac.rs.hostplatserver.model.Project;
+import uns.ac.rs.hostplatserver.model.Task;
+>>>>>>> Stashed changes
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.repository.UserRepository;
 import uns.ac.rs.hostplatserver.service.UserService;
@@ -54,4 +62,107 @@ public class UserServiceImpl implements UserService {
                 ()-> new ResourceNotFoundException(String.format("User with id %s not found!", id))
        );
     }
+<<<<<<< Updated upstream
+=======
+    
+    @Override
+    public User getMyProfileData() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+    
+    @Override
+    public User editUser(UserEditDTO userInfo) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setFirstName(userInfo.getFirstName());
+        user.setLastName(userInfo.getLastName());
+        User dbUser = userRepository.findByEmail(userInfo.getEmail());
+
+        if(dbUser != null) {
+            if (dbUser.getId() != user.getId()) {
+                throw new BadRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+            }
+        }
+
+        user.setEmail(userInfo.getEmail());
+
+        userRepository.save(user);
+
+        return user;
+    }
+    
+    @Override
+    public User addUser(UserRegistrationDTO userInfo) {
+        if (userRepository.findByUsername(userInfo.getUsername()) != null) {
+            throw new BadRequestException("Username '" + userInfo.getUsername() + "' already exists.");
+        }
+
+        if (!userInfo.getPassword().equals(userInfo.getRepeatPassword())) {
+            throw new BadRequestException("Provided passwords must be the same.");
+        }
+
+        if (userRepository.findByEmail(userInfo.getEmail()) != null) {
+            throw new BadRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+        }
+
+        User user = createNewUserObject(userInfo);
+        userRepository.save(user);
+
+        ConfirmationToken token = new ConfirmationToken(user);
+        tokenRepository.save(token);
+
+        mailSenderService.sendRegistrationMail(token);
+
+        return user;
+    }
+
+    private User createNewUserObject(UserRegistrationDTO userInfo) {
+        User user = UserMapper.toEntity(userInfo);
+        user.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+        user.setImagePath("putanje do slike sa cloudinary servisa");
+        user.setLastPasswordResetDate(timeProvider.nowTimestamp());
+        user.getUserAuthorities().add(authorityRepository.findByName(UserRoles.ROLE_USER));
+
+        return user;
+    }
+    
+    @Override
+    public boolean activateAccount(String token) {
+        ConfirmationToken confirmationToken = tokenRepository.findByToken(token);
+
+        if (confirmationToken == null) {
+            throw new ResourceNotFoundException("Confirmation token doesn't exist.");
+        }
+
+        if (confirmationToken.isUsed()) {
+            throw new BadRequestException("This token has been already used.");
+        }
+
+        User user = confirmationToken.getUser();
+        long timeDifference = timeProvider.timeDifferenceInMinutes(timeProvider.now(), confirmationToken.getDatetimeCreated());
+
+        if (timeDifference < 30) {
+            user.setActivatedAccount(true);
+            userRepository.save(user);
+            confirmationToken.setUsed(true);
+            tokenRepository.save(confirmationToken);
+            return true;
+        } else {
+            tokenRepository.delete(confirmationToken);
+            userRepository.delete(user);
+            throw new BadRequestException("Confirmation token timed out.");
+        }
+
+    }
+
+	@Override
+	public Set<User> getUserForProject(Long id) {
+		Project project = projectService.findOne(id);
+		return project.getUsers();
+	}
+	
+	@Override
+	public List<User> getAll() {
+		return this.userRepository.findAll();
+	}
+>>>>>>> Stashed changes
 }
