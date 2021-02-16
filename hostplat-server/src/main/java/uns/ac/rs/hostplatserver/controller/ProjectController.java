@@ -55,6 +55,7 @@ public class ProjectController {
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectDTO projectDTO) throws Exception {
+		System.out.println(projectDTO.getUsers().toString());
 		Project savedProject = projectService.create(ProjectMapper.toProject(projectDTO));
 		return new ResponseEntity<>(ProjectMapper.toDTO(savedProject), HttpStatus.CREATED);
 	}

@@ -12,7 +12,7 @@ public interface MilestoneService {
 	
 	public List<Milestone> findAll();
 
-	public Milestone create(Milestone milestone) throws Exception;
+	public Milestone create(Milestone milestone, Long taskID) throws Exception;
 
 	public Milestone update(Milestone milestone) throws Exception;
 
@@ -23,8 +23,6 @@ public interface MilestoneService {
 	public List<Milestone> findAllOpen(List<Milestone> milestones);
 
 	public Milestone closeMilestone(Long id);
-
-	public Milestone addMilestoneToTask(MilestoneTaskDTO mtDTO); 
 
 
 }

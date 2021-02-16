@@ -78,12 +78,7 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_USER'}
   },
-  {
-    path: 'task-list',
-    component: TasksListComponent,
-    canActivate: [RoleGuard],
-    data: {expectedRoles: 'ROLE_USER'}
-  },
+
   {
     path: 'update-task/:id',
     component: UpdateTaskComponent,
@@ -97,7 +92,7 @@ const routes: Routes = [
     data: {expectedRoles: 'ROLE_USER'}
   },
   {
-    path: 'add-milestone',
+    path: 'add-milestone/:id',
     component: AddMilestoneComponent,
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_USER'}
@@ -108,6 +103,7 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_USER'}
   },
+
  
 ];
 

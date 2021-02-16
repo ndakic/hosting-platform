@@ -20,4 +20,5 @@ public interface UserService {
 	User addUser(UserRegistrationDTO userInfo);
 	boolean activateAccount(String token);
 	Set<User> getUserForProject(Long id);
+	List<User> getAll();
 }

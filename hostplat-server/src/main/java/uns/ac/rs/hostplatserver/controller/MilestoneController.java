@@ -51,8 +51,8 @@ public class MilestoneController {
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MilestoneDTO> createMilestone(@RequestBody MilestoneDTO milestoneDTO) throws Exception {
-		Milestone savedMilestone = milestoneService.create(MilestoneMapper.toMilestone(milestoneDTO));
+	public ResponseEntity<MilestoneDTO> createMilestone(@RequestBody MilestoneTaskDTO milestoneTaskDTO) throws Exception {
+		Milestone savedMilestone = milestoneService.create(MilestoneMapper.toMilestone(milestoneTaskDTO.getMilestone()), milestoneTaskDTO.getTask_id());
 		return new ResponseEntity<>(MilestoneMapper.toDTO(savedMilestone), HttpStatus.CREATED);
 	}
 	
@@ -96,16 +96,6 @@ public class MilestoneController {
 		Milestone milestone = milestoneService.closeMilestone(id);
 		return new ResponseEntity<>(MilestoneMapper.toDTO(milestone), HttpStatus.OK);
 	}
-	
-	@PutMapping(value = "/addMilestoneToTask", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity addMilestoneToTask(@PathVariable("id") MilestoneTaskDTO mtDTO) throws ResourceNotFoundException {
-		milestoneService.addMilestoneToTask(mtDTO);
-		return ResponseEntity.ok().build();
-	}
-	
-	
-	
-	
-	
+		
 	
 }

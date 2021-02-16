@@ -1,7 +1,9 @@
 package uns.ac.rs.hostplatserver.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import uns.ac.rs.hostplatserver.dto.MilestoneDTO;
+import uns.ac.rs.hostplatserver.dto.MilestoneTaskDTO;
 import uns.ac.rs.hostplatserver.dto.TaskDTO;
+import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.dto.UserTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
+import uns.ac.rs.hostplatserver.mapper.MilestoneMapper;
 import uns.ac.rs.hostplatserver.mapper.TaskMapper;
 import uns.ac.rs.hostplatserver.mapper.UserMapper;
+import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Task;
+import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.service.TaskService;
 
 @RestController
@@ -50,12 +58,8 @@ public class TaskController {
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) throws Exception {
-		Task savedTask;
-		if (taskDTO.getLabels()!= null) {
-			savedTask = taskService.create(TaskMapper.toTask(taskDTO));
-		}else {
-			savedTask = taskService.create(TaskMapper.toTask2(taskDTO));
-		}
+		Task savedTask = taskService.create(TaskMapper.toTask2(taskDTO));
+
 		return new ResponseEntity<>(TaskMapper.toDTO(savedTask), HttpStatus.CREATED);
 	}
 	
@@ -125,12 +129,6 @@ public class TaskController {
 		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/setUsersToTask", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity setUsersToTask(@PathVariable("id") UserTaskDTO userTask) {
-		taskService.setUserToTask(userTask);
-
-		return ResponseEntity.ok().build();
-	}
 	
 
 	@GetMapping(value = "/getAllCloseForMilestone/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -143,7 +141,7 @@ public class TaskController {
 		}
 		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/getAllOpenForMilestone/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TaskDTO>> getOpenTasksForMilestone(@PathVariable("id") Long id) {
 		List<Task> tasks = taskService.findAllOpenTasks();
@@ -153,6 +151,47 @@ public class TaskController {
 			tasksDTO.add(TaskMapper.toDTO(task));
 		}
 		return new ResponseEntity<>(tasksDTO, HttpStatus.OK);
+	}
+
+
+
+	@GetMapping(value = "/getMilestoneForTask/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MilestoneDTO> getMilestoneForTask(@PathVariable("id") Long id) {
+		Task task = taskService.findOne(id);		
+		return new ResponseEntity<>(MilestoneMapper.toDTO(task.getMilestone()), HttpStatus.OK);
+	}
+
+
+	@PostMapping(value = "/setMilestoneToTask", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MilestoneDTO> setMilestoneToTask(@RequestBody MilestoneTaskDTO dto) {
+		Milestone milestone = taskService.setMilestoneToTask(dto.getTask_id(),MilestoneMapper.toMilestone(dto.getMilestone()));		
+		return new ResponseEntity<>(MilestoneMapper.toDTO(milestone), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/getUsersForTask/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Set<UserDTO>> getUsersForTask(@PathVariable("id") Long id) {
+		Task task = taskService.findOne(id);		
+		Set<User> users = task.getAssigned_users();
+		Set<UserDTO> usersDTO = new HashSet<UserDTO>();
+		for (User user: users) {
+			usersDTO.add(UserMapper.toDTO(user));
+		}
+		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/setUsersToTask", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Set<UserDTO>> setUsersToTask(@RequestBody UserTaskDTO dto) {
+		Set<User> users = new HashSet<>();
+		for (UserDTO user : dto.getUsers()) {
+			users.add(UserMapper.toUser(user));
+		}
+		Set<User> returnUser = taskService.setUsersToTask(dto.getTask_id(),users);	
+		Set<UserDTO> returnDTO = new HashSet<>();
+		for (User user : returnUser) {
+			returnDTO.add(UserMapper.toDTO(user));
+		}
+
+		return new ResponseEntity<>(returnDTO, HttpStatus.OK);
 	}
 	
 

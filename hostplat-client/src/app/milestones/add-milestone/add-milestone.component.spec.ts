@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { MilestoneDetailsComponent } from "./milestone-details.component";
+import { AddMilestoneComponent } from "./add-milestone.component";
 
-describe('MilestoneDetailsComponent', () => {
-    let component: MilestoneDetailsComponent;
-    let fixture: ComponentFixture<MilestoneDetailsComponent>;
+describe('AddMilestoneComponent', () => {
+    let component: AddMilestoneComponent;
+    let fixture: ComponentFixture<AddMilestoneComponent>;
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [ MilestoneDetailsComponent ]
+        declarations: [ AddMilestoneComponent ]
       })
       .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(MilestoneDetailsComponent);
+      fixture = TestBed.createComponent(AddMilestoneComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });

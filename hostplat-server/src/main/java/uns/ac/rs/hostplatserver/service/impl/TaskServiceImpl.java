@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import uns.ac.rs.hostplatserver.dto.UserTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.LabelEntity;
+import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.repository.TaskRepository;
@@ -49,27 +50,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public Task create(Task task) throws Exception {
 		task.setCreate_date(DateUtil.nowSystemTime());
-		Set<User> users = new HashSet<>();
-
-		for (User user : task.getAssigned_users()) {
-			User u = userService.findOne(user.getId());
-			users.add(u);
-		}
-		
-		task.setAssigned_users(users);
-		
-		Set<LabelEntity> labels = new HashSet<>();
-
-		for (LabelEntity label : task.getLabels()) {
-			LabelEntity l = labelService.findOne(label.getId());
-			labels.add(l);
-		}
-		
-		task.setAssigned_users(users);
-		task.setLabels(labels);
-		
-        return this.taskRepository.save(task);
-       
+		return this.taskRepository.save(task);       
 
 	}
 
@@ -82,33 +63,6 @@ public class TaskServiceImpl implements TaskService {
 		if(task.getDescription()!= null) {
 			taskToUpdate.setDescription(task.getDescription());
 		}
-		if(task.getEnd_date()!=null) {
-			taskToUpdate.setEnd_date(task.getEnd_date());
-		}
-		if(task.getProject()!= null) {
-			taskToUpdate.setProject(task.getProject());
-		}
-		if(task.getMilestone()!= null) {
-			taskToUpdate.setMilestone(task.getMilestone());
-		}
-		Set<User> users = new HashSet<>();
-
-		for (User user : task.getAssigned_users()) {
-			User u = userService.findOne(user.getId());
-			users.add(u);
-		}
-				
-		taskToUpdate.setAssigned_users(users);
-		
-		Set<LabelEntity> labels = new HashSet<>();
-
-		for (LabelEntity label : task.getLabels()) {
-			LabelEntity l = labelService.findOne(label.getId());
-			labels.add(l);
-		}
-				
-		taskToUpdate.setLabels(labels);
-		
 		
 		return this.taskRepository.save(taskToUpdate);
 	}
@@ -175,18 +129,6 @@ public class TaskServiceImpl implements TaskService {
 		return returnTask;
 	}
 
-	@Override
-	public void setUserToTask(UserTaskDTO userTask) {
-		Task task = this.findOne(userTask.getTask_id());
-		Set<User> users = new HashSet<User>();
-		for(Long id : userTask.users_id) {
-			User user = userService.findOne(id);
-			users.add(user);
-		}
-		task.setAssigned_users(users);
-		taskRepository.save(task);
-		
-	}
 
 	@Override
 	public List<Task> findAllForMilestone(List<Task> tasks, Long id) {
@@ -199,6 +141,33 @@ public class TaskServiceImpl implements TaskService {
 			}
 		}
 		return returnTask;
+	}
+	
+
+
+	@Override
+	public Set<User> setUsersToTask(Long task_id, Set<User> users) {
+		Task task = this.findOne(task_id);
+		List<User> allUsers = userService.getAll();
+		Set<User> all = new HashSet<>();
+		for(User us: allUsers) {
+			for(User u: users) {
+				if(u.getId().equals(us.getId())) {
+					all.add(us);
+				}
+			}
+		}
+		task.setAssigned_users(all);
+		taskRepository.save(task);
+		return users;
+	}
+
+	@Override
+	public Milestone setMilestoneToTask(Long task_id, Milestone milestone) {
+		Task task = this.findOne(task_id);
+		task.setMilestone(milestone);
+		taskRepository.save(task);
+		return milestone;
 	}
 
 }

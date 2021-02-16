@@ -13,6 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserTaskDTO {
 	public Long task_id;
-	public Set<Long> users_id;
+	public Set<UserDTO> users;
 
 }

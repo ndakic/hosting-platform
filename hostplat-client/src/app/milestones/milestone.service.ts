@@ -29,7 +29,7 @@ import { Milestone } from "../models/milestone.model";
       return this.http.put(environment.apiUrlPrefix +  `/api/milestone` , milestone);
     }
 
-    add(milestone: Milestone):  Observable<any> {
+    add(milestone: MilestoneTask):  Observable<any> {
       return this.http.post(environment.apiUrlPrefix +  `/api/milestone` , milestone);
     }
 
@@ -42,6 +42,10 @@ import { Milestone } from "../models/milestone.model";
     }
 
     getOpenTaskForMilestone(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix +  `/api/task/getAllOpenForMilestone/` + id);
+    }
+  
+    getCloseTaskForMilestone(id: number): Observable<any> {
       return this.http.get(environment.apiUrlPrefix +  `/api/task/getAllCloseForMilestone/` + id);
     }
   }

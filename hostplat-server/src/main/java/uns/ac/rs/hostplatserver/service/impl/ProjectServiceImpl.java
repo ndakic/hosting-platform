@@ -72,14 +72,7 @@ public class ProjectServiceImpl implements ProjectService {
 		if(project.getDescription()!= null) {
 			projectToUpdate.setDescription(project.getDescription());
 		}
-		Set<User> users = new HashSet<>();
-
-		for (User user : project.getUsers()) {
-			User u = userService.findOne(user.getId());
-			users.add(u);
-		}
-				
-		projectToUpdate.setUsers(users);
+		
 	
 		return this.projectRepository.save(projectToUpdate);
 	}
