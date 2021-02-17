@@ -9,8 +9,13 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { CoreModule } from './core/core.module';
 import { PagesModule } from './pages/pages.module';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserModule } from './user/user.module';
+import { Jwt } from './core/interceptors/jwt.interceptor';
+import { ProjectModule} from './projects/project.module'; 
+import { TaskModule } from './tasks/task.module';
+import { MilestoneModule } from './milestones/milestone.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AuthenticationModule,
     CoreModule,
     PagesModule,
+    UserModule,
+    ProjectModule,
+    TaskModule,
+    MilestoneModule,
     ToastrModule.forRoot({
       progressBar: true,
       timeOut: 4000,
@@ -35,7 +44,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       preventDuplicates: true
     }),
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: Jwt, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

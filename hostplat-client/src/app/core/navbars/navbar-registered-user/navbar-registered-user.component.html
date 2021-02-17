@@ -1,0 +1,50 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-button (click)="onTitleClick()">
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example HOSTPLAT icon">settings_ethernet</mat-icon>
+        <span>HOSTPLAT</span>
+      </button>
+      <span class="example-spacer"></span>
+
+      <button mat-button (click)="onAllProject()">
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example HOSTPLAT icon">class</mat-icon>
+        <span>ALL</span>
+      </button>
+
+      <button mat-button (click)="onNewProject()">
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example HOSTPLAT icon">class</mat-icon>
+        <span>New</span>
+      </button>
+
+
+      <button id="myProfileNav" mat-button  [routerLink]="['/profile']">
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon">supervised_user_circle</mat-icon>
+        <span>Profile</span>
+      </button>
+      <button id="myProfileNav" mat-button  [routerLink]="['/profile']">
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon">sports</mat-icon>
+        <span>Profile</span>
+      </button>
+
+      <button mat-button [matMenuTriggerFor]="viewMenu">
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Profile icon">supervised_user_circle</mat-icon>
+        <span>Profile</span>
+      </button>
+      <mat-menu #viewMenu="matMenu" yPosition="below">
+          <button mat-menu-item (click)="onClickChangePassword()">
+            <mat-icon>password</mat-icon>
+            <span><b>Change password</b></span>
+          </button>
+          <button mat-menu-item (click)="onClickChangeBasicInfo()">
+            <mat-icon>info</mat-icon>
+            <span><b>Change basic info</b></span>
+          </button>
+
+      </mat-menu>  
+  
+      <button mat-button (click)="onClickLogout()" id="logout-btn">
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon">highlight_off</mat-icon>
+        <span>Logout</span>
+    </button>
+    </mat-toolbar-row>
+  </mat-toolbar>

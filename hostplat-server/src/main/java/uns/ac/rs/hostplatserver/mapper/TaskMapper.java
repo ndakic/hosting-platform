@@ -46,9 +46,9 @@ public class TaskMapper {
         		taskDTO.getCreate_date(),
         		taskDTO.getEnd_date(),
         		new User(taskDTO.getAuthor_id()),
-        		taskDTO.getAssigned_users().stream().map(UserMapper::toUser).collect(Collectors.toSet()),
+        		new HashSet<>(),
         		new Project(taskDTO.getProject_id()),
-        		new Milestone(taskDTO.getMilestone_id()),
+        		null,
         		new HashSet<>()
             );    
     }
