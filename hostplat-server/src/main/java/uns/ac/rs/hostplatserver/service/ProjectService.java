@@ -28,7 +28,9 @@ public interface ProjectService {
 
 	public List<Milestone> findAllMilestonesForProject(Long id);
 
-	public List<Milestone> findAllMilestonesForProjectWithTask(Long id); 
+	public List<Milestone> findAllMilestonesForProjectWithTask(Long id);
+
+	public Set<User> setUsersToProject(Long project_id, Set<User> usersOnProject, Set<User> usersSaFronta); 
 	
 
 }

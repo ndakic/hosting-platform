@@ -144,4 +144,24 @@ public class ProjectServiceImpl implements ProjectService {
 		
 	}
 
+	@Override
+	public Set<User> setUsersToProject(Long project_id, Set<User> usersOnProject, Set<User> usersSaFronta) {
+		usersOnProject.addAll(usersSaFronta);
+		Set<User> all = new HashSet<>();
+		Project project = this.findOne(project_id);
+		List<User> allUser = userService.getAll();
+		for(User us: allUser) {
+			for(User u: usersOnProject) {
+				if(u.getId().equals(us.getId())) {
+					all.add(us);
+				}
+			}
+		}
+		
+		
+		project.setUsers(all);
+		projectRepository.save(project);
+		return all;
+	}
+
 }

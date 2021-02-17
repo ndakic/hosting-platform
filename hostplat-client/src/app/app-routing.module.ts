@@ -21,6 +21,7 @@ import { UpdateTaskComponent } from './tasks/update-task/update-task.component';
 import { UpdateMilestoneComponent } from './milestones/update-milestone/update-milestone.component';
 import { AddMilestoneComponent } from './milestones/add-milestone/add-milestone.component';
 import { MilestoneDetailsComponent } from './milestones/milestone-details/milestone-details.component';
+import { AddUsersComponent } from './projects/add-users/add-users.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -100,6 +101,12 @@ const routes: Routes = [
   {
     path: 'milestone-details/:id',
     component: MilestoneDetailsComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'add-users/:id',
+    component: AddUsersComponent,
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_USER'}
   },

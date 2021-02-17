@@ -17,12 +17,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AddUsersComponent } from './add-users/add-users.component';
 
 
 
 @NgModule({
   declarations: [ProjectDetailsComponent, AddProjectComponent, ProjectsListComponent, UpdateProjectComponent,
-  ProjectListItemComponent],
+  ProjectListItemComponent, AddUsersComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -45,7 +46,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     AddProjectComponent,
     ProjectsListComponent,
     UpdateProjectComponent,
-    ProjectListItemComponent
+    ProjectListItemComponent,
+    AddUsersComponent
   ]
 })
 export class ProjectModule { } 
