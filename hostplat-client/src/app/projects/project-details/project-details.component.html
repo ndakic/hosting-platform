@@ -21,7 +21,38 @@
         <button   mat-raised-button  (click)='delete()' color="accent">Delete</button>
 
       </div>
+    </div>
+    <div>
+      <h3>Users on project:</h3>
+      <table mat-table [dataSource]="usersOnProject" class="mat-elevation-z8" >
+
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef> First name </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef> Last name </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef> Username </th>
+          <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns3" ></tr>
+        <tr mat-row  *matRowDef="let row; columns: displayedColumns3"></tr>
+  </table>
     </div>  
+    <h1></h1>
+    <button   mat-raised-button  (click)='addUsers()' color="accent">Add new users</button>
+
   </mat-tab>
   <mat-tab label="Tasks">
     <button   mat-raised-button  (click)='addTask()' color="accent">Create task</button>

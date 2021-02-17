@@ -1,3 +1,4 @@
+import { SelectionModel } from "@angular/cdk/collections";
 import { NgIf } from "@angular/common";
 import { identifierModuleUrl } from "@angular/compiler";
 import { Component, Inject, OnInit } from "@angular/core";
@@ -9,6 +10,7 @@ import { MilestoneService } from "src/app/milestones/milestone.service";
 import { Milestone } from "src/app/models/milestone.model";
 import { Project } from "src/app/models/project.model";
 import { Task } from "src/app/models/task.model";
+import { User } from "src/app/models/user";
 import { TaskService } from "src/app/tasks/task.service";
 import { ProjectService } from "../project.service";
 
@@ -27,6 +29,11 @@ export class ProjectDetailsComponent implements OnInit {
   closeTasks: Task[];
   openMilestones: Milestone[];
   closeMilestones: Milestone[];
+  usersOnProject: User[];
+  displayedColumns3: string[] = ['firstName', 'lastName', 'username', 'email'];
+  selection2 = new SelectionModel<User>(true, []);
+  dataSource;
+
 
 
   constructor(
@@ -62,6 +69,7 @@ export class ProjectDetailsComponent implements OnInit {
     );
     this.getCloseMilestones()
     this.getOpenMilestones()
+    this.getUsersOnProject()
   }
 
   updateProject() {
@@ -126,5 +134,19 @@ export class ProjectDetailsComponent implements OnInit {
 
   addTask(){
     this.router.navigate(['/add-task/' + this.project.id]);
+  }
+
+  addUsers(){
+    this.router.navigate(['/add-users/' + this.project.id]);
+  }
+
+  getUsersOnProject() {
+    this.role = this.authService.getRole();
+    const id = this.route.snapshot.paramMap.get('id');
+    this.projectService.getUsersOnProject(Number(id)).subscribe(
+      (data: User[]) => {
+        this.usersOnProject = data;          
+      }
+    );
   }
 } 
