@@ -51,7 +51,7 @@
   </mat-expansion-panel-header>
   <mat-action-row>
 
-    <table mat-table [dataSource]="close_task" class="mat-elevation-z8">
+    <table mat-table [dataSource]="closeTasks" class="mat-elevation-z8">
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef> Title </th>
         <td mat-cell *matCellDef="let element"> {{element.title}} </td>

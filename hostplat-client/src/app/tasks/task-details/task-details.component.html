@@ -108,7 +108,13 @@
         <button mat-button color="accent" (click)="addMilestone()">Create new milestone</button>
       </mat-panel-description>
     </mat-expansion-panel-header>
+    
     <mat-action-row>
+      <div ng-if='milestone !== undefined'>
+        <h3>{{milestone.title}}</h3>
+        <h3>{{milestone.start_date | date}}</h3>
+        <h3>{{milestone.end_date | date}}</h3>
+      </div>
       <table mat-table [dataSource]="milestones" class="mat-elevation-z8" >
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef> Title </th>
@@ -127,7 +133,7 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
         <tr mat-row  *matRowDef="let row; columns: displayedColumns  let idx=index; let even=even;" [style.background-color]="rowClicked == idx ? 'pink' : (even ? 'white' : 'white')"
-        (click)="changeTableRowColor(idx)" (click)="onRowClicked(row)" [ngClass]="{selected: row.isSelected}" [ngClass]="{'color': (row.id == milestone.id)}"></tr>
+        (click)="changeTableRowColor(idx)" (click)="onRowClicked(row)" [ngClass]="{selected: row.isSelected}"></tr>
 
   </table>
     </mat-action-row>

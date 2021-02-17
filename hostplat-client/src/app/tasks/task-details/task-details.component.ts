@@ -75,6 +75,8 @@ export class TaskDetailsComponent implements OnInit {
         }
       );
     }
+
+    console.log(this.milestones);
   }
 
   changeTableRowColor(idx: any) { 

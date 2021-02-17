@@ -18,6 +18,10 @@ public class UserDTO {
     private List<String> authorities;
     private TokenDTO token;
     private String imagePath;
+    
+    public UserDTO() {
+    	super();
+    }
 
 
     public UserDTO(User user) {

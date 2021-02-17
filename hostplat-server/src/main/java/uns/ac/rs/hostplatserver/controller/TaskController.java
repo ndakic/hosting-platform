@@ -157,8 +157,13 @@ public class TaskController {
 
 	@GetMapping(value = "/getMilestoneForTask/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MilestoneDTO> getMilestoneForTask(@PathVariable("id") Long id) {
-		Task task = taskService.findOne(id);		
-		return new ResponseEntity<>(MilestoneMapper.toDTO(task.getMilestone()), HttpStatus.OK);
+		Task task = taskService.findOne(id);
+		MilestoneDTO DT0 = new MilestoneDTO();
+		if (task.getMilestone()!=null) {
+			return new ResponseEntity<>(MilestoneMapper.toDTO(task.getMilestone()), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(DT0, HttpStatus.OK);
+		}
 	}
 
 

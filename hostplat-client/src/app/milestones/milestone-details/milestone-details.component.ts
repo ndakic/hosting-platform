@@ -46,7 +46,6 @@ export class MilestoneDetailsComponent implements OnInit {
       );
     }
     this.getOpenTask();
-    this.open = this.openTasks.length;
     this.getCloseTask();
 
   }
@@ -92,6 +91,7 @@ export class MilestoneDetailsComponent implements OnInit {
     this.milestoneService.getCloseTaskForMilestone(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
       (data: Task[]) => {
         this.closeTasks = data;
+        console.log(this.closeTasks);
       }
     );
   }
