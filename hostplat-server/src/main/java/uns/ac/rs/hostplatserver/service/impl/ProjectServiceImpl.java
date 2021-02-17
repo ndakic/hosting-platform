@@ -72,14 +72,7 @@ public class ProjectServiceImpl implements ProjectService {
 		if(project.getDescription()!= null) {
 			projectToUpdate.setDescription(project.getDescription());
 		}
-		Set<User> users = new HashSet<>();
-
-		for (User user : project.getUsers()) {
-			User u = userService.findOne(user.getId());
-			users.add(u);
-		}
-				
-		projectToUpdate.setUsers(users);
+		
 	
 		return this.projectRepository.save(projectToUpdate);
 	}
@@ -128,7 +121,7 @@ public class ProjectServiceImpl implements ProjectService {
 		List<Task> tasks = taskService.findAllByProjectId(allTask, project.getId());
 		List<Milestone> milestones = new ArrayList<>();
 		for (Task t : tasks) {
-			if (!milestones.contains(t.getMilestone())) {
+			if (!milestones.contains(t.getMilestone()) & t.getMilestone()!=null) {
 				milestones.add(t.getMilestone());
 			}
 		}

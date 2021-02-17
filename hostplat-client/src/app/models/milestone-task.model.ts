@@ -1,13 +1,12 @@
+import { Milestone } from "./milestone.model";
+
 export class MilestoneTask {
     public task_id: number;
-    public milestone_id: number;
-  
-  
+    public milestone: Milestone;
 
-    constructor(task_id?: number, milestone_id?: number) {
+    constructor(task_id?: number, milestone?: Milestone) {
         this.task_id = task_id;
-        this.milestone_id = milestone_id;
+        this.milestone = milestone;
     }
 
-
-} 
+}  

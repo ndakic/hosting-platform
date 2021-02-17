@@ -1,33 +1,33 @@
 <form #addMilestone="ngForm" (ngSubmit)="create()" novalidate>
-    <h1>Create new milestone:</h1>
-    <div>
-        <mat-form-field>
-          <input matInput type="text" required #name='ngModel'
-          [(ngModel)]="milestone.title" name="title" placeholder="Milestone title">
-        </mat-form-field>
-      </div>
-      <div  appearance="fill">
-        <mat-form-field appearance="fill">
-            <mat-label>Start date</mat-label>
-            <input matInput [matDatepicker]="picker"
-                   (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-      </div>
-      <div>
-          <mat-form-field appearance="fill">
-            <mat-label>End date</mat-label>
-            <input matInput [matDatepicker]="picker1"
-                   (dateInput)="addEvent2('input', $event)" (dateChange)="addEvent2('change', $event)">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
+  <h1>Create new milestone:</h1>
+  <div>
+      <mat-form-field>
+        <input matInput type="text" required #name='ngModel'
+        [(ngModel)]="milestone.title" name="title" placeholder="Milestone title">
+      </mat-form-field>
     </div>
-     
-      <div>
-        <button   mat-raised-button   (click)='create()' color="accent">Create</button>
-      </div>
-  
-  
-</form>
+    <div  appearance="fill">
+      <mat-form-field appearance="fill">
+          <mat-label>Start date</mat-label>
+          <input matInput [matDatepicker]="picker"
+                 (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+          <mat-label>End date</mat-label>
+          <input matInput [matDatepicker]="picker1"
+                 (dateInput)="addEvent2('input', $event)" (dateChange)="addEvent2('change', $event)">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+  </div>
+
+    <div>
+      <button   mat-raised-button  color="accent">Create</button>
+    </div>
+
+
+</form> 

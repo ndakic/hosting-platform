@@ -51,12 +51,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 
-
-
-
 @NgModule({
-  declarations: [TaskDetailsComponent, AddTaskComponent, TasksListComponent, UpdateTaskComponent,
-  TaskListItemComponent],
+  declarations: [TaskDetailsComponent, AddTaskComponent, UpdateTaskComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -67,11 +63,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
   exports: [
     TaskDetailsComponent,
     AddTaskComponent,
-    TasksListComponent,
     UpdateTaskComponent,
-    TaskListItemComponent,
     MatChipsModule,
 
   ]
 })
-export class TaskModule { } 
+export class TaskModule { }

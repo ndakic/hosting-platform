@@ -56,7 +56,7 @@ public class UserController {
         User user = userService.getMyProfileData();
         return new ResponseEntity<>(UserMapper.toDTO(user), HttpStatus.OK);
     }
-    
+   
     @PutMapping("/my-profile")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<UserDTO> editMyProfile(@Valid @RequestBody UserEditDTO userInfo) {

@@ -43,10 +43,14 @@ public class MilestoneServiceImpl implements MilestoneService {
 
 	
 	@Override
-	public Milestone create(Milestone milestone) throws Exception {
-        return this.milestoneRepository.save(milestone);
+	public Milestone create(Milestone milestone, Long task_id) throws Exception {
+        Task task = taskService.findOne(task_id);
 
-	}
+		Milestone milestoneSaved = this.milestoneRepository.save(milestone);
+		task.setMilestone(milestoneSaved);
+		taskRepository.save(task);
+		return milestoneSaved;
+	}		
 
 	
 	@Override
@@ -104,15 +108,6 @@ public class MilestoneServiceImpl implements MilestoneService {
 		return milestoneRepository.save(milestone);
 	}
 
-	@Override
-	public Milestone addMilestoneToTask(MilestoneTaskDTO mtDTO) {
-		Task task = taskService.findOne(mtDTO.getTask_id());
-		Milestone milestone = this.findOne(mtDTO.getMilestone_id());
 
-		task.setMilestone(milestone);
-		taskRepository.save(task);
-		return milestone;
-	}
-	
 	
 }

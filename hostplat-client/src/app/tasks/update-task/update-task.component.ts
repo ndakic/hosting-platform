@@ -5,44 +5,43 @@ import { Task } from "src/app/models/task.model";
 import { TaskService } from "../task.service";
 
 @Component({
-    selector: 'app-update-task',
-    templateUrl: './update-task.component.html',
-    styleUrls: ['./update-task.component.scss']
-  })
-  export class UpdateTaskComponent implements OnInit {
+  selector: 'app-update-task',
+  templateUrl: './update-task.component.html',
+  styleUrls: ['./update-task.component.scss']
+})
+export class UpdateTaskComponent implements OnInit {
 
-    task: Task;
+  task: Task;
 
-    constructor(
-      private route: ActivatedRoute,
-      private router: Router,
-      private taskService: TaskService,
-      private toastr: ToastrService
-    ) {
-    }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private taskService: TaskService,
+    private toastr: ToastrService
+  ) {}
 
-    ngOnInit() {
-      const id = this.route.snapshot.paramMap.get('id');
-      
-      if (id) {
-        this.taskService.getTask(Number(id)).subscribe(
-          (data: Task) => {
-            this.task = data;
-          }
-        );
-      }
-    }
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
 
-
-
-    update() {
-      this.taskService.updateTask(this.task).subscribe(
-        (data: any) => {
+    if (id) {
+      this.taskService.getTask(Number(id)).subscribe(
+        (data: Task) => {
           this.task = data;
-          this.toastr.success('Successful update!');
-          this.router.navigate(['task-details/' + this.task.id]);
         }
       );
-      }
+    }
+  }
 
-  }  
+
+
+  update() {
+    this.taskService.updateTask(this.task).subscribe(
+      (data: any) => {
+        this.task = data;
+        this.toastr.success('Successful update!');
+        this.router.navigate(['task-details/' + this.task.id]);
+      }
+    );
+  }
+
+}

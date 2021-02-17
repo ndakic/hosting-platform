@@ -183,4 +183,9 @@ public class UserServiceImpl implements UserService {
 		Project project = projectService.findOne(id);
 		return project.getUsers();
 	}
+	
+	@Override
+	public List<User> getAll() {
+		return this.userRepository.findAll();
+	}
 }

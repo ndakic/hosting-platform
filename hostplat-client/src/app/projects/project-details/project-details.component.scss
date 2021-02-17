@@ -16,6 +16,8 @@ mat-card-actions {
 
 button {
     width: 15%;
+    height: 13%;
+
     margin-left: 1%;
     float: right;
 }
@@ -27,3 +29,18 @@ h1, h3, h2 {
 p {
     margin-left: 2%;
 }  
+
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}

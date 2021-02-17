@@ -9,11 +9,11 @@ import { TaskService } from "src/app/tasks/task.service";
 import { ProjectService } from "../project.service";
 
 @Component({
-    selector: 'app-projects-list',
-    templateUrl: './projects-list.component.html',
-    styleUrls: ['./projects-list.component.scss']
-  })
-  export class ProjectsListComponent implements OnInit {
+  selector: 'app-projects-list',
+  templateUrl: './projects-list.component.html',
+  styleUrls: ['./projects-list.component.scss']
+})
+export class ProjectsListComponent implements OnInit {
 
 
   projects: Project[];
@@ -44,4 +44,4 @@ import { ProjectService } from "../project.service";
     );
   }
 
-} 
+}  

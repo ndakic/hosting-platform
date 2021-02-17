@@ -6,14 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class MilestoneTaskDTO {
-	
+
 	private Long task_id;
-	private Long milestone_id;
-	
+	private MilestoneDTO milestone;
+
 
 }
