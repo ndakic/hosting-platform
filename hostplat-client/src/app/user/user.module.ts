@@ -4,12 +4,13 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { ChangeBasicInfoComponent } from './change-basic-info/change-basic-info.component';
+import { ChangeAvatarComponent } from './change-avatar/change-avatar.component';
 
 
 
 
 @NgModule({
-  declarations: [ChangePasswordComponent, ChangeBasicInfoComponent],
+  declarations: [ChangePasswordComponent, ChangeBasicInfoComponent, ChangeAvatarComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -17,7 +18,9 @@ import { ChangeBasicInfoComponent } from './change-basic-info/change-basic-info.
     FormsModule
   ],
   exports: [
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ChangeBasicInfoComponent,
+    ChangeAvatarComponent
   ]
 })
 export class UserModule { }
