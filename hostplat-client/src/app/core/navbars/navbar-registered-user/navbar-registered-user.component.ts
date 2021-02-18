@@ -24,6 +24,7 @@ export class NavbarRegisteredUserComponent implements OnInit {
   onClickLogout(): void {
     this.authenticationService.logout();
     this.toastr.success('Logout successful!');
+    location.reload();
     this.router.navigate(['home']);
   }
 
@@ -37,6 +38,10 @@ export class NavbarRegisteredUserComponent implements OnInit {
 
   onClickChangeBasicInfo(): void {
     this.router.navigate(['change-basic-info']);
+  }
+
+  onClickChangeAvatar(): void {
+    this.router.navigate(['change-avatar']);
   }
 
   
