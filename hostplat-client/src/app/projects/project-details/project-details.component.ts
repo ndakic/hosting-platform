@@ -2,13 +2,17 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { NgIf } from "@angular/common";
 import { identifierModuleUrl } from "@angular/compiler";
 import { Component, Inject, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
+import { AsyncSubject, Subject } from "rxjs";
 import { AuthenticationService } from "src/app/core/services/authentication.service";
 import { MilestoneService } from "src/app/milestones/milestone.service";
 import { Milestone } from "src/app/models/milestone.model";
 import { Project } from "src/app/models/project.model";
+import { StatisticsBack } from "src/app/models/statisticBack.model";
+import { Statistics } from "src/app/models/statistics.model";
 import { Task } from "src/app/models/task.model";
 import { User } from "src/app/models/user";
 import { TaskService } from "src/app/tasks/task.service";
@@ -33,8 +37,13 @@ export class ProjectDetailsComponent implements OnInit {
   displayedColumns3: string[] = ['firstName', 'lastName', 'username', 'email'];
   selection2 = new SelectionModel<User>(true, []);
   dataSource;
-
-
+  selected = '3 days';
+  statistics: Statistics;
+  back: StatisticsBack;
+  open: Task[];
+  closeT: Task[];
+  o: number;
+  c: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -115,6 +124,8 @@ export class ProjectDetailsComponent implements OnInit {
     );
   }
 
+ 
+
 
   update(id: number){
     this.router.navigate(['/update-milestone/' + id]);
@@ -146,6 +157,22 @@ export class ProjectDetailsComponent implements OnInit {
     this.projectService.getUsersOnProject(Number(id)).subscribe(
       (data: User[]) => {
         this.usersOnProject = data;          
+      }
+    );
+  }
+
+  show(selected){
+    console.log(selected);
+    const id = this.route.snapshot.paramMap.get('id');
+    this.statistics = new Statistics(Number(id), selected);
+    this.projectService.statistics(this.statistics).subscribe(
+      (data: StatisticsBack)  => {
+        this.back = data;       
+        console.log(data); 
+        this.closeT = this.back.close;
+        this.c = this.closeT.length;
+        this.open = this.back.open; 
+        this.o = this.open.length; 
       }
     );
   }

@@ -1,6 +1,10 @@
 package uns.ac.rs.hostplatserver.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,18 +24,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import uns.ac.rs.hostplatserver.dto.MilestoneDTO;
 import uns.ac.rs.hostplatserver.dto.ProjectDTO;
+import uns.ac.rs.hostplatserver.dto.StatisticBackDTO;
+import uns.ac.rs.hostplatserver.dto.StatisticsDTO;
+import uns.ac.rs.hostplatserver.dto.TaskDTO;
 import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.dto.UserProjectDTO;
 import uns.ac.rs.hostplatserver.dto.UserTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.mapper.MilestoneMapper;
 import uns.ac.rs.hostplatserver.mapper.ProjectMapper;
+import uns.ac.rs.hostplatserver.mapper.TaskMapper;
 import uns.ac.rs.hostplatserver.mapper.UserMapper;
 import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Project;
+import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.service.ProjectService;
+import uns.ac.rs.hostplatserver.service.TaskService;
 import uns.ac.rs.hostplatserver.service.UserService;
+import uns.ac.rs.hostplatserver.util.DateUtil;
 
 @RestController
 @RequestMapping("/api/project")
@@ -42,6 +53,9 @@ public class ProjectController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TaskService taskService;
 	
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -192,5 +206,12 @@ public class ProjectController {
 		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "/statistics", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<StatisticBackDTO> statistics(@RequestBody StatisticsDTO dto) {
+		
+		StatisticBackDTO back = projectService.statistic(dto);
+				
+		return new ResponseEntity<>(back, HttpStatus.OK);
+	}
 }
 

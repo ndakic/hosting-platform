@@ -3,6 +3,8 @@ package uns.ac.rs.hostplatserver.service;
 import java.util.List;
 import java.util.Set;
 
+import uns.ac.rs.hostplatserver.dto.StatisticBackDTO;
+import uns.ac.rs.hostplatserver.dto.StatisticsDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Project;
@@ -30,7 +32,9 @@ public interface ProjectService {
 
 	public List<Milestone> findAllMilestonesForProjectWithTask(Long id);
 
-	public Set<User> setUsersToProject(Long project_id, Set<User> usersOnProject, Set<User> usersSaFronta); 
+	public Set<User> setUsersToProject(Long project_id, Set<User> usersOnProject, Set<User> usersSaFronta);
+
+	public StatisticBackDTO statistic(StatisticsDTO dto); 
 	
 
 }
