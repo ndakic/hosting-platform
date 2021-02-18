@@ -42,6 +42,8 @@ export class ProjectDetailsComponent implements OnInit {
   back: StatisticsBack;
   open: Task[];
   closeT: Task[];
+  o: number;
+  c: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -168,7 +170,9 @@ export class ProjectDetailsComponent implements OnInit {
         this.back = data;       
         console.log(data); 
         this.closeT = this.back.close;
-        this.open = this.back.open;  
+        this.c = this.closeT.length;
+        this.open = this.back.open; 
+        this.o = this.open.length; 
       }
     );
   }
