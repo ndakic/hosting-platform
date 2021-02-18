@@ -119,4 +119,39 @@
           </mat-grid-tile>
         </mat-grid-list>
       </mat-tab>
-</mat-tab-group>
+    </mat-tab-group>
+      <mat-tab label="Wiki">
+        <mat-tab-group>
+        </mat-tab-group>
+      </mat-tab>
+      <mat-tab label="Insights">
+        <div class="center">
+        <mat-form-field appearance="fill">
+          <mat-label>Period:</mat-label>
+          <mat-select [(value)]="selected">
+            <mat-option value="24 h">24 h</mat-option>
+            <mat-option value="3 days">3 days</mat-option>
+            <mat-option value="1 week">1 week</mat-option>
+            <mat-option value="1 month">1 month</mat-option>
+          </mat-select>
+        </mat-form-field>
+        </div>
+
+        <div class="center">
+        <h2>Open task in period  {{selected}}</h2>
+        <div  *ngFor="let o of open">
+          <h3>{{o.title}}</h3>
+        </div>
+      </div>
+      <div class="center">
+        <h2>Close task in period  {{selected}}</h2>
+        <div  *ngFor="let o of closeT">
+          <h3>{{o.title}}</h3>
+        </div>
+        <div>
+        </div>
+      </div>
+      <div class="center">
+      <button mat-raised-button (click)="show(selected)" color="accent">Show</button>
+    </div>
+      </mat-tab>

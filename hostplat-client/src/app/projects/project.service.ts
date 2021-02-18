@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Project } from "../models/project.model";
+import { Statistics } from "../models/statistics.model";
 import { UserProject } from "../models/user-project.model";
 
 @Injectable({
@@ -69,6 +70,9 @@ import { UserProject } from "../models/user-project.model";
       return this.http.post(environment.apiUrlPrefix + `/api/project/setUsersToProject/`, users);
     }
 
+    statistics(project: Statistics){
+      return this.http.post(environment.apiUrlPrefix + `/api/project/statistics/`, project);
+    }
     
 
   }
