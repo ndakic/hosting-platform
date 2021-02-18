@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Project } from "../models/project.model";
+import { UserProject } from "../models/user-project.model";
 
 @Injectable({
     providedIn: 'root'
@@ -35,5 +36,39 @@ import { Project } from "../models/project.model";
     delete(id: number):  Observable<any> {
       return this.http.delete(environment.apiUrlPrefix +  `/api/project/` + id);
     }
+
+    getMilestoneForProject(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/project/allMilestoneForProject/` + id);
+    }
+
+    getUsersForProject(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/project/allUserForTask/` + id);
+    }
+   
+    updatePrivateProject(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/project/updatePrivateProject/` + id);
+    }
+
+    getOpenMilestone(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/milestone/getAllOpenForProject/` + id);
+    }
+
+    getCloseMilestone(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/milestone/getAllCloseForProject/` + id);
+    }
+
+    getUsersOnProject(id: number):Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/project/allUserForProject/` + id);
+    }
+
+    getAllNewUserForProject(id: number):Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/api/project/getAllNewUserForProject/` + id);
+    }
+    
+    setUsersToProject(users: UserProject):Observable<any> {
+      return this.http.post(environment.apiUrlPrefix + `/api/project/setUsersToProject/`, users);
+    }
+
+    
 
   }

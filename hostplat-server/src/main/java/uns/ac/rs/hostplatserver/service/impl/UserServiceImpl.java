@@ -1,7 +1,9 @@
 package uns.ac.rs.hostplatserver.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,13 @@ import uns.ac.rs.hostplatserver.exception.BadRequestException;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.mapper.UserMapper;
 import uns.ac.rs.hostplatserver.model.ConfirmationToken;
+import uns.ac.rs.hostplatserver.model.Project;
+import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.repository.AuthorityRepository;
 import uns.ac.rs.hostplatserver.repository.ConfirmationTokenRepository;
 import uns.ac.rs.hostplatserver.repository.UserRepository;
+import uns.ac.rs.hostplatserver.service.ProjectService;
 import uns.ac.rs.hostplatserver.service.UserService;
 
 @Service
@@ -30,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
     private UserRepository userRepository;
+	
+	@Autowired
+    private ProjectService projectService;
 
     @Autowired
     private AuthorityRepository authorityRepository;
@@ -169,4 +177,15 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+	@Override
+	public Set<User> getUserForProject(Long id) {
+		Project project = projectService.findOne(id);
+		return project.getUsers();
+	}
+	
+	@Override
+	public List<User> getAll() {
+		return this.userRepository.findAll();
+	}
 }

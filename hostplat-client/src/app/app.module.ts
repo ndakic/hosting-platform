@@ -14,6 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserModule } from './user/user.module';
 import { Jwt } from './core/interceptors/jwt.interceptor';
 import { ProjectModule} from './projects/project.module'; 
+import { TaskModule } from './tasks/task.module';
+import { MilestoneModule } from './milestones/milestone.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { ProjectModule} from './projects/project.module';
     PagesModule,
     UserModule,
     ProjectModule,
+    TaskModule,
+    MilestoneModule,
     ToastrModule.forRoot({
       progressBar: true,
       timeOut: 4000,

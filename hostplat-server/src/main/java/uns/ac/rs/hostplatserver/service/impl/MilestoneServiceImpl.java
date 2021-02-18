@@ -1,14 +1,19 @@
 package uns.ac.rs.hostplatserver.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import uns.ac.rs.hostplatserver.dto.MilestoneTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.Milestone;
+import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.repository.MilestoneRepository;
+import uns.ac.rs.hostplatserver.repository.TaskRepository;
 import uns.ac.rs.hostplatserver.service.MilestoneService;
+import uns.ac.rs.hostplatserver.service.TaskService;
 
 @Service
 public class MilestoneServiceImpl implements MilestoneService {
@@ -16,6 +21,13 @@ public class MilestoneServiceImpl implements MilestoneService {
 	@Autowired
     private MilestoneRepository milestoneRepository;
 
+	
+	@Autowired
+	private TaskService taskService;
+	
+	@Autowired
+	private TaskRepository taskRepository;
+	
 	@Override
 	public Milestone findOne(Long id) throws ResourceNotFoundException {
 		 return this.milestoneRepository.findById(id)
@@ -31,10 +43,14 @@ public class MilestoneServiceImpl implements MilestoneService {
 
 	
 	@Override
-	public Milestone create(Milestone milestone) throws Exception {
-        return this.milestoneRepository.save(milestone);
+	public Milestone create(Milestone milestone, Long task_id) throws Exception {
+        Task task = taskService.findOne(task_id);
 
-	}
+		Milestone milestoneSaved = this.milestoneRepository.save(milestone);
+		task.setMilestone(milestoneSaved);
+		taskRepository.save(task);
+		return milestoneSaved;
+	}		
 
 	
 	@Override
@@ -57,5 +73,41 @@ public class MilestoneServiceImpl implements MilestoneService {
         this.milestoneRepository.deleteById(id);
 		
 	}
+
+	@Override
+	public List<Milestone> findAllClose(List<Milestone> milestones) {
+		List<Milestone> m = new ArrayList<>();
+		for (Milestone mi : milestones) {
+			if(mi!=null) {
+				if(mi.isClose()) {
+					m.add(mi);
+				}
+			}
+		}
+		return m;
+	}
+	
+	@Override
+	public List<Milestone> findAllOpen(List<Milestone> milestones) {
+		List<Milestone> m = new ArrayList<>();
+		for (Milestone mi : milestones) {
+			if(mi!=null) {
+				System.out.println(mi.getTitle());
+				if(!mi.isClose()) {
+					m.add(mi);
+				}
+			}
+		}
+		return m;
+	}
+
+	@Override
+	public Milestone closeMilestone(Long id) {
+		Milestone milestone = this.findOne(id);
+		milestone.setClose(true);
+		return milestoneRepository.save(milestone);
+	}
+
+
 	
 }

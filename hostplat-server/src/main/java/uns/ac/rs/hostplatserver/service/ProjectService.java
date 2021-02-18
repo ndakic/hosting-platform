@@ -1,9 +1,12 @@
 package uns.ac.rs.hostplatserver.service;
 
 import java.util.List;
+import java.util.Set;
 
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
+import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Project;
+import uns.ac.rs.hostplatserver.model.User;
 
 public interface ProjectService {
 	
@@ -19,7 +22,15 @@ public interface ProjectService {
 
 	public List<Project> findAllForUser(Long id);
 
-	public List<Project> findAllPublic(); 
+	public List<Project> findAllPublic();
+
+	public Set<User> findAllUsersForProject(Long id);
+
+	public List<Milestone> findAllMilestonesForProject(Long id);
+
+	public List<Milestone> findAllMilestonesForProjectWithTask(Long id);
+
+	public Set<User> setUsersToProject(Long project_id, Set<User> usersOnProject, Set<User> usersSaFronta); 
 	
 
 }

@@ -18,5 +18,6 @@ public class MilestoneDTO {
 	private Date start_date;
 	private Date end_date;
 	private Long user_id;
+	private boolean close;
 
 }

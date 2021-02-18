@@ -6,44 +6,41 @@ import { Project } from "src/app/models/project.model";
 import { ProjectService } from "../project.service";
 
 @Component({
-    selector: 'app-update-project',
-    templateUrl: './update-project.component.html',
-    styleUrls: ['./update-project.component.scss']
-  })
-  export class UpdateProjectComponent implements OnInit {
+  selector: 'app-update-project',
+  templateUrl: './update-project.component.html',
+  styleUrls: ['./update-project.component.scss']
+})
+export class UpdateProjectComponent implements OnInit {
 
-    project: Project;
+  project: Project;
 
-    constructor(
-      private route: ActivatedRoute,
-      private router: Router,
-      private projectService: ProjectService,
-      private toastr: ToastrService
-    ) {
-    }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private projectService: ProjectService,
+    private toastr: ToastrService
+  ) {}
 
-    ngOnInit() {
-      const id = this.route.snapshot.paramMap.get('id');
-      if (id) {
-        this.projectService.getProject(Number(id)).subscribe(
-          (data: Project) => {
-            this.project = data;
-          }
-        );
-      }
-    }
-
-
-
-    update() {
-      console.log("cao");
-      console.log(this.project.description);
-      this.projectService.update(this.project).subscribe(
-        (data: any) => {
-          this.project = data;
-          this.toastr.success('Successful update!');
-          this.router.navigate(['project-details/' + this.project.id]);
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.projectService.getProject(Number(id)).subscribe(
+        (data: Project) => {
+           this.project = data;
         }
       );
+    }
+  }
+
+
+
+  update() {
+    this.projectService.update(this.project).subscribe(
+      (data: any) => {
+        this.project = data;
+        this.toastr.success('Successful update!');
+        this.router.navigate(['project-details/' + this.project.id]);
       }
-  }  
+    );
+  }
+}   

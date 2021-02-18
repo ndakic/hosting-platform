@@ -1,0 +1,41 @@
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+button {
+  width: 15%;
+  margin-left: 1%;
+  float: right;
+}
+
+table {
+  width: 100%;
+
+}
+.red{
+  background-color: red;
+ }
+
+ .data-selected {
+  color:grey;
+}
+
+
+.color {
+  font-weight: bold;
+  background-color: grey;
+} 
+
+.div{
+  float: left;
+
+}
