@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrlPrefix: 'http://ec2-18-188-91-54.us-east-2.compute.amazonaws.com:9000',
+  //apiUrlPrefix: 'http://localhost:9000',
 };
 
 /*

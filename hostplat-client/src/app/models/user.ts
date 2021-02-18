@@ -4,5 +4,5 @@ export interface User {
     email?: string;
     firstName?: string;
     lastName?: string;
-    //imagePath?: string;
+    imagePath?: string;
 }
