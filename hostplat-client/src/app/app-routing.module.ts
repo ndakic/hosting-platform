@@ -14,6 +14,7 @@ import { ProjectListItemComponent } from './projects/project-list-item/project-l
 import { UpdateProjectComponent } from './projects/update-project/update-project.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
 import { AccountConfirmationComponent } from './authentication/account-confirmation/account-confirmation.component';
+import { ChangeAvatarComponent } from './user/change-avatar/change-avatar.component';
 import { AddTaskComponent } from './tasks/add-task/add-task.component';
 import { TaskDetailsComponent } from './tasks/task-details/task-details.component';
 import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
@@ -40,6 +41,12 @@ const routes: Routes = [
   {
     path: 'change-basic-info',
     component: ChangeBasicInfoComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'change-avatar',
+    component: ChangeAvatarComponent,
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_USER'}
   },
