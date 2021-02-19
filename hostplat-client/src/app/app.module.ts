@@ -16,6 +16,7 @@ import { Jwt } from './core/interceptors/jwt.interceptor';
 import { ProjectModule} from './projects/project.module'; 
 import { TaskModule } from './tasks/task.module';
 import { MilestoneModule } from './milestones/milestone.module';
+import { LabelModule} from './labels/label.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MilestoneModule } from './milestones/milestone.module';
     ProjectModule,
     TaskModule,
     MilestoneModule,
+    LabelModule,
     ToastrModule.forRoot({
       progressBar: true,
       timeOut: 4000,

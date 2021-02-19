@@ -73,6 +73,10 @@ import { UserProject } from "../models/user-project.model";
     statistics(project: Statistics){
       return this.http.post(environment.apiUrlPrefix + `/api/project/statistics/`, project);
     }
+
+    getLabels():Observable<any> {
+      return this.http.get(environment.apiUrlPrefix + `/label/active`);
+    }
     
 
   }

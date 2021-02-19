@@ -1,0 +1,12 @@
+<div  *ngIf="label">
+    <form #updateLabel="ngForm" (ngSubmit)="update()" novalidate>
+      <h1>Update label:</h1>
+      <div>
+        <mat-form-field>
+          <input matInput type="text" required #name='ngModel'
+          [(ngModel)]="label.name" name="name" placeholder="Label name">
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="accent" type="submit" [disabled]="updateLabel.form.invalid">Update</button>
+    </form>
+  </div> 

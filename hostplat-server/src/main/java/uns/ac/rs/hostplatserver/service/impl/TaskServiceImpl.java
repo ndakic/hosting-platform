@@ -3,6 +3,7 @@ package uns.ac.rs.hostplatserver.service.impl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import uns.ac.rs.hostplatserver.model.LabelEntity;
 import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
+import uns.ac.rs.hostplatserver.repository.StatusRepository;
 import uns.ac.rs.hostplatserver.repository.TaskRepository;
+import uns.ac.rs.hostplatserver.resource.LabelResource;
 import uns.ac.rs.hostplatserver.service.LabelService;
 import uns.ac.rs.hostplatserver.service.TaskService;
 import uns.ac.rs.hostplatserver.service.UserService;
@@ -31,6 +34,9 @@ public class TaskServiceImpl implements TaskService {
 	
 	@Autowired
     private LabelService labelService;
+	
+	@Autowired
+	private StatusRepository statusRepository;
 
 	@Override
 	public Task findOne(Long id) throws ResourceNotFoundException {
@@ -50,6 +56,8 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public Task create(Task task) throws Exception {
 		task.setCreate_date(DateUtil.nowSystemTime());
+        task.setStatus(statusRepository.getOne((long) 20));
+
 		return this.taskRepository.save(task);       
 
 	}
@@ -72,6 +80,7 @@ public class TaskServiceImpl implements TaskService {
 		Task task = findOne(id);
 		task.setAssigned_users(new HashSet<>());
 		task.setLabels(new HashSet<>());
+        task.setStatus(statusRepository.getOne((long) 21));
 		taskRepository.save(task);
 		this.taskRepository.deleteById(id);
 		
@@ -169,5 +178,6 @@ public class TaskServiceImpl implements TaskService {
 		taskRepository.save(task);
 		return milestone;
 	}
+
 
 }

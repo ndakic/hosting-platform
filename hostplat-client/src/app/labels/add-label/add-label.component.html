@@ -1,0 +1,12 @@
+<form #addTask="ngForm" (ngSubmit)="create()" novalidate>
+  <h1>Create new label:</h1>
+  <div>
+      <mat-form-field>
+        <input matInput type="text" required #name='ngModel'
+        [(ngModel)]="label.name" name="name" placeholder="Label name">
+      </mat-form-field>
+    </div>
+    <div>
+      <button   mat-raised-button    color="accent">Create</button>
+    </div>
+</form> 

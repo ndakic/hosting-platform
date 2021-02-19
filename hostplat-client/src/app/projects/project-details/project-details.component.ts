@@ -9,6 +9,7 @@ import { ToastrService } from "ngx-toastr";
 import { AsyncSubject, Subject } from "rxjs";
 import { AuthenticationService } from "src/app/core/services/authentication.service";
 import { MilestoneService } from "src/app/milestones/milestone.service";
+import { Label } from "src/app/models/label.model";
 import { Milestone } from "src/app/models/milestone.model";
 import { Project } from "src/app/models/project.model";
 import { StatisticsBack } from "src/app/models/statisticBack.model";
@@ -17,7 +18,7 @@ import { Task } from "src/app/models/task.model";
 import { User } from "src/app/models/user";
 import { TaskService } from "src/app/tasks/task.service";
 import { ProjectService } from "../project.service";
-
+import { LabelService } from "src/app/labels/label.service";
 
 
 @Component({
@@ -44,6 +45,7 @@ export class ProjectDetailsComponent implements OnInit {
   closeT: Task[];
   o: number;
   c: number;
+  labels: Label[];
 
   constructor(
     private route: ActivatedRoute,
@@ -53,7 +55,9 @@ export class ProjectDetailsComponent implements OnInit {
     private toastr: ToastrService,
     private taskService: TaskService,
     private milestoneService: MilestoneService,
-    public dialog: MatDialog
+    private labelService: LabelService,
+    public dialog: MatDialog,
+
   ) { }
 
   ngOnInit() {
@@ -79,6 +83,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.getCloseMilestones()
     this.getOpenMilestones()
     this.getUsersOnProject()
+    this.getLabels()
   }
 
   updateProject() {
@@ -110,6 +115,16 @@ export class ProjectDetailsComponent implements OnInit {
     this.projectService.getCloseMilestone(Number(id)).subscribe(
       (data: Milestone[]) => {
         this.closeMilestones = data;          
+      }
+    );
+  }
+
+  getLabels() {
+    this.role = this.authService.getRole();
+    const id = this.route.snapshot.paramMap.get('id');
+    this.projectService.getLabels().subscribe(
+      (data: Label[]) => {
+        this.labels = data;          
       }
     );
   }
@@ -175,5 +190,16 @@ export class ProjectDetailsComponent implements OnInit {
         this.o = this.open.length; 
       }
     );
+  }
+
+  updateLabel(id: string){
+    console.log(id);
+    this.router.navigate(['/update-label/' + id]);
+  }
+
+   deleteLabel(id: number){
+    this.labelService.delete(id).subscribe();
+    this.router.navigate(['/project-details/' + this.project.id]);
+
   }
 } 

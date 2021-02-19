@@ -145,7 +145,57 @@
       <mat-panel-title>
         <h2>Labels:</h2>
       </mat-panel-title>
+        <mat-panel-description>
+        <button mat-button color="accent" (click)="addLabel()">Create new label</button>
+      </mat-panel-description>
     </mat-expansion-panel-header>
+    <mat-action-row>
+      <table mat-table [dataSource]="labelsForTask" class="mat-elevation-z8" >
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns5" ></tr>
+        <tr mat-row  *matRowDef="let row; columns: displayedColumns5  let idx=index; let even=even;" [style.background-color]="rowClicked == idx ? 'pink' : (even ? 'white' : 'white')"
+        (click)="changeTableRowColor(idx)" [ngClass]="{selected: row.isSelected}" (click)="selection.toggle(row)"></tr>
+  </table>
+
+</mat-action-row>
+<mat-action-row>
+      <table mat-table [dataSource]="labels" class="mat-elevation-z8" >
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection3.hasValue() && isAllSelected()"
+                          [indeterminate]="selection3.hasValue() && !isAllSelected()"
+                          [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection3.toggle(row) : null"
+                          [checked]="selection3.isSelected(row)"
+                          [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns4" ></tr>
+        <tr mat-row  *matRowDef="let row; columns: displayedColumns4  let idx=index; let even=even;" [style.background-color]="rowClicked == idx ? 'pink' : (even ? 'white' : 'white')"
+        (click)="changeTableRowColor(idx)" [ngClass]="{selected: row.isSelected}" (click)="selection.toggle(row)"></tr>
+
+  </table>
+  <button mat-button color="accent" (click)="addLabels(task.id)">Save</button>
+
+    </mat-action-row>
   </mat-expansion-panel>
 
 

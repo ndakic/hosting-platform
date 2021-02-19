@@ -120,9 +120,20 @@
         </mat-grid-list>
       </mat-tab>
     </mat-tab-group>
-      <mat-tab label="Wiki">
-        <mat-tab-group>
-        </mat-tab-group>
+      <mat-tab label="Labels">
+        <mat-grid-list  cols="1" rowHeight="160px">
+          <mat-grid-tile *ngFor="let open of labels" >
+            <mat-card class="card">
+              <mat-card-header>
+                <mat-card-title>{{open.name}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-actions>
+                <button mat-raised-button (click)="updateLabel(open.id)" color="accent">Update</button>
+                <button mat-raised-button (click)="deleteLabel(open.id)" color="accent">Delete</button>
+              </mat-card-actions>
+            </mat-card>  
+          </mat-grid-tile>
+        </mat-grid-list>
       </mat-tab>
       <mat-tab label="Insights">
         <div class="center">

@@ -3,6 +3,7 @@ package uns.ac.rs.hostplatserver.controller;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import uns.ac.rs.hostplatserver.dto.LabelTaskDTO;
 import uns.ac.rs.hostplatserver.dto.MilestoneDTO;
 import uns.ac.rs.hostplatserver.dto.MilestoneTaskDTO;
 import uns.ac.rs.hostplatserver.dto.TaskDTO;
@@ -27,9 +29,13 @@ import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.mapper.MilestoneMapper;
 import uns.ac.rs.hostplatserver.mapper.TaskMapper;
 import uns.ac.rs.hostplatserver.mapper.UserMapper;
+import uns.ac.rs.hostplatserver.model.LabelEntity;
 import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
+import uns.ac.rs.hostplatserver.repository.LabelRepository;
+import uns.ac.rs.hostplatserver.resource.LabelResource;
+import uns.ac.rs.hostplatserver.service.LabelService;
 import uns.ac.rs.hostplatserver.service.TaskService;
 
 @RestController
@@ -38,6 +44,9 @@ public class TaskController {
 	
 	@Autowired
 	private TaskService taskService;
+	
+	@Autowired
+	private LabelRepository labelService;
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TaskDTO> getTask(@PathVariable("id") Long id) throws ResourceNotFoundException {
@@ -196,6 +205,35 @@ public class TaskController {
 			returnDTO.add(UserMapper.toDTO(user));
 		}
 
+		return new ResponseEntity<>(returnDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getLabelsForTask/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Set<LabelResource>> getLabelsForTask(@PathVariable("id") Long id) {
+		Task task = taskService.findOne(id);		
+		Set<LabelEntity> labels = task.getLabels();
+		Set<LabelResource> labelsDTO = new HashSet<LabelResource>();
+		for (LabelEntity label: labels) {
+			labelsDTO.add(LabelResource.entityToResource(label));
+		}
+		return new ResponseEntity<>(labelsDTO, HttpStatus.OK);
+	}
+	
+	// DODATI
+	@PostMapping(value = "/setLabelsToTask", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Set<LabelResource>> setLabelsToTask(@RequestBody LabelTaskDTO dto) {
+		/*
+		Set<User> users = new HashSet<>();
+		for (UserDTO user : dto.getUsers()) {
+			users.add(UserMapper.toUser(user));
+		}
+		Set<User> returnUser = taskService.setUsersToTask(dto.getTask_id(),users);	
+		Set<UserDTO> returnDTO = new HashSet<>();
+		for (User user : returnUser) {
+			returnDTO.add(UserMapper.toDTO(user));
+		}*/
+
+		Set<LabelResource> returnDTO = new HashSet<>();
 		return new ResponseEntity<>(returnDTO, HttpStatus.OK);
 	}
 	
