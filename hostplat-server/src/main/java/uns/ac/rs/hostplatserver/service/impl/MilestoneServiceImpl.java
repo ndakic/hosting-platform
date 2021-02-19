@@ -2,15 +2,19 @@ package uns.ac.rs.hostplatserver.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import uns.ac.rs.hostplatserver.constant.LabelStatus;
 import uns.ac.rs.hostplatserver.dto.MilestoneTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.model.Milestone;
+import uns.ac.rs.hostplatserver.model.StatusEntity;
 import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.repository.MilestoneRepository;
+import uns.ac.rs.hostplatserver.repository.StatusRepository;
 import uns.ac.rs.hostplatserver.repository.TaskRepository;
 import uns.ac.rs.hostplatserver.service.MilestoneService;
 import uns.ac.rs.hostplatserver.service.TaskService;
@@ -27,6 +31,9 @@ public class MilestoneServiceImpl implements MilestoneService {
 	
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private StatusRepository statusRepository;
 	
 	@Override
 	public Milestone findOne(Long id) throws ResourceNotFoundException {
@@ -45,7 +52,8 @@ public class MilestoneServiceImpl implements MilestoneService {
 	@Override
 	public Milestone create(Milestone milestone, Long task_id) throws Exception {
         Task task = taskService.findOne(task_id);
-
+        milestone.setStatus(statusRepository.getOne((long) 40));
+        
 		Milestone milestoneSaved = this.milestoneRepository.save(milestone);
 		task.setMilestone(milestoneSaved);
 		taskRepository.save(task);
@@ -70,7 +78,9 @@ public class MilestoneServiceImpl implements MilestoneService {
 
 	@Override
 	public void delete(Long id) {
-        this.milestoneRepository.deleteById(id);
+		Milestone milestone = this.findOne(id);
+        milestone.setStatus(statusRepository.getOne((long) 41));
+        milestoneRepository.save(milestone);
 		
 	}
 
@@ -92,7 +102,6 @@ public class MilestoneServiceImpl implements MilestoneService {
 		List<Milestone> m = new ArrayList<>();
 		for (Milestone mi : milestones) {
 			if(mi!=null) {
-				System.out.println(mi.getTitle());
 				if(!mi.isClose()) {
 					m.add(mi);
 				}

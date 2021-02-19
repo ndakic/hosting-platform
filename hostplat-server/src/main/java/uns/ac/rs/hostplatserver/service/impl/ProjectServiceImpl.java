@@ -20,6 +20,7 @@ import uns.ac.rs.hostplatserver.model.Project;
 import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.repository.ProjectRepository;
+import uns.ac.rs.hostplatserver.repository.StatusRepository;
 import uns.ac.rs.hostplatserver.service.ProjectService;
 import uns.ac.rs.hostplatserver.service.TaskService;
 import uns.ac.rs.hostplatserver.service.UserService;
@@ -37,6 +38,9 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
     private TaskService taskService;
+	
+	@Autowired
+	private StatusRepository statusRepository;
 
 	@Override
 	public Project findOne(Long id) throws ResourceNotFoundException {
@@ -56,6 +60,8 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project create(Project project) throws Exception {
 		project.setCreate_date(DateUtil.nowSystemTime());
+        project.setStatus(statusRepository.getOne((long) 10));
+
 		Set<User> users = new HashSet<>();
 
 		for (User user : project.getUsers()) {
@@ -87,6 +93,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public void delete(Long id) {
 		Project project = findOne(id);
 		project.setUsers(new HashSet<>());
+        project.setStatus(statusRepository.getOne((long) 11));
 		projectRepository.save(project);
 		this.projectRepository.deleteById(id);
 		

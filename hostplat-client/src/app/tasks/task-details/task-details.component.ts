@@ -15,7 +15,8 @@ import { MatCheckboxChange } from "@angular/material/checkbox";
 import { MatTableDataSource } from "@angular/material/table";
 import { UserTask } from "src/app/models/user-task.model";
 import { MilestoneTask } from "src/app/models/milestone-task.model";
-
+import { Label} from "src/app/models/label.model";
+import { LabelTask} from "src/app/models/label-task.model";
 
 
 @Component({
@@ -35,6 +36,12 @@ export class TaskDetailsComponent implements OnInit {
   displayedColumns: string[] = ['title', 'start_date', 'end_date'];
   displayedColumns2: string[] = ['select', 'firstName', 'lastName', 'username', 'email'];
   displayedColumns3: string[] = ['firstName', 'lastName', 'username', 'email'];
+  displayedColumns4: string[] = ['select', 'name'];
+  displayedColumns5: string[] = [ 'name'];
+
+  labels: Label[];
+  labelTask: LabelTask;
+
 
   selection = new SelectionModel<Milestone>(true, []);
   rowClicked;
@@ -45,6 +52,8 @@ export class TaskDetailsComponent implements OnInit {
   selection2 = new SelectionModel<User>(true, []);
   dataSource;
   id_glavni: number;
+  selection3 = new SelectionModel<Label>(true, []);
+  labelsForTask: Label[];
 
 
   constructor(
@@ -67,6 +76,8 @@ export class TaskDetailsComponent implements OnInit {
     this.getUsers();
     this.getMilestoneForTask();
     this.getUsersForTask();
+    this.getLabels();
+    this.getLabelsForTask();
 
     if (id) {
       this.taskService.getTask(Number(id)).subscribe(
@@ -135,6 +146,10 @@ export class TaskDetailsComponent implements OnInit {
     this.router.navigate(['/add-milestone/' + this.task.id]);
   }
 
+  addLabel(){
+    this.router.navigate(['/add-label/' + this.task.id]);
+  }
+
   onRowClicked(row) {
     this.role = this.authService.getRole();
     const id = this.route.snapshot.paramMap.get('id');
@@ -201,7 +216,35 @@ export class TaskDetailsComponent implements OnInit {
     return `${this.selection2.isSelected(row) ? 'deselect' : 'select'} row`;
   }
 
+ getLabels() {
+    this.role = this.authService.getRole();
+    const id = this.route.snapshot.paramMap.get('id');
+    this.projectService.getLabels().subscribe(
+      (data: Label[]) => {
+        this.labels = data;          
+      }
+    );
+  }
 
+  addLabels(task_id: number){
+    console.log(task_id);
+    this.labelTask = new LabelTask(task_id, this.selection3.selected);
+    this.taskService.setLabelsToTask(this.labelTask).subscribe(
+      (data: Label[]) => {
+        this.labelsForTask = data;
+      }
+    );
+  }
+
+  getLabelsForTask(){
+    this.role = this.authService.getRole();
+    const id = this.route.snapshot.paramMap.get('id');
+    this.taskService.getLabelsForTask(Number(id)).subscribe(
+      (data: Label[]) => {
+        this.labelsForTask = data;
+      }
+    );
+  }
 
 
 

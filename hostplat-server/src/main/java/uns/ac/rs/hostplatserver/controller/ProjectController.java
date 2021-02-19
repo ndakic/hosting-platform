@@ -35,10 +35,12 @@ import uns.ac.rs.hostplatserver.mapper.MilestoneMapper;
 import uns.ac.rs.hostplatserver.mapper.ProjectMapper;
 import uns.ac.rs.hostplatserver.mapper.TaskMapper;
 import uns.ac.rs.hostplatserver.mapper.UserMapper;
+import uns.ac.rs.hostplatserver.model.LabelEntity;
 import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Project;
 import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
+import uns.ac.rs.hostplatserver.resource.LabelResource;
 import uns.ac.rs.hostplatserver.service.ProjectService;
 import uns.ac.rs.hostplatserver.service.TaskService;
 import uns.ac.rs.hostplatserver.service.UserService;
@@ -200,8 +202,6 @@ public class ProjectController {
 		for (User user: users) {
 			usersDTO.add(UserMapper.toDTO(user));
 		}
-		System.out.println("MILICA");
-		System.out.println(usersDTO.size());
 		
 		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
 	}
@@ -213,5 +213,6 @@ public class ProjectController {
 				
 		return new ResponseEntity<>(back, HttpStatus.OK);
 	}
+	
 }
 
