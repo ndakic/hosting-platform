@@ -19,7 +19,7 @@ import { MilestoneModule } from './milestones/milestone.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
