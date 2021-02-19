@@ -38,6 +38,8 @@ public interface TaskService {
 
 	public Set<User> setUsersToTask(Long task_id, Set<User> users);
 
+	public Set<LabelEntity> setLabelsToTask(Long task_id, Set<LabelEntity> labels);
+
 	
 
 }

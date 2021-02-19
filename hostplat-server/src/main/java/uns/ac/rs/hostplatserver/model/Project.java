@@ -64,5 +64,11 @@ public class Project {
 		this.id = project_id;
 	}
 
+	public Project(Long id, String persistedProjectName, String persistedProjectDescription) {
+		this.id = id;
+		this.name = persistedProjectName;
+		this.description = persistedProjectDescription;
+	}
+
 
 }

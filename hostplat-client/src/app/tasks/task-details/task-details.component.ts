@@ -217,6 +217,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
  getLabels() {
+
     this.role = this.authService.getRole();
     const id = this.route.snapshot.paramMap.get('id');
     this.projectService.getLabels().subscribe(
@@ -227,11 +228,14 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   addLabels(task_id: number){
+    console.log(this.selection3.selected);
     console.log(task_id);
     this.labelTask = new LabelTask(task_id, this.selection3.selected);
     this.taskService.setLabelsToTask(this.labelTask).subscribe(
       (data: Label[]) => {
         this.labelsForTask = data;
+        console.log("GOTOVO");
+        console.log(this.labelsForTask);
       }
     );
   }
@@ -246,6 +250,26 @@ export class TaskDetailsComponent implements OnInit {
     );
   }
 
+isAllSelected2() {
+    const numSelected = this.selection3.selected.length;
+    const numRows = this.users.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle2() {
+    this.dataSource = new MatTableDataSource<Label>(this.labels);
+
+    this.isAllSelected2() ?
+        this.selection3.clear() :
+        this.dataSource.forEach(row => this.selection3.select(row));
+  }
+
+  checkboxLabel2(row?: Label): string {
+    if (!row) {
+      return `${this.isAllSelected2() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection3.isSelected(row) ? 'deselect' : 'select'} row`;
+  }
 
 
   }
