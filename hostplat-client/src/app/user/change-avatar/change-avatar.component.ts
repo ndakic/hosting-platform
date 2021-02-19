@@ -16,6 +16,7 @@ export class ChangeAvatarComponent implements OnInit {
   user: User = {};
   constructor(private userService: UserService,
               private toastr: ToastrService,
+              private router: Router,
               private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
@@ -43,16 +44,16 @@ export class ChangeAvatarComponent implements OnInit {
   }
 
   onClickChangeAvatar(event): void {
-    console.log('ide slika na back')
-/*     const image = event.target.files[0];
+    const image = event.target.files[0];
     const uploadData = new FormData();
     uploadData.append('file', image, image.name);
 
-    this.userService.editUserProfileImage(uploadData).subscribe(data => {
+    this.userService.changeAvatar(uploadData).subscribe(data => {
       this.toastr.success('Your image has been successfully updated.');
+      this.user.imagePath = data.imagePath;
     }, error => {
       this.toastr.error('There was an error while uploading your new profile image.');
-    }); */
+    });
   }
 
 }

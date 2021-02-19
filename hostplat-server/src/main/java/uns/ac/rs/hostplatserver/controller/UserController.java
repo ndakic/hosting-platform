@@ -1,6 +1,5 @@
 package uns.ac.rs.hostplatserver.controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,18 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.sun.xml.bind.v2.schemagen.xmlschema.List;
-
-import uns.ac.rs.hostplatserver.dto.MilestoneDTO;
 import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.dto.UserEditDTO;
 import uns.ac.rs.hostplatserver.dto.UserRegistrationDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
-import uns.ac.rs.hostplatserver.mapper.MilestoneMapper;
 import uns.ac.rs.hostplatserver.mapper.UserMapper;
-import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.service.UserService;
 
@@ -92,6 +88,12 @@ public class UserController {
 		}
   		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
   	}
+    
+    @PostMapping(value = "/change-avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity changeProfileImage(@RequestParam("file") MultipartFile file) {
+        User user = userService.changeAvatar(file);
+        return new ResponseEntity<>(UserMapper.toDTO(user), HttpStatus.OK);
+    }
     
 
 

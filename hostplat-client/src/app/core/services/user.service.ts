@@ -25,5 +25,9 @@ export class UserService {
   editMyProfile(userEditData: UserEditInfo): Observable<any> {
     return this.http.put(environment.apiUrlPrefix + '/api/users/my-profile', userEditData);
   }
+
+  changeAvatar(image: FormData): Observable<any> {
+    return this.http.post(environment.apiUrlPrefix + `/api/users/change-avatar`, image);
+  }
   
 }
