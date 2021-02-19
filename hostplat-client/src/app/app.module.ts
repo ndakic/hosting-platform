@@ -20,7 +20,7 @@ import { LabelModule} from './labels/label.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
