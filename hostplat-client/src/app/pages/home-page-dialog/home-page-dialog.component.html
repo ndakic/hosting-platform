@@ -3,8 +3,8 @@
     <h3>Project name: <b>{{data.name | titlecase}}</b></h3>
     <h3>Project description: <b>{{data.description | titlecase}}</b></h3>
     <h3>Created: <b>{{data.create_date | date: 'dd.MM.yyyy.'}}</b></h3>
-    <h3>Project name: <b>{{data.name | titlecase}}</b></h3>
-    <h3>Project name: <b>{{data.name | titlecase}}</b></h3>
+    <h3>Project owner: <b>{{data.users[0].username}}</b></h3>
+    <h3>Number of contributors: <b>{{data.users.length}}</b></h3>
 </mat-dialog-content>
 
 <mat-dialog-actions align="center">
