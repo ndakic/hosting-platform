@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/hostplatdb?ApplicationName=hostplat-db
+    url: jdbc:postgresql://hostplatdb.clyjge7psjds.us-east-2.rds.amazonaws.com:5432/hostplatdb?ApplicationName=hostplat-db
     username: postgres
-    password: 1234
+    password: NKcdxWYfg8odL
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,8 +22,4 @@ spring:
     protocol: smtp
     tls: true
     properties.mail.smtp:
-        starttls.enable: true
-cloud:
-  name: djxkexzcr
-  secret: CTvt7sqwOmYEOWD9zIm90CZDpng
-  key: 371719426212883
+      starttls.enable: true
