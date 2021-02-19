@@ -11,6 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 
 import uns.ac.rs.hostplatserver.common.TimeProvider;
 import uns.ac.rs.hostplatserver.constant.UserRoles;
@@ -29,6 +33,8 @@ import uns.ac.rs.hostplatserver.repository.ConfirmationTokenRepository;
 import uns.ac.rs.hostplatserver.repository.UserRepository;
 import uns.ac.rs.hostplatserver.service.ProjectService;
 import uns.ac.rs.hostplatserver.service.UserService;
+import java.io.IOException;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,6 +59,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MailSenderService mailSenderService;
+    
+    @Autowired
+    private Cloudinary cloudinary;
 
 
     @Override
@@ -188,4 +197,21 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAll() {
 		return this.userRepository.findAll();
 	}
+	
+
+    
+    public User changeAvatar(MultipartFile file) {
+    	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        try {
+            Map result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+            String imagePath = (String) result.get("url");
+            user.setImagePath(imagePath);
+            userRepository.save(user);
+        } catch (IOException e) {
+            throw new BadRequestException("There was an error while uploading a profile image");
+        }
+        
+        return user;
+        
+    }
 }

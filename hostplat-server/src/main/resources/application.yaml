@@ -23,3 +23,7 @@ spring:
     tls: true
     properties.mail.smtp:
         starttls.enable: true
+cloud:
+  name: djxkexzcr
+  secret: CTvt7sqwOmYEOWD9zIm90CZDpng
+  key: 371719426212883
