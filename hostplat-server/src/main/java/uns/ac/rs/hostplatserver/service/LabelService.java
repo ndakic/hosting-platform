@@ -77,4 +77,9 @@ public class LabelService {
                 ()-> new ResourceNotFoundException(String.format("Label with id %s not found!", id))
        );
     }
+    
+    public List<LabelEntity> getAll(){
+        return labelRepository.findAllByStatus_Id(LabelStatus.ACTIVE.getId());
+    }
+
 }
