@@ -22,7 +22,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir("hostplat-server") {
-                    sh 'mvn -B test'
+                    sh 'mvn -B test -Dspring.profiles.active=test'
                 }
             }
         }
