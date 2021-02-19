@@ -23,6 +23,8 @@ import { UpdateMilestoneComponent } from './milestones/update-milestone/update-m
 import { AddMilestoneComponent } from './milestones/add-milestone/add-milestone.component';
 import { MilestoneDetailsComponent } from './milestones/milestone-details/milestone-details.component';
 import { AddUsersComponent } from './projects/add-users/add-users.component';
+import { UpdateLabelComponent} from './labels/update-label/update-label.component';
+import { AddLabelComponent} from './labels/add-label/add-label.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -114,6 +116,18 @@ const routes: Routes = [
   {
     path: 'add-users/:id',
     component: AddUsersComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'update-label/:id',
+    component: UpdateLabelComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'add-label/:id',
+    component: AddLabelComponent,
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_USER'}
   },

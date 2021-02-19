@@ -1,1 +1,43 @@
-<p>change-avatar works!</p>
+<mat-card class="card" *ngIf="this.user">
+    <mat-card-header>
+        <mat-card-title>User profile</mat-card-title>
+        <mat-card-subtitle>Informations</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{user.imagePath}}" alt="{{user.username}}" matTooltip="Change your avatar" (click)="fileInput.click()">
+
+    <mat-card-content>
+        <div class="row">
+            <div>
+                <p>
+                    <strong>Username:</strong> {{user.username | titlecase}}
+                </p>
+    
+                <p>
+                    <strong>Email:</strong> {{user.email | titlecase}}
+                </p>
+                <p>
+                    <strong>First name:</strong> {{user.firstName | titlecase}}
+                </p>
+    
+                <p>
+                    <strong>Last name:</strong> {{user.lastName | titlecase}}
+                </p>
+
+            </div>
+        </div>
+    </mat-card-content>
+
+    <!-- Conditional Display of Angular Material Buttons for user -->
+    <mat-card-actions class="card-actions">
+
+        <input
+        style="display: none"
+        multiple="multiple"
+        type="file" (change)="onClickChangeAvatar($event)"
+        #fileInput
+        accept="image/*"/>
+
+    </mat-card-actions>
+
+    <mat-card-footer>Informations about user's profile</mat-card-footer>
+</mat-card>

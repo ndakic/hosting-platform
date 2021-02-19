@@ -3,6 +3,8 @@ package uns.ac.rs.hostplatserver.service;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.dto.UserEditDTO;
 import uns.ac.rs.hostplatserver.dto.UserRegistrationDTO;
@@ -21,4 +23,5 @@ public interface UserService {
 	boolean activateAccount(String token);
 	Set<User> getUserForProject(Long id);
 	List<User> getAll();
+	User changeAvatar(MultipartFile file);
 }

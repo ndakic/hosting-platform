@@ -1,4 +1,10 @@
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/core/services/user.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-change-avatar',
@@ -7,9 +13,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangeAvatarComponent implements OnInit {
 
-  constructor() { }
+  user: User = {};
+  constructor(private userService: UserService,
+              private toastr: ToastrService,
+              private router: Router,
+              private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
+    this.getUserData();
+  }
+
+
+  private getUserData(): void {
+    this.userService.getMyProfileData().subscribe(data => {
+      this.user = {
+        id: data.id,
+        username: data.username,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        imagePath: data.imagePath
+      };
+    }, error => {
+      this.toastr.error('There was an error while getting your profile data');
+    });
+  }
+
+  isUserLoggedIn(): boolean {
+    return this.authenticationService.isUserLoggedIn();
+  }
+
+  onClickChangeAvatar(event): void {
+    const image = event.target.files[0];
+    const uploadData = new FormData();
+    uploadData.append('file', image, image.name);
+
+    this.userService.changeAvatar(uploadData).subscribe(data => {
+      this.toastr.success('Your image has been successfully updated.');
+      this.user.imagePath = data.imagePath;
+    }, error => {
+      this.toastr.error('There was an error while uploading your new profile image.');
+    });
   }
 
 }

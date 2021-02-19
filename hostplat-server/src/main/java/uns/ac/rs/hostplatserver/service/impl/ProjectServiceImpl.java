@@ -1,6 +1,8 @@
 package uns.ac.rs.hostplatserver.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,12 +10,17 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import uns.ac.rs.hostplatserver.dto.StatisticBackDTO;
+import uns.ac.rs.hostplatserver.dto.StatisticsDTO;
+import uns.ac.rs.hostplatserver.dto.TaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
+import uns.ac.rs.hostplatserver.mapper.TaskMapper;
 import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Project;
 import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
 import uns.ac.rs.hostplatserver.repository.ProjectRepository;
+import uns.ac.rs.hostplatserver.repository.StatusRepository;
 import uns.ac.rs.hostplatserver.service.ProjectService;
 import uns.ac.rs.hostplatserver.service.TaskService;
 import uns.ac.rs.hostplatserver.service.UserService;
@@ -31,6 +38,9 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
     private TaskService taskService;
+	
+	@Autowired
+	private StatusRepository statusRepository;
 
 	@Override
 	public Project findOne(Long id) throws ResourceNotFoundException {
@@ -50,6 +60,8 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project create(Project project) throws Exception {
 		project.setCreate_date(DateUtil.nowSystemTime());
+        project.setStatus(statusRepository.getOne((long) 10));
+
 		Set<User> users = new HashSet<>();
 
 		for (User user : project.getUsers()) {
@@ -81,6 +93,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public void delete(Long id) {
 		Project project = findOne(id);
 		project.setUsers(new HashSet<>());
+        project.setStatus(statusRepository.getOne((long) 11));
 		projectRepository.save(project);
 		this.projectRepository.deleteById(id);
 		
@@ -162,6 +175,94 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setUsers(all);
 		projectRepository.save(project);
 		return all;
+	}
+
+	@Override
+	public StatisticBackDTO statistic(StatisticsDTO dto) {
+		List<Task> openTasks = taskService.findAllOpenTasks();
+		List<Task> openTasksByProjectId = taskService.findAllByProjectId(openTasks, dto.getProject_id());
+		List<Task> closeTasks = taskService.findAllCloseTasks();
+		List<Task> closeTasksByProjectId = taskService.findAllByProjectId(closeTasks, dto.getProject_id());
+		Calendar cal = Calendar.getInstance();
+		List<Task> closeTask = new ArrayList<>();
+		List<Task> openTask = new ArrayList<>();
+
+		if(dto.getPeriod().equals("24 h")){
+			cal.add(Calendar.DATE, -1);
+			Date cal2 = cal.getTime();
+			for (Task t: closeTasksByProjectId) {
+				if(cal2.before(t.getEnd_date())) {
+					System.out.println("24 h");
+					closeTask.add(t);				
+				}
+			}
+			for(Task t:  openTasksByProjectId) {
+				if(cal2.before(t.getCreate_date())) {
+					System.out.println("TU");
+					openTask.add(t);
+				}
+			}
+		}else if(dto.getPeriod().equals("3 days")) {
+			cal.add(Calendar.DATE, -3);
+			Date cal2 = cal.getTime();
+			for (Task t: closeTasksByProjectId) {
+				if(t.getEnd_date()!=null &  cal2.before(t.getEnd_date()) ) {
+					System.out.println("3 days");
+					closeTask.add(t);				
+				}
+			}
+			for(Task t: openTasksByProjectId) {
+				if(cal2.before(t.getCreate_date())) {
+					openTask.add(t);
+				}
+			}
+		
+		}else if(dto.getPeriod().equals("1 week")) {
+			cal.add(Calendar.DATE, -7);
+			Date cal2 = cal.getTime();
+			for (Task t: closeTasksByProjectId) {
+				if(t.getEnd_date()!=null &  cal2.before(t.getEnd_date()) ) {
+					System.out.println("7 days");
+					closeTask.add(t);				
+				}
+			}
+			for(Task t: openTasksByProjectId) {
+				if(cal2.before(t.getCreate_date())) {
+					openTask.add(t);
+				}
+			}
+		
+		}else if(dto.getPeriod().equals("1 month")) {
+			cal.add(Calendar.DATE, -30);
+			Date cal2 = cal.getTime();
+			for (Task t: closeTasksByProjectId) {
+				if(t.getEnd_date()!=null &  cal2.before(t.getEnd_date()) ) {
+					System.out.println("30 days");
+					closeTask.add(t);				
+				}
+			}
+			for(Task t: openTasksByProjectId) {
+				if(cal2.before(t.getCreate_date())) {
+					openTask.add(t);
+				}
+			}
+		
+		}
+		
+		List<TaskDTO> openDTO = new ArrayList<TaskDTO>();
+		for (Task t: openTask) {
+			openDTO.add(TaskMapper.toDTO(t));
+		}
+		
+		List<TaskDTO> closeDTO = new ArrayList<TaskDTO>();
+		for (Task t: closeTask) {
+			closeDTO.add(TaskMapper.toDTO(t));
+		}
+		
+		StatisticBackDTO statistic = new StatisticBackDTO(openDTO, closeDTO);
+		
+		return statistic;
+
 	}
 
 }

@@ -2,18 +2,23 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { NgIf } from "@angular/common";
 import { identifierModuleUrl } from "@angular/compiler";
 import { Component, Inject, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
+import { AsyncSubject, Subject } from "rxjs";
 import { AuthenticationService } from "src/app/core/services/authentication.service";
 import { MilestoneService } from "src/app/milestones/milestone.service";
+import { Label } from "src/app/models/label.model";
 import { Milestone } from "src/app/models/milestone.model";
 import { Project } from "src/app/models/project.model";
+import { StatisticsBack } from "src/app/models/statisticBack.model";
+import { Statistics } from "src/app/models/statistics.model";
 import { Task } from "src/app/models/task.model";
 import { User } from "src/app/models/user";
 import { TaskService } from "src/app/tasks/task.service";
 import { ProjectService } from "../project.service";
-
+import { LabelService } from "src/app/labels/label.service";
 
 
 @Component({
@@ -33,8 +38,14 @@ export class ProjectDetailsComponent implements OnInit {
   displayedColumns3: string[] = ['firstName', 'lastName', 'username', 'email'];
   selection2 = new SelectionModel<User>(true, []);
   dataSource;
-
-
+  selected = '3 days';
+  statistics: Statistics;
+  back: StatisticsBack;
+  open: Task[];
+  closeT: Task[];
+  o: number;
+  c: number;
+  labels: Label[];
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +55,9 @@ export class ProjectDetailsComponent implements OnInit {
     private toastr: ToastrService,
     private taskService: TaskService,
     private milestoneService: MilestoneService,
-    public dialog: MatDialog
+    private labelService: LabelService,
+    public dialog: MatDialog,
+
   ) { }
 
   ngOnInit() {
@@ -70,6 +83,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.getCloseMilestones()
     this.getOpenMilestones()
     this.getUsersOnProject()
+    this.getLabels()
   }
 
   updateProject() {
@@ -105,6 +119,16 @@ export class ProjectDetailsComponent implements OnInit {
     );
   }
 
+  getLabels() {
+    this.role = this.authService.getRole();
+    const id = this.route.snapshot.paramMap.get('id');
+    this.projectService.getLabels().subscribe(
+      (data: Label[]) => {
+        this.labels = data;          
+      }
+    );
+  }
+
   getOpenMilestones() {
     this.role = this.authService.getRole();
     const id = this.route.snapshot.paramMap.get('id');
@@ -114,6 +138,8 @@ export class ProjectDetailsComponent implements OnInit {
       }
     );
   }
+
+ 
 
 
   update(id: number){
@@ -148,5 +174,32 @@ export class ProjectDetailsComponent implements OnInit {
         this.usersOnProject = data;          
       }
     );
+  }
+
+  show(selected){
+    console.log(selected);
+    const id = this.route.snapshot.paramMap.get('id');
+    this.statistics = new Statistics(Number(id), selected);
+    this.projectService.statistics(this.statistics).subscribe(
+      (data: StatisticsBack)  => {
+        this.back = data;       
+        console.log(data); 
+        this.closeT = this.back.close;
+        this.c = this.closeT.length;
+        this.open = this.back.open; 
+        this.o = this.open.length; 
+      }
+    );
+  }
+
+  updateLabel(id: string){
+    console.log(id);
+    this.router.navigate(['/update-label/' + id]);
+  }
+
+   deleteLabel(id: number){
+    this.labelService.delete(id).subscribe();
+    this.router.navigate(['/project-details/' + this.project.id]);
+
   }
 } 

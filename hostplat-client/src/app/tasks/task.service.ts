@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { MilestoneTask } from "../models/milestone-task.model";
 import { Task } from "../models/task.model";
 import { UserTask } from "../models/user-task.model";
+import { LabelTask} from "../models/label-task.model";
 
 @Injectable({
     providedIn: 'root'
@@ -56,6 +57,14 @@ import { UserTask } from "../models/user-task.model";
   
     setUsersToTask(users: UserTask): Observable<any> {
       return this.http.post(environment.apiUrlPrefix +  `/api/task/setUsersToTask`, users);
+    }
+
+     setLabelsToTask(labels: LabelTask): Observable<any> {
+      return this.http.post(environment.apiUrlPrefix +  `/api/task/setLabelsToTask`, labels);
+    }
+
+    getLabelsForTask(id: number): Observable<any> {
+      return this.http.get(environment.apiUrlPrefix +  `/api/task/getLabelsForTask/` + id);
     }
   
     } 

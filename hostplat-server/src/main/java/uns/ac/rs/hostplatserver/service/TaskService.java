@@ -1,10 +1,12 @@
 package uns.ac.rs.hostplatserver.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import uns.ac.rs.hostplatserver.dto.UserTaskDTO;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
+import uns.ac.rs.hostplatserver.model.LabelEntity;
 import uns.ac.rs.hostplatserver.model.Milestone;
 import uns.ac.rs.hostplatserver.model.Task;
 import uns.ac.rs.hostplatserver.model.User;
@@ -34,7 +36,8 @@ public interface TaskService {
 	
 	public Milestone setMilestoneToTask(Long task_id,Milestone milestone);
 
-	public Set<User> setUsersToTask(Long task_id, Set<User> users); 
+	public Set<User> setUsersToTask(Long task_id, Set<User> users);
+
 	
 
 }
