@@ -17,7 +17,7 @@
         </encoder>
     </appender>
     <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>http://logstash:5959</destination>
+        <destination>logstash:5959</destination>
         <!-- encoder is required -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
         <keepAliveDuration>5 minutes</keepAliveDuration>
