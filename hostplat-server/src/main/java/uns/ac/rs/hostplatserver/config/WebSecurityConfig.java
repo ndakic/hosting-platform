@@ -81,6 +81,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/users/public/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users/public/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/project/allPublic").permitAll()
                 .antMatchers(HttpMethod.GET, "/task/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/task/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/task/**").permitAll()
@@ -104,8 +106,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.POST, "/api/users/public/add-user");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/users/public/verify-account/{token}");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/project/allPublic");
-
-
-
     }
 }
