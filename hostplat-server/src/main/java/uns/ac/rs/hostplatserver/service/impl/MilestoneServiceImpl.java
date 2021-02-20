@@ -52,7 +52,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 	@Override
 	public Milestone create(Milestone milestone, Long task_id) throws Exception {
         Task task = taskService.findOne(task_id);
-        milestone.setStatus(statusRepository.getOne((long) 40));
+        milestone.setActive_milestone(true);
         
 		Milestone milestoneSaved = this.milestoneRepository.save(milestone);
 		task.setMilestone(milestoneSaved);
@@ -79,7 +79,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 	@Override
 	public void delete(Long id) {
 		Milestone milestone = this.findOne(id);
-        milestone.setStatus(statusRepository.getOne((long) 41));
+		milestone.setActive_milestone(false);
         milestoneRepository.save(milestone);
 		
 	}

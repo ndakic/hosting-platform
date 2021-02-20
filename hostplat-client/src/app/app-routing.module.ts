@@ -25,6 +25,7 @@ import { MilestoneDetailsComponent } from './milestones/milestone-details/milest
 import { AddUsersComponent } from './projects/add-users/add-users.component';
 import { UpdateLabelComponent} from './labels/update-label/update-label.component';
 import { AddLabelComponent} from './labels/add-label/add-label.component';
+import { KanbanComponent } from './projects/kanban/kanban.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -128,6 +129,12 @@ const routes: Routes = [
   {
     path: 'add-label/:id',
     component: AddLabelComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_USER'}
+  },
+  {
+    path: 'kanban/:id',
+    component: KanbanComponent,
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_USER'}
   },

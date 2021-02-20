@@ -106,13 +106,13 @@ public class ProjectController {
 	}
 	
 	@GetMapping(value = "/allPublic", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ProjectDTO>> getPublic() {
+	public ResponseEntity<List<Project>> getPublic() {
 		List<Project> projects = projectService.findAllPublic();
 		List<ProjectDTO> projectsDTO = new ArrayList<ProjectDTO>();
 		for (Project project: projects) {
 			projectsDTO.add(ProjectMapper.toDTO(project));
 		}
-		return new ResponseEntity<>(projectsDTO, HttpStatus.OK);
+		return new ResponseEntity<>(projects, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/allUserForProject/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

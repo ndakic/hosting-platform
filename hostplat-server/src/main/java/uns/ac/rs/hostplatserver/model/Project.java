@@ -5,11 +5,13 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.persistence.JoinColumn;
@@ -48,9 +50,10 @@ public class Project {
     )
 	private Set<User> users;
 	
-    private StatusEntity status;
+    
     
     private boolean private_project = true;
+    private boolean active_project = true;
     
 	public Project(Long id, String name, String description, Set<User> set, boolean private_project) {
 		this.id = id;
@@ -63,6 +66,8 @@ public class Project {
 	public Project(Long project_id) {
 		this.id = project_id;
 	}
+	
+
 
 
 }
