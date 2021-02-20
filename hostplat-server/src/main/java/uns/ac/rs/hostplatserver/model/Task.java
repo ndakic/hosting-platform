@@ -44,7 +44,7 @@ public class Task {
 
 	private Date end_date;
 	
-    private StatusEntity status;
+	private boolean active_task = true;
 
 	@ManyToOne
 	@JoinColumn(name="author_id", referencedColumnName="id")

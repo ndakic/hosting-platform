@@ -60,7 +60,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project create(Project project) throws Exception {
 		project.setCreate_date(DateUtil.nowSystemTime());
-        project.setStatus(statusRepository.getOne((long) 10));
+        project.setActive_project(true);
 
 		Set<User> users = new HashSet<>();
 
@@ -93,7 +93,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public void delete(Long id) {
 		Project project = findOne(id);
 		project.setUsers(new HashSet<>());
-        project.setStatus(statusRepository.getOne((long) 11));
+		project.setActive_project(false);
 		projectRepository.save(project);
 		this.projectRepository.deleteById(id);
 		
