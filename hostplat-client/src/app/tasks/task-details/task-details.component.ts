@@ -234,6 +234,8 @@ export class TaskDetailsComponent implements OnInit {
     this.taskService.setLabelsToTask(this.labelTask).subscribe(
       (data: Label[]) => {
         this.labelsForTask = data;
+        console.log("GOTOVO");
+        console.log(this.labelsForTask);
       }
     );
   }

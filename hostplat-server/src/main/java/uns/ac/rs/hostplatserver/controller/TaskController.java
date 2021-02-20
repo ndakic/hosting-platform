@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import uns.ac.rs.hostplatserver.constant.ErrorCode;
 import uns.ac.rs.hostplatserver.dto.LabelTaskDTO;
 import uns.ac.rs.hostplatserver.dto.MilestoneDTO;
 import uns.ac.rs.hostplatserver.dto.MilestoneTaskDTO;
 import uns.ac.rs.hostplatserver.dto.TaskDTO;
 import uns.ac.rs.hostplatserver.dto.UserDTO;
 import uns.ac.rs.hostplatserver.dto.UserTaskDTO;
+import uns.ac.rs.hostplatserver.exception.ResourceNotExistException;
 import uns.ac.rs.hostplatserver.exception.ResourceNotFoundException;
 import uns.ac.rs.hostplatserver.mapper.MilestoneMapper;
 import uns.ac.rs.hostplatserver.mapper.TaskMapper;
@@ -46,7 +48,8 @@ public class TaskController {
 	private TaskService taskService;
 	
 	@Autowired
-	private LabelRepository labelService;
+	private LabelRepository labelRepository;
+	
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TaskDTO> getTask(@PathVariable("id") Long id) throws ResourceNotFoundException {
@@ -222,18 +225,20 @@ public class TaskController {
 	// DODATI
 	@PostMapping(value = "/setLabelsToTask", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Set<LabelResource>> setLabelsToTask(@RequestBody LabelTaskDTO dto) {
-		/*
-		Set<User> users = new HashSet<>();
-		for (UserDTO user : dto.getUsers()) {
-			users.add(UserMapper.toUser(user));
-		}
-		Set<User> returnUser = taskService.setUsersToTask(dto.getTask_id(),users);	
-		Set<UserDTO> returnDTO = new HashSet<>();
-		for (User user : returnUser) {
-			returnDTO.add(UserMapper.toDTO(user));
-		}*/
+		
+		Set<LabelEntity> labels = new HashSet<>();
+		for (LabelResource label : dto.getLabels()) {
+			LabelEntity labelEntity = labelRepository.findOneByMd5h(label.getId()).orElseThrow(() ->
+            new ResourceNotExistException(String.format("Label with id %s not found!", label.getId()), ErrorCode.NOT_FOUND));
 
+			labels.add(labelEntity);
+		}
+		Set<LabelEntity> returnLabel = taskService.setLabelsToTask(dto.getTask_id(),labels);	
 		Set<LabelResource> returnDTO = new HashSet<>();
+		for (LabelEntity label : returnLabel) {
+			returnDTO.add(LabelResource.entityToResource(label));
+		}
+
 		return new ResponseEntity<>(returnDTO, HttpStatus.OK);
 	}
 	

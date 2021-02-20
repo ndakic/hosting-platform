@@ -178,5 +178,15 @@ public class TaskServiceImpl implements TaskService {
 		return milestone;
 	}
 
+	@Override
+	public Set<LabelEntity> setLabelsToTask(Long task_id, Set<LabelEntity> labels) {
+		Task task = this.findOne(task_id);
+		Set<LabelEntity> a = task.getLabels();
+		a.addAll(labels);		
+		task.setLabels(a);
+		taskRepository.save(task);
+		return a;
+	}
+
 
 }
