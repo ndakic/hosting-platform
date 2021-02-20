@@ -18,12 +18,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddUsersComponent } from './add-users/add-users.component';
+import { KanbanComponent } from './kanban/kanban.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
 @NgModule({
   declarations: [ProjectDetailsComponent, AddProjectComponent, ProjectsListComponent, UpdateProjectComponent,
-  ProjectListItemComponent, AddUsersComponent],
+  ProjectListItemComponent, AddUsersComponent, KanbanComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -39,7 +41,8 @@ import { AddUsersComponent } from './add-users/add-users.component';
     MatToolbarModule,
     MatButtonModule,
     MatDialogModule,
-    MatInputModule    
+    MatInputModule,
+    DragDropModule    
   ],
   exports: [
     ProjectDetailsComponent,
@@ -47,7 +50,8 @@ import { AddUsersComponent } from './add-users/add-users.component';
     ProjectsListComponent,
     UpdateProjectComponent,
     ProjectListItemComponent,
-    AddUsersComponent
+    AddUsersComponent,
+    KanbanComponent
   ]
 })
 export class ProjectModule { } 

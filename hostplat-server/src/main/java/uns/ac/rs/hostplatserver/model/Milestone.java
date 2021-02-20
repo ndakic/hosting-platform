@@ -41,7 +41,8 @@ public class Milestone {
 	@JoinColumn(name="user_id", referencedColumnName="id")
 	private User user;
 	
-    private StatusEntity status;
+    
+    private boolean active_milestone = true;
     
     private boolean close;
     

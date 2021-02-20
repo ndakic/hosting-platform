@@ -17,6 +17,7 @@ import { ProjectModule} from './projects/project.module';
 import { TaskModule } from './tasks/task.module';
 import { MilestoneModule } from './milestones/milestone.module';
 import { LabelModule} from './labels/label.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LabelModule} from './labels/label.module';
     TaskModule,
     MilestoneModule,
     LabelModule,
+    DragDropModule,
     ToastrModule.forRoot({
       progressBar: true,
       timeOut: 4000,

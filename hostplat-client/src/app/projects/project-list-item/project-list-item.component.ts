@@ -21,4 +21,7 @@ export class ProjectListItemComponent implements OnInit {
   showDetails() {
     this.router.navigate(['/project-details/' + this.project.id]);
   }
+  onClickKanban(projectId: number): void {
+    this.router.navigate(['kanban', projectId]);
+  }
 } 

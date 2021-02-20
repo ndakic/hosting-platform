@@ -56,8 +56,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public Task create(Task task) throws Exception {
 		task.setCreate_date(DateUtil.nowSystemTime());
-        task.setStatus(statusRepository.getOne((long) 20));
-
+		task.setActive_task(true);
 		return this.taskRepository.save(task);       
 
 	}
@@ -80,7 +79,7 @@ public class TaskServiceImpl implements TaskService {
 		Task task = findOne(id);
 		task.setAssigned_users(new HashSet<>());
 		task.setLabels(new HashSet<>());
-        task.setStatus(statusRepository.getOne((long) 21));
+		task.setActive_task(false);
 		taskRepository.save(task);
 		this.taskRepository.deleteById(id);
 		
