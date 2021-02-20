@@ -35,4 +35,10 @@
                 <appender-ref ref="FILE"/>
             </root>
     </springProfile>
+    <springProfile name="default">
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
 </configuration>
