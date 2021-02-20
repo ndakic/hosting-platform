@@ -1,0 +1,4 @@
+<springProfile name="test">
+    <!-- only one line, shut up logback ! -->
+    <configuration />
+</springProfile>
