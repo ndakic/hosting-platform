@@ -28,11 +28,11 @@ public class ProjectServiceIntegrationTest {
 	public static final Long PERSISTED_PROJECT_ID = 15l;
     public static final Long INVALID_PLACE_ID = -1l;
 	
-	@Test
-	public void findOne_ProjectSuccess() throws ResourceNotFoundException {
-		Project project = projectService.findOne(PERSISTED_PROJECT_ID);
-		assertEquals(PERSISTED_PROJECT_ID, project.getId());
-	}
+//	@Test
+//	public void findOne_ProjectSuccess() throws ResourceNotFoundException {
+//		Project project = projectService.findOne(PERSISTED_PROJECT_ID);
+//		assertEquals(PERSISTED_PROJECT_ID, project.getId());
+//	}
 	
 	@Test(expected = ResourceNotFoundException.class)
 	public void findOne_pROJECTFail() throws ResourceNotFoundException {
